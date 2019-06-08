@@ -1,0 +1,45 @@
+//#FILENAME:package.json
+{
+  "name": "block-service-{{lowercase data.metadata.name}}",
+  "version": "{{data.metadata.version}}",
+  "dependencies": {
+    "@blockware/server": "1.0.0"
+    {{#consumes 'rest.blockware.com/v1/Client'}},
+        "@blockware/rest-client": "1.0.0"
+    {{/consumes}}
+    {{#provides 'rest.blockware.com/v1/Resource'}},
+        "@blockware/rest-route": "1.0.0"
+    {{/provides}}
+    {{#consumes 'grpc.blockware.com/v1/Client'}},
+        "@blockware/grpc-client": "1.0.0"
+    {{/consumes}}
+    {{#provides 'grpc.blockware.com/v1/Resource'}},
+        "@blockware/grpc-route": "1.0.0"
+    {{/provides}}
+    {{#consumes 'nosqldb.blockware.com/v1/mongodb'}},
+        "@blockware/nosql-mongodb": "1.0.0"
+    {{/consumes}}
+    {{#consumes 'nosqldb.blockware.com/v1/couchdb'}},
+        "@blockware/nosql-couchdb": "1.0.0"
+    {{/consumes}}
+    {{#consumes 'nosqldb.blockware.com/v1/cassandra'}},
+        "@blockware/nosql-cassandra": "1.0.0"
+    {{/consumes}}
+    {{#consumes 'nosqldb.blockware.com/v1/redis'}},
+        "@blockware/nosql-redis": "1.0.0"
+    {{/consumes}}
+    {{#consumes 'sqldb.blockware.com/v1/postgresql'}},
+        "@blockware/sqldb-postgresql": "1.0.0"
+    {{/consumes}}
+    {{#consumes 'sqldb.blockware.com/v1/mysql'}},
+        "@blockware/sqldb-mysql": "1.0.0"
+    {{/consumes}}
+    {{#consumes 'sqldb.blockware.com/v1/mssql'}},
+        "@blockware/sqldb-mssql": "1.0.0"
+    {{/consumes}}
+    {{#consumes 'sqldb.blockware.com/v1/oracle'}},
+        "@blockware/sqldb-oracle": "1.0.0"
+    {{/consumes}}
+
+  }
+}

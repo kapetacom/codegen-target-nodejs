@@ -1,0 +1,32 @@
+//#FILENAME:index.js
+const Server = require('@blockware/server');
+
+{{#providers-of-type 'rest.blockware.com/v1/Resource'}}
+const {{type metadata.name}}Route = require('./src/rest/{{type metadata.name}}Route');
+const {{type metadata.name}}RouteService = require('./src/service/{{type metadata.name}}RouteService');
+{{/providers-of-type}}
+
+{{#providers-of-type 'grpc.blockware.com/v1/Resource'}}
+    const {{type metadata.name}}Route = require('./src/grpc/{{type metadata.name}}Route');
+    const {{type metadata.name}}RouteService = require('./src/service/{{type metadata.name}}RouteService');
+{{/providers-of-type}}
+
+const server = new Server('{{type data.metadata.name}}');
+
+{{#providers-of-type 'rest.blockware.com/v1/Resource'}}
+server.addRESTRoute(
+    new {{type metadata.name}}Route(
+        new {{type metadata.name}}RouteService()
+    )
+);
+{{/providers-of-type}}
+
+{{#providers-of-type 'grpc.blockware.com/v1/Resource'}}
+server.addGRPCRoute(
+    new {{type metadata.name}}Route(
+        new {{type metadata.name}}RouteService()
+    )
+);
+{{/providers-of-type}}
+
+server.start();
