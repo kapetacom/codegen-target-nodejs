@@ -1,8 +1,8 @@
-//#FILENAME:src/rest/{{type data.metadata.name}}Route.js
+//#FILENAME:src/rest/{{type data.metadata.name}}Route.js:write-always
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-const RestRoute = require('@blockware/rest-route');
+const RestRoute = require('@blockware/sdk-rest-route');
 
 class {{type data.metadata.name}}Route extends RestRoute {
 
@@ -13,11 +13,20 @@ class {{type data.metadata.name}}Route extends RestRoute {
 
     _initRoutes(service) {
     {{#methods data.spec.methods}}
+        //{{method methodName}}: Verify the method is available
         if (!service.{{method methodName}}) {
             throw new Error('REST resource service for "{{type ../data.metadata.name}}" is missing method: "{{method methodName}}"');
         }
 
-        this.addRoute(
+        //{{method methodName}}: Verify the method is implemented correctly
+        this.validateMethod(service.{{method methodName}}, '{{method methodName}}', [
+            {{#arguments arguments}}
+                '{{variable argumentName}}'
+            {{/arguments}}
+        ]);
+
+        //{{method methodName}}: Add route to server
+        this.addEndpoint(
             {
                 method: '{{string method}}',
                 path: '{{string path}}',

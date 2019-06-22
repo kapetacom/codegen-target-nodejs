@@ -1,5 +1,8 @@
-//#FILENAME:index.js
-const Server = require('@blockware/server');
+//#FILENAME:index.js:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+const Server = require('@blockware/sdk-server');
 
 {{#providers-of-type 'rest.blockware.com/v1/Resource'}}
 const {{type metadata.name}}Route = require('./src/rest/{{type metadata.name}}Route');

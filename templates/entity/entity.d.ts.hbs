@@ -1,0 +1,14 @@
+//#FILENAME:src/entities/{{type data.name}}.d.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+// Definitions file - only used for code-completion
+//
+
+interface {{type data.name}} {
+
+{{#eachProperty data.properties}}
+    {{variable propertyId}}:{{type ./type}};
+{{/eachProperty}}
+
+}

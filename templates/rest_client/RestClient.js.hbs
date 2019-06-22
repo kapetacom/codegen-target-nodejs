@@ -1,8 +1,8 @@
-//#FILENAME:src/clients/{{type data.metadata.name}}Client.js
+//#FILENAME:src/clients/{{type data.metadata.name}}Client.js:write-always
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-const RestClient = require('@blockware/rest-client');
+const RestClient = require('@blockware/sdk-rest-client');
 
 class {{type data.metadata.name}}Client {
 
@@ -35,7 +35,7 @@ class {{type data.metadata.name}}Client {
                     {{#arguments arguments}}
                         {{variable argumentName}}: {
                             value: {{variable argumentName}},
-                            transport: {{transport}}
+                            transport: '{{string transport}}'
                         }
                     {{/arguments}}
                 }
