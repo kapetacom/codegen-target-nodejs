@@ -3,7 +3,7 @@
   "name": "block-service-{{lowercase data.metadata.name}}",
   "version": "{{data.metadata.version}}",
   "dependencies": {
-    "@blockware/sdk-server": "0.0.1"
+    "@blockware/sdk-server": "0.0.2"
     {{#consumes 'rest.blockware.com/v1/Client'}},
         "@blockware/sdk-rest-client": "0.0.1"
     {{/consumes}}
