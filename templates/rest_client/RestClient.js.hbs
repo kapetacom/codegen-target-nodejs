@@ -34,7 +34,7 @@ class {{type data.metadata.name}}Client {
                 [
                     {{#arguments arguments}}
                         {
-                            name: '{{string argumentName}}'
+                            name: '{{string argumentName}}',
                             value: {{variable argumentName}},
                             transport: '{{string transport}}'
                         }
