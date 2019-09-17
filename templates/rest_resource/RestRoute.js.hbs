@@ -31,11 +31,13 @@ class {{type data.metadata.name}}Route extends RestRoute {
                 method: '{{string method}}',
                 path: '{{string path}}',
                 description: '{{string description}}',
-                arguments: {
+                arguments: [
                     {{#arguments arguments}}
-                        {{variable argumentName}}: '{{string transport}}'
+                        {
+                            name: '{{string argumentName}}',
+                            transport: '{{string transport}}'
                     {{/arguments}}
-                },
+                ],
                 handler: service.{{method methodName}}.bind(service)
             }
         );

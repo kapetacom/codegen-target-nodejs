@@ -3,12 +3,12 @@
   "name": "block-service-{{lowercase data.metadata.name}}",
   "version": "{{data.metadata.version}}",
   "dependencies": {
-    "@blockware/sdk-server": "0.0.2"
+    "@blockware/sdk-server": "0.0.3"
     {{#consumes 'rest.blockware.com/v1/Client'}},
-        "@blockware/sdk-rest-client": "0.0.1"
+        "@blockware/sdk-rest-client": "0.0.2"
     {{/consumes}}
     {{#provides 'rest.blockware.com/v1/Resource'}},
-        "@blockware/sdk-rest-route": "0.0.1"
+        "@blockware/sdk-rest-route": "0.0.2"
     {{/provides}}
     {{#consumes 'grpc.blockware.com/v1/Client'}},
         "@blockware/sdk-grpc-client": "0.0.1"
@@ -17,7 +17,7 @@
         "@blockware/sdk-grpc-route": "0.0.1"
     {{/provides}}
     {{#consumes 'nosql.blockware.com/v1/mongodb'}},
-        "@blockware/sdk-nosql-mongodb": "0.0.1"
+        "@blockware/sdk-nosql-mongodb": "0.0.2"
     {{/consumes}}
     {{#consumes 'nosql.blockware.com/v1/couchdb'}},
         "@blockware/sdk-nosql-couchdb": "0.0.1"
@@ -29,7 +29,7 @@
         "@blockware/sdk-nosql-redis": "0.0.1"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/postgresql'}},
-        "@blockware/sdk-sqldb-postgresql": "0.0.1"
+        "@blockware/sdk-sqldb-postgresql": "0.0.2"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/mysql'}},
         "@blockware/sdk-sqldb-mysql": "0.0.1"

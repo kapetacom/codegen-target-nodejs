@@ -1,0 +1,15 @@
+//#FILENAME:src/data/{{type data.metadata.name}}DB.js:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+const {PostgresDB} = require('@blockware/sdk-sqldb-postgresql');
+
+class {{type data.metadata.name}}DB extends PostgresDB {
+
+    constructor() {
+        super('{{string data.metadata.name}}');
+    }
+
+}
+
+module.exports = new {{type data.metadata.name}}Repository();

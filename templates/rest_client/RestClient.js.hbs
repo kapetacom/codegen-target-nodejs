@@ -31,14 +31,15 @@ class {{type data.metadata.name}}Client {
             return this._client.execute(
                 '{{string method}}',
                 '{{string path}}',
-                {
+                [
                     {{#arguments arguments}}
-                        {{variable argumentName}}: {
+                        {
+                            name: '{{string argumentName}}'
                             value: {{variable argumentName}},
                             transport: '{{string transport}}'
                         }
                     {{/arguments}}
-                }
+                ]
             );
         }
 

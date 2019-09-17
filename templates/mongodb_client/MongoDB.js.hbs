@@ -1,0 +1,15 @@
+//#FILENAME:src/data/{{type data.metadata.name}}DB.js:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+const {MongoDB} = require('@blockware/sdk-nosql-mongodb');
+
+class {{type data.metadata.name}}DB extends MongoDB {
+
+    constructor() {
+        super('{{string data.metadata.name}}');
+    }
+
+}
+
+module.exports = new {{type data.metadata.name}}Repository();
