@@ -1,6 +1,6 @@
 {
   "name": "@blockware/codegen-target-nodejs9",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "index.js",
   "description": "Provides code generation support for NodeJS9+",
   "repository": {
@@ -21,6 +21,6 @@
   "homepage": "https://github.com/blockwarecom/codegen-target-nodejs9#readme",
   "dependencies": {
     "prettier": "1.17.1",
-    "@blockware/codegen-target": "0.0.5"
+    "@blockware/codegen-target": "0.0.6"
   }
 }
