@@ -1,6 +1,6 @@
 {
   "name": "@blockware/codegen-target-nodejs9",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "index.js",
   "description": "Provides code generation support for NodeJS9+",
   "repository": {
@@ -10,9 +10,6 @@
   "keywords": [
     "blockware"
   ],
-  "scripts": {
-    "start": "node index.js"
-  },
   "author": "Henrik Hofmeister <hh@blockware.com>",
   "license": "MIT",
   "bugs": {

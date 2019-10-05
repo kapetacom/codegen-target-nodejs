@@ -2,6 +2,10 @@
 {
   "name": "block-service-{{lowercase data.metadata.name}}",
   "version": "{{data.metadata.version}}",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "@blockware/sdk-server": "0.0.4"
     {{#consumes 'rest.blockware.com/v1/Client'}},
