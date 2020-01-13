@@ -1,23 +1,46 @@
 {
-  "name": "@blockware/codegen-target-nodejs9",
-  "version": "0.0.14",
-  "main": "index.js",
-  "description": "Provides code generation support for NodeJS9+",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/blockwarecom/codegen-target-nodejs9.git"
-  },
-  "keywords": [
-    "blockware"
-  ],
-  "author": "Henrik Hofmeister <hh@blockware.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/blockwarecom/codegen-target-nodejs9/issues"
-  },
-  "homepage": "https://github.com/blockwarecom/codegen-target-nodejs9#readme",
-  "dependencies": {
-    "prettier": "1.17.1",
-    "@blockware/codegen-target": "0.0.6"
-  }
+    "name": "@blockware/codegen-target-nodejs9",
+    "version": "0.0.14",
+    "main": "index.js",
+    "description": "Provides code generation support for NodeJS9+",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/blockwarecom/codegen-target-nodejs9.git"
+    },
+    "keywords": [
+        "blockware"
+    ],
+    "author": "Henrik Hofmeister <hh@blockware.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/blockwarecom/codegen-target-nodejs9/issues"
+    },
+    "homepage": "https://github.com/blockwarecom/codegen-target-nodejs9#readme",
+    "dependencies": {
+        "prettier": "1.17.1",
+        "@blockware/codegen-target": "0.0.6"
+    },
+    "peerDependencies": {
+        "@blockware/ui-web-types": "^0.0.9"
+    },
+    "devDependencies": {
+        "@blockware/ui-web-types": "^0.0.9",
+        "@babel/cli": "^7.7.7",
+        "@babel/core": "^7.7.7",
+        "@babel/plugin-proposal-class-properties": "^7.5.0",
+        "@babel/plugin-proposal-decorators": "^7.4.4",
+        "@babel/preset-env": "^7.5.0",
+        "@babel/preset-react": "^7.7.4",
+        "@babel/preset-typescript": "^7.3.3",
+        "babel-loader": "^8.0.6",
+        "json-loader": "^0.5.7",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10",
+        "yaml-loader": "^0.5.0",
+        "typescript": "^3.4.5"
+    },
+    "scripts": {
+        "prepublishOnly": "npm run build",
+        "build": "webpack"
+    }
 }
