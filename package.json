@@ -1,11 +1,15 @@
 {
     "name": "@blockware/codegen-target-nodejs9",
-    "version": "0.0.14",
+    "version": "0.0.15",
     "main": "index.js",
     "description": "Provides code generation support for NodeJS9+",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/blockwarecom/codegen-target-nodejs9.git"
+    },
+    "private": false,
+    "publishConfig": {
+        "access": "public"
     },
     "keywords": [
         "blockware"
@@ -18,7 +22,7 @@
     "homepage": "https://github.com/blockwarecom/codegen-target-nodejs9#readme",
     "dependencies": {
         "prettier": "1.17.1",
-        "@blockware/codegen-target": "0.0.6"
+        "@blockware/codegen-target": "0.0.7"
     },
     "peerDependencies": {
         "@blockware/ui-web-types": "^0.0.9"
