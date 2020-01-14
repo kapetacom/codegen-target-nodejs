@@ -11,25 +11,25 @@
     {{#consumes 'rest.blockware.com/v1/Client'}},
         "@blockware/sdk-rest-client": "0.0.3"
     {{/consumes}}
-    {{#provides 'rest.blockware.com/v1/Resource'}},
+    {{#provides 'rest.blockware.com/v1/API'}},
         "@blockware/sdk-rest-route": "0.0.2"
     {{/provides}}
     {{#consumes 'grpc.blockware.com/v1/Client'}},
         "@blockware/sdk-grpc-client": "0.0.1"
     {{/consumes}}
-    {{#provides 'grpc.blockware.com/v1/Resource'}},
+    {{#provides 'grpc.blockware.com/v1/API'}},
         "@blockware/sdk-grpc-route": "0.0.1"
     {{/provides}}
-    {{#consumes 'nosql.blockware.com/v1/mongodb'}},
+    {{#consumes 'nosqldb.blockware.com/v1/mongodb'}},
         "@blockware/sdk-nosql-mongodb": "0.0.4"
     {{/consumes}}
-    {{#consumes 'nosql.blockware.com/v1/couchdb'}},
+    {{#consumes 'nosqldb.blockware.com/v1/couchdb'}},
         "@blockware/sdk-nosql-couchdb": "0.0.1"
     {{/consumes}}
-    {{#consumes 'nosql.blockware.com/v1/cassandra'}},
+    {{#consumes 'nosqldb.blockware.com/v1/cassandra'}},
         "@blockware/sdk-nosql-cassandra": "0.0.1"
     {{/consumes}}
-    {{#consumes 'nosql.blockware.com/v1/redis'}},
+    {{#consumes 'nosqldb.blockware.com/v1/redis'}},
         "@blockware/sdk-nosql-redis": "0.0.1"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/postgresql'}},
