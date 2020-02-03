@@ -7,12 +7,13 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@blockware/sdk-server": "0.0.4"
+    "@blockware/sdk-config": "0.0.5",
+    "@blockware/sdk-server": "0.0.5"
     {{#consumes 'rest.blockware.com/v1/Client'}},
-        "@blockware/sdk-rest-client": "0.0.3"
+        "@blockware/sdk-rest-client": "0.0.4"
     {{/consumes}}
     {{#provides 'rest.blockware.com/v1/API'}},
-        "@blockware/sdk-rest-route": "0.0.2"
+        "@blockware/sdk-rest-route": "0.0.4"
     {{/provides}}
     {{#consumes 'grpc.blockware.com/v1/Client'}},
         "@blockware/sdk-grpc-client": "0.0.1"
@@ -21,7 +22,7 @@
         "@blockware/sdk-grpc-route": "0.0.1"
     {{/provides}}
     {{#consumes 'nosqldb.blockware.com/v1/mongodb'}},
-        "@blockware/sdk-nosql-mongodb": "0.0.4"
+        "@blockware/sdk-nosql-mongodb": "0.0.5"
     {{/consumes}}
     {{#consumes 'nosqldb.blockware.com/v1/couchdb'}},
         "@blockware/sdk-nosql-couchdb": "0.0.1"
@@ -33,7 +34,7 @@
         "@blockware/sdk-nosql-redis": "0.0.1"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/postgresql'}},
-        "@blockware/sdk-sqldb-postgresql": "0.0.3"
+        "@blockware/sdk-sqldb-postgresql": "0.0.4"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/mysql'}},
         "@blockware/sdk-sqldb-mysql": "0.0.1"
