@@ -18,7 +18,7 @@ const {{type metadata.name}}RouteService = require('./src/service/{{type metadat
 const server = new Server('{{type data.metadata.name}}', __dirname);
 
 {{#providers-of-type 'rest.blockware.com/v1/API'}}
-server.addRESTRoute(
+server.addRoute(
     new {{type metadata.name}}Route(
         new {{type metadata.name}}RouteService()
     )
@@ -26,7 +26,7 @@ server.addRESTRoute(
 {{/providers-of-type}}
 
 {{#providers-of-type 'grpc.blockware.com/v1/API'}}
-server.addGRPCRoute(
+server.addRoute(
     new {{type metadata.name}}Route(
         new {{type metadata.name}}RouteService()
     )
