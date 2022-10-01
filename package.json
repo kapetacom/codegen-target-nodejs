@@ -1,6 +1,6 @@
 {
     "name": "@blockware/codegen-target-nodejs9",
-    "version": "0.0.25",
+    "version": "0.0.26",
     "main": "index.js",
     "description": "Provides code generation support for NodeJS9+",
     "repository": {
