@@ -5,10 +5,19 @@
 // Definitions file - only used for code-completion
 //
 
-interface {{type data.name}} {
+{{#switch data.type}}
+    {{#case 'dto'}}
+declare interface {{type data.name}} {
 
 {{#eachProperty data.properties}}
     {{propertyId}}:{{type ./type}};
 {{/eachProperty}}
 
 }
+    {{/case}}
+    {{#case 'enum'}}
+declare enum {{type data.name}} {
+{{enumValues data.values}}
+}
+    {{/case}}
+{{/switch}}

@@ -1,10 +1,18 @@
-const {Target} = require('@blockware/codegen-target');
+const {Target, Template} = require('@blockware/codegen-target');
 const prettier = require("prettier");
 
 class NodeJS9Target extends Target {
 
     constructor(options) {
         super(options, __dirname);
+    }
+
+    _createTemplateEngine(data) {
+        const engine = super._createTemplateEngine(data);
+        engine.registerHelper('enumValues', (values) => {
+            return Template.SafeString('\t' + values.map(value => `${value} = ${JSON.stringify(value)}`).join(',\n\t'));
+        });
+        return engine;
     }
 
     _postProcessCode(filename, code) {
