@@ -4,19 +4,22 @@
 //
 // Definitions file - only used for code-completion
 //
+{{#eachTypeReference data all=true}}
+import { {{name}} } from "./{{name}}";
+{{/eachTypeReference}}
 
 {{#switch data.type}}
     {{#case 'dto'}}
-declare interface {{type data.name}} {
+export declare interface {{type data.name}} {
 
 {{#eachProperty data.properties}}
-    {{propertyId}}:{{type ./type}};
+    {{propertyId}}:{{fieldtype ./type }};
 {{/eachProperty}}
 
 }
     {{/case}}
     {{#case 'enum'}}
-declare enum {{type data.name}} {
+export declare enum {{type data.name}} {
 {{enumValues data.values}}
 }
     {{/case}}

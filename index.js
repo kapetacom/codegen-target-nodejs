@@ -7,10 +7,30 @@ class NodeJS9Target extends Target {
         super(options, __dirname);
     }
 
-    _createTemplateEngine(data) {
-        const engine = super._createTemplateEngine(data);
+    _createTemplateEngine(data, context) {
+        const engine = super._createTemplateEngine(data, context);
         engine.registerHelper('enumValues', (values) => {
             return Template.SafeString('\t' + values.map(value => `${value} = ${JSON.stringify(value)}`).join(',\n\t'));
+        });
+
+        const $fieldType = (value) => {
+            if (!value) {
+                return value;
+            }
+
+            if (value.$ref) {
+                value = value.$ref.substring(0,1).toUpperCase() + value.$ref.substring(1);
+            }
+
+            return Template.SafeString(value);
+        };
+        engine.registerHelper('fieldtype', $fieldType);
+        engine.registerHelper('returnType', (value) => {
+            if (!value) {
+                return 'void';
+            }
+
+            return $fieldType(value);
         });
         return engine;
     }
@@ -25,6 +45,10 @@ class NodeJS9Target extends Target {
 
         if (filename.endsWith('.js')) {
             parser = 'babel';
+        }
+
+        if (filename.endsWith('.ts')) {
+            parser = 'babel-ts';
         }
 
         if (filename.endsWith('.yaml') ||

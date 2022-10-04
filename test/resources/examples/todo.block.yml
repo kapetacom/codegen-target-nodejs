@@ -1,0 +1,198 @@
+kind: blocks.blockware.com/v1/Service
+metadata:
+  name: Todo
+  version: 1.0.0
+spec:
+  target:
+    kind: targets.blockware.com/v1/nodejs9
+  entities:
+    types:
+      - type: enum
+        name: State
+        description: A state
+        values:
+          - OK
+          - NOT_OK
+      - type: dto
+        name: Task
+        description: Task type
+        properties:
+          id:
+            description: Primary ID of task
+            type: string
+            properties: null
+          userId:
+            description: null
+            type: string
+            properties: null
+          title:
+            description: Name of the task
+            type: string
+            properties: null
+          description:
+            description: Longer description
+            type: string
+            properties: null
+          done:
+            description: Defines if the task is done or not
+            type: boolean
+            properties: null
+      - type: dto
+        name: User
+        description: User - from Users block
+        properties:
+          id:
+            description: null
+            type: string
+            properties: null
+          name:
+            description: null
+            type: string
+            properties: null
+          email:
+            description: null
+            type: string
+            properties: null
+          state:
+            description: null
+            type:
+              $ref: State
+            properties: null
+    source:
+      type: blockware-dsl
+      value: |+
+        
+        //A state
+        enum State {
+        	OK, 
+        	NOT_OK2
+        }
+
+        //Task type
+        Task {	
+        	//Primary ID of task
+        	id: string	
+        	userId: string	
+        	//Name of the task
+        	title: string	
+        	//Longer description
+        	description: string	
+
+        	//Defines if the task is done or not
+        	done: boolean
+        }
+
+        //User - from Users block
+        User {	
+        	id: string	
+        	name: string	
+        	email: string
+        	state: State
+        }
+
+  consumers:
+    - kind: nosqldb.blockware.com/v1/mongodb
+      metadata:
+        name: todo
+    - kind: rest.blockware.com/v1/Client
+      metadata:
+        name: users
+      spec:
+        methods:
+          getUserById:
+            responseType:
+              $ref: User
+            method: GET
+            path: /users/{id}
+            description: Get users by id
+            arguments:
+              id:
+                type: string
+                transport: PATH
+          deleteUser:
+            responseType: void
+            method: DELETE
+            path: /users/{id}
+            description: Delete user by id
+            arguments:
+              id:
+                type: string
+                transport: PATH
+        source:
+          type: blockware-dsl
+          value: |-
+            //Get users by id
+            @GET("/users/{id}")
+            getUserById(@Path id:string):User
+
+            //Delete user by id
+            @DELETE("/users/{id}")
+            deleteUser(@Path id:string):void
+  providers:
+    - kind: rest.blockware.com/v1/API
+      metadata:
+        name: tasks
+      spec:
+        methods:
+          addTask:
+            responseType: void
+            method: POST
+            path: /tasks/{userId}/{id}
+            description: Add task for user
+            arguments:
+              userId:
+                type: string
+                transport: PATH
+              id:
+                type: string
+                transport: PATH
+              task:
+                type:
+                  $ref: Task
+                transport: BODY
+          markAsDone:
+            responseType: void
+            method: POST
+            path: /tasks/{id}/done
+            description: Mark task as done
+            arguments:
+              id:
+                type: string
+                transport: PATH
+          removeTask:
+            responseType: void
+            method: DELETE
+            path: /tasks/{id}
+            description: Delete task
+            arguments:
+              id:
+                type: string
+                transport: PATH
+          getTask:
+            responseType:
+              $ref: Task
+            method: GET
+            path: /tasks/{id}
+            description: Get task by id
+            arguments:
+              id:
+                type: string
+                transport: PATH
+        source:
+          type: blockware-dsl
+          value: |-
+            //Add task for user
+            @POST("/tasks/{userId}/{id}")
+            addTask(@Path userId:string, @Path id:string, @Body task:Task):void
+
+            //Mark task as done
+            @POST("/tasks/{id}/done")
+            markAsDone(@Path id:string):void
+
+            //Delete task
+            @DELETE("/tasks/{id}")
+            removeTask(@Path id:string):void
+
+            //Get task by id
+            @GET("/tasks/{id}")
+            getTask(@Path id:string):Task

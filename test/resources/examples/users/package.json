@@ -1,0 +1,14 @@
+{
+    "name": "block-service-users",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "@blockware/sdk-config": "<2",
+        "@blockware/sdk-server": "<2",
+        "@blockware/sdk-rest-route": "<2",
+        "@blockware/sdk-sqldb-postgresql": "<2"
+    }
+}

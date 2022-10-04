@@ -7,43 +7,43 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@blockware/sdk-config": "0.0.5",
-    "@blockware/sdk-server": "0.0.8"
+    "@blockware/sdk-config": "<2",
+    "@blockware/sdk-server": "<2"
     {{#consumes 'rest.blockware.com/v1/Client'}},
-        "@blockware/sdk-rest-client": "0.0.4"
+        "@blockware/sdk-rest-client": "<2"
     {{/consumes}}
     {{#provides 'rest.blockware.com/v1/API'}},
-        "@blockware/sdk-rest-route": "0.0.4"
+        "@blockware/sdk-rest-route": "<2"
     {{/provides}}
     {{#consumes 'grpc.blockware.com/v1/Client'}},
-        "@blockware/sdk-grpc-client": "0.0.1"
+        "@blockware/sdk-grpc-client": "<2"
     {{/consumes}}
     {{#provides 'grpc.blockware.com/v1/API'}},
-        "@blockware/sdk-grpc-route": "0.0.1"
+        "@blockware/sdk-grpc-route": "<2"
     {{/provides}}
     {{#consumes 'nosqldb.blockware.com/v1/mongodb'}},
-        "@blockware/sdk-nosql-mongodb": "0.0.5"
+        "@blockware/sdk-nosql-mongodb": "<2"
     {{/consumes}}
     {{#consumes 'nosqldb.blockware.com/v1/couchdb'}},
-        "@blockware/sdk-nosql-couchdb": "0.0.1"
+        "@blockware/sdk-nosql-couchdb": "<2"
     {{/consumes}}
     {{#consumes 'nosqldb.blockware.com/v1/cassandra'}},
-        "@blockware/sdk-nosql-cassandra": "0.0.1"
+        "@blockware/sdk-nosql-cassandra": "<2"
     {{/consumes}}
     {{#consumes 'nosqldb.blockware.com/v1/redis'}},
-        "@blockware/sdk-nosql-redis": "0.0.1"
+        "@blockware/sdk-nosql-redis": "<2"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/postgresql'}},
-        "@blockware/sdk-sqldb-postgresql": "0.0.4"
+        "@blockware/sdk-sqldb-postgresql": "<2"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/mysql'}},
-        "@blockware/sdk-sqldb-mysql": "0.0.1"
+        "@blockware/sdk-sqldb-mysql": "<2"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/mssql'}},
-        "@blockware/sdk-sqldb-mssql": "0.0.1"
+        "@blockware/sdk-sqldb-mssql": "<2"
     {{/consumes}}
     {{#consumes 'sqldb.blockware.com/v1/oracle'}},
-        "@blockware/sdk-sqldb-oracle": "0.0.1"
+        "@blockware/sdk-sqldb-oracle": "<2"
     {{/consumes}}
 
   }

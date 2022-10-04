@@ -1,0 +1,91 @@
+kind: blocks.blockware.com/v1/Service
+metadata:
+  name: Users
+  version: 1.0.0
+spec:
+  target:
+    kind: targets.blockware.com/v1/nodejs9
+  entities:
+    types:
+      - name: User
+        type: dto
+        description: |-
+          User object
+          More lines
+        properties:
+          id:
+            type: string
+            properties: null
+          name:
+            type: string
+            properties: null
+          email:
+            type: string
+            properties: null
+    source:
+      type: blockware-dsl
+      value: |-
+        //User object
+        //More lines
+        User {	
+        	id: string	
+        	name: string	
+        	email: string
+        }
+  consumers:
+    - kind: sqldb.blockware.com/v1/postgresql
+      metadata:
+        name: users
+  providers:
+    - kind: rest.blockware.com/v1/API
+      metadata:
+        name: users
+      spec:
+        methods:
+          createUser:
+            responseType:
+              $ref: User
+            method: POST
+            path: /users/{id}
+            description: Create user
+            arguments:
+              id:
+                type: string
+                transport: PATH
+              user:
+                type:
+                  $ref: User
+                transport: QUERY
+          getUser:
+            responseType:
+              $ref: User
+            method: GET
+            path: /users/{id}
+            description: Get user by id
+            arguments:
+              id:
+                type: string
+                transport: PATH
+          deleteUser:
+            responseType: void
+            method: DELETE
+            path: /users/{id}
+            description: Delete user by id
+            arguments:
+              id:
+                type: string
+                transport: PATH
+        source:
+          type: blockware-dsl
+          value: |-
+            //Create user
+            @POST("/users/{id}")
+            createUser(@Path id:string, @Query user:User):User
+
+            //Get user by id
+            @GET("/users/{id}")
+            getUser(@Path id:string):User
+
+            //Delete user by id
+            @DELETE("/users/{id}")
+            deleteUser(@Path id:string):void
