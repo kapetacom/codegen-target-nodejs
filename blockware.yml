@@ -1,5 +1,5 @@
-kind: core.blockware.com/v1/LanguageTarget
+kind: core/language-target
 metadata:
-  id: targets.blockware.com/v1/NodeJS9
-  name: NodeJS 9 / ExpressJS
-  description: Generate block service code in NodeJS 9+ with ExpressJS
+  name: blockware/language-target-nodejs
+  title: NodeJS
+  description: Generate block service code in NodeJS

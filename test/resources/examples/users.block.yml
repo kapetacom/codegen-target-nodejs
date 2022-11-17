@@ -1,10 +1,10 @@
-kind: blocks.blockware.com/v1/Service
+kind: blockware/block-type-service
 metadata:
   name: Users
   version: 1.0.0
 spec:
   target:
-    kind: targets.blockware.com/v1/nodejs9
+    kind: blockware/language-target-nodejs
   entities:
     types:
       - name: User
@@ -33,11 +33,11 @@ spec:
         	email: string
         }
   consumers:
-    - kind: sqldb.blockware.com/v1/postgresql
+    - kind: blockware/resource-type-postgresql
       metadata:
         name: users
   providers:
-    - kind: rest.blockware.com/v1/API
+    - kind: blockware/resource-type-rest-api
       metadata:
         name: users
       spec:
