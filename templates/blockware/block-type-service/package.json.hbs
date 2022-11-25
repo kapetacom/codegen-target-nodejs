@@ -15,34 +15,34 @@
     {{#provides 'blockware/resource-type-rest-api'}},
         "@blockware/sdk-rest-route": "<2"
     {{/provides}}
-    {{#consumes 'grpc.blockware.com/v1/Client'}},
+    {{#consumes 'blockware/resource-type-grpc-client'}},
         "@blockware/sdk-grpc-client": "<2"
     {{/consumes}}
-    {{#provides 'grpc.blockware.com/v1/API'}},
+    {{#provides 'blockware/resource-type-grpc-api'}},
         "@blockware/sdk-grpc-route": "<2"
     {{/provides}}
     {{#consumes 'blockware/resource-type-mongodb'}},
         "@blockware/sdk-nosql-mongodb": "<2"
     {{/consumes}}
-    {{#consumes 'nosqldb.blockware.com/v1/couchdb'}},
+    {{#consumes 'blockware/resource-type-couchdb'}},
         "@blockware/sdk-nosql-couchdb": "<2"
     {{/consumes}}
-    {{#consumes 'nosqldb.blockware.com/v1/cassandra'}},
+    {{#consumes 'blockware/resource-type-cassandra'}},
         "@blockware/sdk-nosql-cassandra": "<2"
     {{/consumes}}
-    {{#consumes 'nosqldb.blockware.com/v1/redis'}},
+    {{#consumes 'blockware/resource-type-redis'}},
         "@blockware/sdk-nosql-redis": "<2"
     {{/consumes}}
     {{#consumes 'blockware/resource-type-postgresql'}},
         "@blockware/sdk-sqldb-postgresql": "<2"
     {{/consumes}}
-    {{#consumes 'sqldb.blockware.com/v1/mysql'}},
+    {{#consumes 'blockware/resource-type-mysql'}},
         "@blockware/sdk-sqldb-mysql": "<2"
     {{/consumes}}
-    {{#consumes 'sqldb.blockware.com/v1/mssql'}},
+    {{#consumes 'blockware/resource-type-mssql'}},
         "@blockware/sdk-sqldb-mssql": "<2"
     {{/consumes}}
-    {{#consumes 'sqldb.blockware.com/v1/oracle'}},
+    {{#consumes 'blockware/resource-type-oracle'}},
         "@blockware/sdk-sqldb-oracle": "<2"
     {{/consumes}}
 

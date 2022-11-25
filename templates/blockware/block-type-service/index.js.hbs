@@ -10,7 +10,7 @@ const {{type metadata.name}}Route = require('./src/rest/{{type metadata.name}}Ro
 const {{type metadata.name}}RouteService = require('./src/service/{{type metadata.name}}RouteService');
 {{/providers-of-type}}
 
-{{#providers-of-type 'grpc.blockware.com/v1/API'}}
+{{#providers-of-type 'blockware/resource-type-grpc-api'}}
     const {{type metadata.name}}Route = require('./src/grpc/{{type metadata.name}}Route');
     const {{type metadata.name}}RouteService = require('./src/service/{{type metadata.name}}RouteService');
 {{/providers-of-type}}
@@ -25,7 +25,7 @@ server.addRoute(
 );
 {{/providers-of-type}}
 
-{{#providers-of-type 'grpc.blockware.com/v1/API'}}
+{{#providers-of-type 'blockware/resource-type-grpc-api'}}
 server.addRoute(
     new {{type metadata.name}}Route(
         new {{type metadata.name}}RouteService()
