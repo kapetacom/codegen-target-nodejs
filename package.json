@@ -1,8 +1,7 @@
 {
-    "name": "@blockware/codegen-target-nodejs9",
-    "version": "0.0.34",
-    "main": "index.js",
-    "description": "Provides code generation support for NodeJS9+",
+    "name": "@blockware/language-target-nodejs",
+    "version": "local",
+    "description": "Provides code generation support for NodeJS",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/blockwarecom/codegen-target-nodejs9.git"
@@ -49,7 +48,9 @@
     },
     "scripts": {
         "prepublishOnly": "npm run test && npm run build",
-        "build": "webpack",
+        "build": "webpack --mode production",
+        "start": "npm run watch",
+        "watch": "webpack --mode development --watch",
         "test": "jest"
     }
 }
