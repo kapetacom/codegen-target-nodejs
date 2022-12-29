@@ -15,7 +15,7 @@ const {{type metadata.name}}RouteService = require('./src/service/{{type metadat
     const {{type metadata.name}}RouteService = require('./src/service/{{type metadata.name}}RouteService');
 {{/providers-of-type}}
 
-const server = new Server('{{type data.metadata.name}}', __dirname);
+const server = new Server('{{data.metadata.name}}', __dirname);
 
 {{#providers-of-type 'blockware/resource-type-rest-api'}}
 server.addRoute(

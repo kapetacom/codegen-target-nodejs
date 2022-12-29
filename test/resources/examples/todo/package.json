@@ -1,6 +1,6 @@
 {
-    "name": "block-service-todo",
-    "version": "1.0.0",
+    "name": "@blockware/todo",
+    "version": "local",
     "main": "index.js",
     "scripts": {
         "start": "node index.js"
