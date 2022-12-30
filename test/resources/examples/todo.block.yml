@@ -1,10 +1,10 @@
-kind: blockware/block-type-service
+kind: blockware/block-type-service:0.0.8
 metadata:
-  name: Todo
-  version: 1.0.0
+  name: blockware/todo
+  title: Todo service
 spec:
   target:
-    kind: blockware/language-target-nodejs
+    kind: blockware/language-target-nodejs:local
   entities:
     types:
       - type: enum
@@ -91,10 +91,10 @@ spec:
         }
 
   consumers:
-    - kind: blockware/resource-type-mongodb
+    - kind: blockware/resource-type-mongodb:0.0.2
       metadata:
         name: todo
-    - kind: blockware/resource-type-rest-client
+    - kind: blockware/resource-type-rest-client:0.0.4
       metadata:
         name: users
       spec:
@@ -129,7 +129,7 @@ spec:
             @DELETE("/users/{id}")
             deleteUser(@Path id:string):void
   providers:
-    - kind: blockware/resource-type-rest-api
+    - kind: blockware/resource-type-rest-api:0.0.4
       metadata:
         name: tasks
       spec:

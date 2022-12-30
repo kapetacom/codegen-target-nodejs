@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 echo "Building docker image";
-docker build . -t users || exit 1
+docker build . -t blockware/users || exit 1
 
-echo "Done. Image ready: users";
+echo "Done. Image ready: blockware/users";
