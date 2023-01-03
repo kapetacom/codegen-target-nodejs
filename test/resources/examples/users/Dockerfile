@@ -6,7 +6,7 @@ WORKDIR /application
 
 RUN npm install
 
-ADD block.yml /application/block.yml
+ADD blockware.yml /application/blockware.yml
 ADD index.js /application/index.js
 ADD src /application/src
 
