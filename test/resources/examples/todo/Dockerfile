@@ -1,4 +1,4 @@
-FROM node:13.12
+FROM node:19
 
 ADD package.json /application/package.json
 
