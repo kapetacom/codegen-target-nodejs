@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 echo "Building docker image";
-docker build . -t blockware/users || exit 1
+docker build . -t kapeta/users || exit 1
 
-echo "Done. Image ready: blockware/users";
+echo "Done. Image ready: kapeta/users";

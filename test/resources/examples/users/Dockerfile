@@ -4,10 +4,10 @@ ADD package.json /application/package.json
 
 WORKDIR /application
 
-RUN npm config set @blockware:registry "https://europe-npm.pkg.dev/blockware-cloud/blockware-npm-public/"
+RUN npm config set @kapeta:registry "https://europe-npm.pkg.dev/kapeta-cloud/kapeta-npm-public/"
 RUN npm install
 
-ADD blockware.yml /application/blockware.yml
+ADD kapeta.yml /application/kapeta.yml
 ADD index.js /application/index.js
 ADD src /application/src
 

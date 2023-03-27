@@ -1,5 +1,5 @@
 {
-    "name": "@blockware/language-target-nodejs",
+    "name": "@kapeta/language-target-nodejs",
     "version": "local",
     "description": "Provides code generation support for NodeJS",
     "repository": {
@@ -11,24 +11,24 @@
         "access": "public"
     },
     "keywords": [
-        "blockware"
+        "kapeta"
     ],
-    "author": "Henrik Hofmeister <hh@blockware.com>",
+    "author": "Henrik Hofmeister <hh@kapeta.com>",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/blockwarecom/codegen-target-nodejs9/issues"
     },
     "homepage": "https://github.com/blockwarecom/codegen-target-nodejs9#readme",
     "dependencies": {
-        "@blockware/codegen-target": "<2",
+        "@kapeta/codegen-target": "<2",
         "prettier": "2.7.1"
     },
     "peerDependencies": {
-        "@blockware/ui-web-types": "<2"
+        "@kapeta/ui-web-types": "<2"
     },
     "devDependencies": {
-        "@blockware/codegen": "<2",
-        "@blockware/ui-web-types": "<2",
+        "@kapeta/codegen": "<2",
+        "@kapeta/ui-web-types": "<2",
         "@babel/cli": "^7.18.10",
         "@babel/core": "^7.18.13",
         "@babel/plugin-proposal-class-properties": "^7.18.6",

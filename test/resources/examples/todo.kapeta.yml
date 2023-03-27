@@ -1,10 +1,10 @@
-kind: blockware/block-type-service:0.0.8
+kind: kapeta/block-type-service:0.0.8
 metadata:
-  name: blockware/todo
+  name: kapeta/todo
   title: Todo service
 spec:
   target:
-    kind: blockware/language-target-nodejs:local
+    kind: kapeta/language-target-nodejs:local
   entities:
     types:
       - type: enum
@@ -59,7 +59,7 @@ spec:
               $ref: State
             properties: null
     source:
-      type: blockware-dsl
+      type: kapeta-dsl
       value: |+
         
         //A state
@@ -91,10 +91,10 @@ spec:
         }
 
   consumers:
-    - kind: blockware/resource-type-mongodb:0.0.2
+    - kind: kapeta/resource-type-mongodb:0.0.2
       metadata:
         name: todo
-    - kind: blockware/resource-type-rest-client:0.0.4
+    - kind: kapeta/resource-type-rest-client:0.0.4
       metadata:
         name: users
       spec:
@@ -119,7 +119,7 @@ spec:
                 type: string
                 transport: PATH
         source:
-          type: blockware-dsl
+          type: kapeta-dsl
           value: |-
             //Get users by id
             @GET("/users/{id}")
@@ -129,7 +129,7 @@ spec:
             @DELETE("/users/{id}")
             deleteUser(@Path id:string):void
   providers:
-    - kind: blockware/resource-type-rest-api:0.0.4
+    - kind: kapeta/resource-type-rest-api:0.0.4
       metadata:
         name: tasks
       spec:
@@ -179,7 +179,7 @@ spec:
                 type: string
                 transport: PATH
         source:
-          type: blockware-dsl
+          type: kapeta-dsl
           value: |-
             //Add task for user
             @POST("/tasks/{userId}/{id}")

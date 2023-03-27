@@ -1,14 +1,14 @@
 {
-    "name": "@blockware/users",
+    "name": "@kapeta/users",
     "version": "local",
     "main": "index.js",
     "scripts": {
         "start": "node index.js"
     },
     "dependencies": {
-        "@blockware/sdk-config": "<2",
-        "@blockware/sdk-server": "<2",
-        "@blockware/sdk-rest-route": "<2",
-        "@blockware/sdk-sqldb-postgresql": "<2"
+        "@kapeta/sdk-config": "<2",
+        "@kapeta/sdk-server": "<2",
+        "@kapeta/sdk-rest-route": "<2",
+        "@kapeta/sdk-sqldb-postgresql": "<2"
     }
 }

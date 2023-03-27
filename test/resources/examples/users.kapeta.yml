@@ -1,10 +1,10 @@
-kind: blockware/block-type-service:0.0.2
+kind: kapeta/block-type-service:0.0.2
 metadata:
-  name: blockware/users
+  name: kapeta/users
   title: User service
 spec:
   target:
-    kind: blockware/language-target-nodejs:local
+    kind: kapeta/language-target-nodejs:local
   entities:
     types:
       - name: User
@@ -23,7 +23,7 @@ spec:
             type: string
             properties: null
     source:
-      type: blockware-dsl
+      type: kapeta-dsl
       value: |-
         //User object
         //More lines
@@ -33,11 +33,11 @@ spec:
         	email: string
         }
   consumers:
-    - kind: blockware/resource-type-postgresql:0.0.2
+    - kind: kapeta/resource-type-postgresql:0.0.2
       metadata:
         name: users
   providers:
-    - kind: blockware/resource-type-rest-api:0.0.4
+    - kind: kapeta/resource-type-rest-api:0.0.4
       metadata:
         name: users
       spec:
@@ -76,7 +76,7 @@ spec:
                 type: string
                 transport: PATH
         source:
-          type: blockware-dsl
+          type: kapeta-dsl
           value: |-
             //Create user
             @POST("/users/{id}")

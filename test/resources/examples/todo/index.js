@@ -2,12 +2,12 @@
 // GENERATED SOURCE - DO NOT EDIT
 //
 const Path = require("path");
-const Server = require("@blockware/sdk-server");
+const Server = require("@kapeta/sdk-server");
 
 const TasksRoute = require("./src/rest/TasksRoute");
 const TasksRouteService = require("./src/service/TasksRouteService");
 
-const server = new Server("blockware/todo", __dirname);
+const server = new Server("kapeta/todo", __dirname);
 
 server.addRoute(new TasksRoute(new TasksRouteService()));
 

@@ -2,9 +2,9 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-const {MongoDB} = require('@blockware/sdk-nosql-mongodb');
+const {PostgresDB} = require('@kapeta/sdk-sqldb-postgresql');
 
-class {{type data.metadata.name}}DB extends MongoDB {
+class {{type data.metadata.name}}DB extends PostgresDB {
 
     constructor() {
         super('{{string data.metadata.name}}');
