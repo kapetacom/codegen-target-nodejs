@@ -3,21 +3,21 @@
 // GENERATED SOURCE - DO NOT EDIT
 //
 const Path = require('path');
-const Server = require('@blockware/sdk-server');
+const Server = require('@kapeta/sdk-server');
 
-{{#providers-of-type 'blockware/resource-type-rest-api'}}
+{{#providers-of-type 'kapeta/resource-type-rest-api'}}
 const {{type metadata.name}}Route = require('./src/rest/{{type metadata.name}}Route');
 const {{type metadata.name}}RouteService = require('./src/service/{{type metadata.name}}RouteService');
 {{/providers-of-type}}
 
-{{#providers-of-type 'blockware/resource-type-grpc-api'}}
+{{#providers-of-type 'kapeta/resource-type-grpc-api'}}
     const {{type metadata.name}}Route = require('./src/grpc/{{type metadata.name}}Route');
     const {{type metadata.name}}RouteService = require('./src/service/{{type metadata.name}}RouteService');
 {{/providers-of-type}}
 
 const server = new Server('{{data.metadata.name}}', __dirname);
 
-{{#providers-of-type 'blockware/resource-type-rest-api'}}
+{{#providers-of-type 'kapeta/resource-type-rest-api'}}
 server.addRoute(
     new {{type metadata.name}}Route(
         new {{type metadata.name}}RouteService()
@@ -25,7 +25,7 @@ server.addRoute(
 );
 {{/providers-of-type}}
 
-{{#providers-of-type 'blockware/resource-type-grpc-api'}}
+{{#providers-of-type 'kapeta/resource-type-grpc-api'}}
 server.addRoute(
     new {{type metadata.name}}Route(
         new {{type metadata.name}}RouteService()

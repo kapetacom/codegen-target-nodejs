@@ -1,7 +1,7 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-const { PostgresDB } = require("@blockware/sdk-sqldb-postgresql");
+const { PostgresDB } = require("@kapeta/sdk-sqldb-postgresql");
 
 class UsersDB extends PostgresDB {
     constructor() {
