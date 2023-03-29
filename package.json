@@ -4,7 +4,7 @@
     "description": "Provides code generation support for NodeJS",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/blockwarecom/codegen-target-nodejs9.git"
+        "url": "git+https://github.com/kapetacom/codegen-target-nodejs9.git"
     },
     "private": false,
     "publishConfig": {
@@ -16,9 +16,9 @@
     "author": "Henrik Hofmeister <hh@kapeta.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/blockwarecom/codegen-target-nodejs9/issues"
+        "url": "https://github.com/kapetacom/codegen-target-nodejs9/issues"
     },
-    "homepage": "https://github.com/blockwarecom/codegen-target-nodejs9#readme",
+    "homepage": "https://github.com/kapetacom/codegen-target-nodejs9#readme",
     "dependencies": {
         "@kapeta/codegen-target": "<2",
         "prettier": "2.7.1"
