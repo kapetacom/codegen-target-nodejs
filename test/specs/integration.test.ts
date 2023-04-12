@@ -1,12 +1,11 @@
-const {describe, test, beforeEach} =  require("@jest/globals");
+import Path from "path";
+import {describe, test, beforeEach} from "@jest/globals";
 
-const Target = require('../../index');
-const {CodegenHelpers, BlockCodeGenerator} = require('@kapeta/codegen');
-const Path = require("path");
-const data = require("../resources/examples/todo.kapeta.yml");
+import {CodegenHelpers, BlockCodeGenerator} from '@kapeta/codegen';
+import Target from '../../src';
 
 describe('blocks', () => {
-    let target;
+    let target:Target;
 
     beforeEach(() => {
         target = new Target({});
