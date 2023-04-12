@@ -56,7 +56,7 @@ spec:
           state:
             description: null
             type:
-              $ref: State
+              ref: State
             properties: null
     source:
       type: kapeta-dsl
@@ -101,7 +101,7 @@ spec:
         methods:
           getUserById:
             responseType:
-              $ref: User
+              ref: User
             method: GET
             path: /users/{id}
             description: Get users by id
@@ -148,7 +148,7 @@ spec:
                 transport: PATH
               task:
                 type:
-                  $ref: Task
+                  ref: Task
                 transport: BODY
           markAsDone:
             responseType: void
@@ -170,7 +170,7 @@ spec:
                 transport: PATH
           getTask:
             responseType:
-              $ref: Task
+              ref: Task
             method: GET
             path: /tasks/{id}
             description: Get task by id

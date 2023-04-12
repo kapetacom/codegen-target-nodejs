@@ -44,7 +44,7 @@ spec:
         methods:
           createUser:
             responseType:
-              $ref: User
+              ref: User
             method: POST
             path: /users/{id}
             description: Create user
@@ -54,11 +54,11 @@ spec:
                 transport: PATH
               user:
                 type:
-                  $ref: User
+                  ref: User
                 transport: QUERY
           getUser:
             responseType:
-              $ref: User
+              ref: User
             method: GET
             path: /users/{id}
             description: Get user by id

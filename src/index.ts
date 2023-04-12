@@ -1,25 +1,26 @@
-const {Target, Template} = require('@kapeta/codegen-target');
-const prettier = require("prettier");
+import {Target, Template, GeneratedFile} from '@kapeta/codegen-target';
+import prettier from "prettier";
+import Path from "path";
 
-class NodeJS9Target extends Target {
+export default class NodeJS9Target extends Target {
 
-    constructor(options) {
-        super(options, __dirname);
+    constructor(options:any) {
+        super(options, Path.resolve(__dirname,'../'));
     }
 
-    _createTemplateEngine(data, context) {
+    protected _createTemplateEngine(data:any, context:any) {
         const engine = super._createTemplateEngine(data, context);
-        engine.registerHelper('enumValues', (values) => {
+        engine.registerHelper('enumValues', (values:string[]) => {
             return Template.SafeString('\t' + values.map(value => `${value} = ${JSON.stringify(value)}`).join(',\n\t'));
         });
 
-        const $fieldType = (value) => {
+        const $fieldType = (value:any) => {
             if (!value) {
                 return value;
             }
 
-            if (value.$ref) {
-                value = value.$ref.substring(0,1).toUpperCase() + value.$ref.substring(1);
+            if (value.ref) {
+                value = value.ref.substring(0,1).toUpperCase() + value.ref.substring(1);
             }
 
             return Template.SafeString(value);
@@ -35,7 +36,7 @@ class NodeJS9Target extends Target {
         return engine;
     }
 
-    _postProcessCode(filename, code) {
+    protected _postProcessCode(filename:string, code:string) {
         let parser = null;
         let tabWidth = 4;
 
@@ -72,6 +73,8 @@ class NodeJS9Target extends Target {
         }
     }
 
-}
+    generate(data: any, context: any): GeneratedFile[] {
+        return super.generate(data, context);
+    }
 
-module.exports = NodeJS9Target;
+}
