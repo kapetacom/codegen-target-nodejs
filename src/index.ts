@@ -1,4 +1,4 @@
-import {Target, Template, GeneratedFile} from '@kapeta/codegen-target';
+import {Target, Template, GeneratedFile, TypeLike} from '@kapeta/codegen-target';
 import prettier from "prettier";
 import Path from "path";
 
@@ -14,16 +14,21 @@ export default class NodeJS9Target extends Target {
             return Template.SafeString('\t' + values.map(value => `${value} = ${JSON.stringify(value)}`).join(',\n\t'));
         });
 
-        const $fieldType = (value:any) => {
+        const $fieldType = (value:TypeLike) => {
             if (!value) {
                 return value;
             }
 
-            if (value.ref) {
-                value = value.ref.substring(0,1).toUpperCase() + value.ref.substring(1);
+            if (typeof value !== 'string') {
+                if (value.ref) {
+                    value = value.ref.substring(0,1).toUpperCase() + value.ref.substring(1);
+                } else if (value.type) {
+                    value = value.type;
+                }
             }
 
-            return Template.SafeString(value);
+
+            return Template.SafeString(value as string);
         };
         engine.registerHelper('fieldtype', $fieldType);
         engine.registerHelper('returnType', (value) => {
