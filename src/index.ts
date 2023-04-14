@@ -27,7 +27,6 @@ export default class NodeJS9Target extends Target {
                 }
             }
 
-
             return Template.SafeString(value as string);
         };
         engine.registerHelper('fieldtype', $fieldType);

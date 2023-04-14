@@ -53,8 +53,7 @@ spec:
                 type: string
                 transport: PATH
               user:
-                type:
-                  ref: User
+                ref: User
                 transport: QUERY
           getUser:
             responseType:
@@ -67,7 +66,8 @@ spec:
                 type: string
                 transport: PATH
           deleteUser:
-            responseType: void
+            responseType:
+              type: void
             method: DELETE
             path: /users/{id}
             description: Delete user by id

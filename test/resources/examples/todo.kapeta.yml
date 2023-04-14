@@ -55,8 +55,7 @@ spec:
             properties: null
           state:
             description: null
-            type:
-              ref: State
+            ref: State
             properties: null
     source:
       type: kapeta-dsl
@@ -110,7 +109,8 @@ spec:
                 type: string
                 transport: PATH
           deleteUser:
-            responseType: void
+            responseType:
+              type: void
             method: DELETE
             path: /users/{id}
             description: Delete user by id
@@ -135,7 +135,8 @@ spec:
       spec:
         methods:
           addTask:
-            responseType: void
+            responseType:
+              type: void
             method: POST
             path: /tasks/{userId}/{id}
             description: Add task for user
@@ -147,11 +148,11 @@ spec:
                 type: string
                 transport: PATH
               task:
-                type:
-                  ref: Task
+                ref: Task
                 transport: BODY
           markAsDone:
-            responseType: void
+            responseType:
+              type: void
             method: POST
             path: /tasks/{id}/done
             description: Mark task as done
@@ -160,7 +161,8 @@ spec:
                 type: string
                 transport: PATH
           removeTask:
-            responseType: void
+            responseType:
+              type: void
             method: DELETE
             path: /tasks/{id}
             description: Delete task

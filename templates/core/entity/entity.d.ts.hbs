@@ -13,7 +13,7 @@ import { {{name}} } from "./{{name}}";
 export declare interface {{type data.name}} {
 
 {{#eachProperty data.properties}}
-    {{propertyId}}:{{fieldtype ./type }};
+    {{propertyId}}:{{fieldtype this}};
 {{/eachProperty}}
 
 }
