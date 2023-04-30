@@ -1,5 +1,5 @@
 import {Target, Template, GeneratedFile, TypeLike} from '@kapeta/codegen-target';
-import {spawnSync} from 'child_process';
+import {execSync} from 'child_process';
 import prettier from "prettier";
 import Path from "path";
 import {GeneratedAsset} from "@kapeta/codegen";
@@ -86,10 +86,14 @@ export default class NodeJS9Target extends Target {
     async postprocess(targetDir:string, files: GeneratedAsset[]): Promise<void> {
         const packageJsonChanged = files.some(file => file.filename === 'package.json');
 
+
         if (packageJsonChanged) {
-            spawnSync('npm', ['install'], {
+            console.log('Running npm install in %s', targetDir);
+            execSync('npm install', {
                 cwd: targetDir,
+                stdio: 'inherit'
             });
+            console.log('install done');
         }
     }
 
