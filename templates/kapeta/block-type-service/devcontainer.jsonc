@@ -1,0 +1,10 @@
+#FILENAME:devcontainer.json:merge
+{
+    "name": "{{dashify data.metadata.name}}",
+    "build": {
+        "dockerfile": "Dockerfile",
+    },
+    "features": {
+
+    }
+}
