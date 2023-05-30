@@ -1,7 +1,0 @@
-{
-    "name": "kapeta-todo",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "features": {}
-}
