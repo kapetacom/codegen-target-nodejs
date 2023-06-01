@@ -4,7 +4,11 @@
   "version": "local",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start-dev": "NODE_ENV=development nodemon index.js",
+    "start": "NODE_ENV=production node index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   },
   "dependencies": {
     "@kapeta/sdk-config": "<2",
