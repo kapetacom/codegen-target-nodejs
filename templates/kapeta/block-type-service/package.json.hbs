@@ -1,4 +1,4 @@
-//#FILENAME:package.json:merge
+//#FILENAME:package.json:create-only
 {
   "name": "@{{lowercase data.metadata.name}}",
   "version": "0.0.1",
@@ -23,14 +23,15 @@
   "devDependencies": {
     "@kapeta/eslint-config": "^0.6.0",
     "@kapeta/prettier-config": "^0.6.0",
-    "@types/md5": "^2.3.2",
     "@types/node": "^20.2.5",
-    "@types/react": "^18.2.11",
     "cross-env": "^7.0.3",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8"
+    {{#consumes 'kapeta/resource-type-smtp-client'}},
+        "@types/react": "^18.2.11"
+    {{/consumes}}
   },
   "dependencies": {
     "@kapeta/sdk-config": "<2",
