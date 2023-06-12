@@ -1,0 +1,24 @@
+//#FILENAME:src/rest/I{{type data.metadata.name}}RouteService.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+{{#eachTypeReference data.spec.methods all=true}}
+    import { {{name}} } from "../entities/{{name}}";
+{{/eachTypeReference}}
+
+export interface I{{type data.metadata.name}}RouteService {
+
+    {{#methods data.spec.methods}}
+
+        /**
+         * {{comment description}}
+         * HTTP: {{./method}} {{path}}
+         */
+        {{method methodName}}(
+                    {{#arguments arguments}}
+                        {{variable argumentName}}:{{fieldtype this}}
+                    {{/arguments}}
+                ): Promise<{{returnType responseType}}>;
+
+    {{/methods}}
+}
