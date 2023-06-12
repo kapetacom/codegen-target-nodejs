@@ -1,4 +1,4 @@
-//#FILENAME:src/service/{{type data.metadata.name}}RouteService.ts:create-only
+//#FILENAME:src/service/{{type data.metadata.name}}RouteService.tsx:create-only
 
 import { I{{type data.metadata.name}}RouteService } from '../rest/I{{type data.metadata.name}}RouteService';
 {{#eachTypeReference data.spec.methods all=true}}
@@ -13,11 +13,9 @@ export class {{type data.metadata.name}}RouteService implements I{{type data.met
         * {{comment description}}
         * HTTP: {{./method}} {{path}}
         */
-        {{method methodName}}(
-        {{#arguments arguments}}
-            {{variable argumentName}}:{{fieldtype this}}
-        {{/arguments}}
-        ): Promise<{{returnType responseType}}> {
+        {{method methodName}}( {{#arguments arguments}}
+                    {{variable argumentName}}:{{fieldtype this}}
+                {{/arguments}} ): Promise<{{returnType responseType}}> {
             throw new Error('REST resource method not implemented: "{{method methodName}}"');
         }
 
