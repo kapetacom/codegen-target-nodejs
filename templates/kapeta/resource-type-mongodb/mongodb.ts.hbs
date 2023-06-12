@@ -1,0 +1,17 @@
+//#FILENAME:src/data/{{type data.metadata.name}}DB.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+
+import {MongoDB} from '@kapeta/sdk-nosql-mongodb';
+import { Prisma, PrismaClient } from './{{data.metadata.name}}';
+
+export class {{type data.metadata.name}}DB extends MongoDB<PrismaClient> {
+    constructor() {
+        super('{{string data.metadata.name}}');
+    }
+
+    createClient(opts: Prisma.PrismaClientOptions): PrismaClient {
+        return new PrismaClient(opts);
+    }
+}
