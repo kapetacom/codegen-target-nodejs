@@ -10,4 +10,4 @@ const server = new Server("kapeta/users", __dirname);
 
 server.addRoute(new UsersRoute(new UsersRouteService()));
 
-server.start();
+server.start("rest");

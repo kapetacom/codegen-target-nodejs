@@ -2,7 +2,7 @@ kind: core/language-target
 metadata:
   name: kapeta/language-target-nodejs
   title: NodeJS
-  description: Generate block service code in NodeJS
+  description: Generate block service code in Typescript and NodeJS
 spec:
   local:
     image: node:20

@@ -10,4 +10,4 @@ const server = new Server("kapeta/todo", __dirname);
 
 server.addRoute(new TasksRoute(new TasksRouteService()));
 
-server.start();
+server.start("rest");
