@@ -13,20 +13,33 @@ export class UsersClient {
 
     /**
      * Get users by id
+     *
+     * Throws if service responds with a status code higher than 399 and not 404.
+     * For 404 responses, null is returned.
+     *
      * HTTP: GET /users/{id}
      */
-    getUserById(id: string): Promise<User> {
-        return this.client.execute("GET", "/users/{id}", [
+    async getUserById(id: string): Promise<User | null> {
+        const result = await this.client.execute("GET", "/users/{id}", [
             { name: "id", value: id, transport: "PATH" },
         ]);
+
+        if (result.body === null) {
+            return null;
+        }
+        return result.body as User;
     }
 
     /**
      * Delete user by id
+     *
+     * Throws if service responds with a status code higher than 399 and not 404.
+     * For 404 responses, null is returned.
+     *
      * HTTP: DELETE /users/{id}
      */
-    deleteUser(id: string): Promise<void> {
-        return this.client.execute("DELETE", "/users/{id}", [
+    async deleteUser(id: string): Promise<void> {
+        await this.client.execute("DELETE", "/users/{id}", [
             { name: "id", value: id, transport: "PATH" },
         ]);
     }

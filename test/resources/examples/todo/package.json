@@ -5,8 +5,8 @@
     "scripts": {
         "start:dev": "NODE_ENV=development nodemon --watch '**/*' index.ts",
         "start": "NODE_ENV=production ts-node --transpile-only index.ts",
-        "migrate:dev:todo": "cross-env-shell DATABASE_URL=$(npx kap-mongodb-url todo) prisma migrate dev --schema ./db/todo/schema.prisma",
-        "migrate:db:todo": "cross-env-shell DATABASE_URL=$(npx kap-mongodb-url todo) prisma migrate deploy --schema ./db/todo/schema.prisma",
+        "migrate:dev:todo": "cross-env-shell DATABASE_URL=$(npx kap-mongodb-url todo) prisma generate --schema ./db/todo/schema.prisma",
+        "migrate:db:todo": "cross-env-shell DATABASE_URL=$(npx kap-mongodb-url todo) prisma db push --schema ./db/todo/schema.prisma",
         "migrate:dev": "npm-run-pattern migrate:dev:",
         "migrate": "npm-run-pattern migrate:db:",
         "format": "prettier --write .",
