@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "type": "commonjs",
     "scripts": {
-        "start:dev": "NODE_ENV=development nodemon --watch '**/*' index.ts",
+        "start:dev": "NODE_ENV=development nodemon --ext ts,tsx,js,json,yaml,yml --watch '**/*' index.ts",
         "start": "NODE_ENV=production ts-node --transpile-only index.ts",
         "migrate:dev:users": "cross-env-shell DATABASE_URL=$(npx kap-postgres-url users) prisma migrate dev --schema ./db/users/schema.prisma",
         "migrate:db:users": "cross-env-shell DATABASE_URL=$(npx kap-postgres-url users) prisma migrate deploy --schema ./db/users/schema.prisma",

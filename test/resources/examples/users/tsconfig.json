@@ -21,6 +21,6 @@
         "emitDecoratorMetadata": true,
         "isolatedModules": true
     },
-    "include": ["src/**/*.ts", "index.ts"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "index.ts"],
     "exclude": ["node_modules", "dist"]
 }
