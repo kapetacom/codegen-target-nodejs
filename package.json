@@ -2,8 +2,8 @@
   "name": "@kapeta/language-target-nodejs",
   "version": "local",
   "description": "Provides code generation support for NodeJS",
-  "main": "node/index.js",
-  "types": "node/index.d.ts",
+  "main": "node/src/index.js",
+  "types": "node/src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kapetacom/codegen-target-nodejs9.git"
