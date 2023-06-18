@@ -14,7 +14,7 @@ module.exports = {
     "@typescript-eslint/no-var-requires": "off",
   },
   parserOptions: {
-    project: `${__dirname}/tsconfig.json`,
+    project: `${__dirname}/tsconfig.eslint.json`,
     tsconfigRootDir: __dirname,
   },
 };
