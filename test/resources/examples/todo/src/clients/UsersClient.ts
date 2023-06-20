@@ -24,10 +24,10 @@ export class UsersClient {
             { name: "id", value: id, transport: "PATH" },
         ]);
 
-        if (result.body === null) {
+        if (result === null) {
             return null;
         }
-        return result.body as User;
+        return result as User;
     }
 
     /**
