@@ -5,7 +5,7 @@ metadata:
   description: Generate block service code in Typescript and NodeJS
 spec:
   local:
-    image: node:20
+    image: node:19
     workingDir: /workspace
     healthcheck: curl --fail http://localhost:80/__kapeta/health || exit 1
     handlers:
