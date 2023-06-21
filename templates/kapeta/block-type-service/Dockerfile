@@ -2,6 +2,7 @@
 FROM node:19
 
 ADD package.json /application/package.json
+ADD package-lock.json /application/package-lock.json
 
 WORKDIR /application
 
