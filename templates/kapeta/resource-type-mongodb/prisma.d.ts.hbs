@@ -1,4 +1,4 @@
-//#FILENAME:src/data/{{data.metadata.name}}/index.d.ts:create-only
+//#FILENAME:src/data/clients/{{data.metadata.name}}/index.d.ts:create-only
 
 // Placeholder file - will be overwritten by Prisma when you run npm migrate:dev
 
@@ -8,4 +8,7 @@ export declare namespace Prisma {
 
 export declare class PrismaClient {
     constructor(opts:Prisma.PrismaClientOptions)
+
+    $connect();
+    $disconnect();
 };

@@ -12,4 +12,6 @@ ADD kapeta.yml /application/kapeta.yml
 ADD index.ts /application/index.ts
 ADD src /application/src
 
+RUN npm run build
+
 CMD [ "npm", "start" ]
