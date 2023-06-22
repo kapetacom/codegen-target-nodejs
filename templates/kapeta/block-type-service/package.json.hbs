@@ -1,22 +1,25 @@
-//#FILENAME:package.json:create-only
+//#FILENAME:package.json:merge
 {
   "name": "@{{lowercase data.metadata.name}}",
   "version": "0.0.1",
   "type": "commonjs",
   "scripts": {
-    "start:dev": "NODE_ENV=development nodemon --ext ts,tsx,js,json,yaml,yml --watch '**/*' index.ts",
-    "start": "NODE_ENV=production ts-node --transpile-only index.ts",
+    "start:dev": "NODE_ENV=development npm run migrate --if-present && nodemon --ext ts,tsx,js,json,yaml,yml --watch '**/*' index.ts",
+    "start": "NODE_ENV=production npm run migrate --if-present && ts-node --transpile-only index.ts",
     {{#consumers-of-type 'kapeta/resource-type-mongodb'}}
-    "migrate:dev:{{metadata.name}}": "cross-env-shell DATABASE_URL=$(npx kap-mongodb-url {{metadata.name}}) prisma generate --schema ./db/{{metadata.name}}/schema.prisma",
     "migrate:db:{{metadata.name}}": "cross-env-shell DATABASE_URL=$(npx kap-mongodb-url {{metadata.name}}) prisma db push --schema ./db/{{metadata.name}}/schema.prisma",
+    "migrate:generate:{{metadata.name}}": "prisma generate --schema ./db/{{metadata.name}}/schema.prisma",
     {{/consumers-of-type}}
     {{#consumers-of-type 'kapeta/resource-type-postgresql'}}
     "migrate:dev:{{metadata.name}}": "cross-env-shell DATABASE_URL=$(npx kap-postgres-url {{metadata.name}}) prisma migrate dev --schema ./db/{{metadata.name}}/schema.prisma",
     "migrate:db:{{metadata.name}}": "cross-env-shell DATABASE_URL=$(npx kap-postgres-url {{metadata.name}}) prisma migrate deploy --schema ./db/{{metadata.name}}/schema.prisma",
+    "migrate:generate:{{metadata.name}}": "prisma generate --schema ./db/{{metadata.name}}/schema.prisma",
     {{/consumers-of-type}}
     "migrate:dev": "npm-run-pattern migrate:dev:",
+    "migrate:generate": "npm-run-pattern migrate:generate:",
     "migrate": "npm-run-pattern migrate:db:",
     "format": "prettier --write .",
+    "build": "npm run migrate:generate",
     "lint": "tsc --noEmit && eslint src/**/*.ts"
   },
   "prettier": "@kapeta/prettier-config",

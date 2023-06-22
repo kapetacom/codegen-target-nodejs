@@ -6,4 +6,7 @@ export declare namespace Prisma {
 
 export declare class PrismaClient {
     constructor(opts: Prisma.PrismaClientOptions);
+
+    $connect();
+    $disconnect();
 }
