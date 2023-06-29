@@ -9,6 +9,7 @@ WORKDIR /application
 RUN npm install
 
 ADD db /application/db
+ADD tsconfig.json /application/tsconfig.json
 ADD kapeta.yml /application/kapeta.yml
 ADD index.ts /application/index.ts
 ADD src /application/src
