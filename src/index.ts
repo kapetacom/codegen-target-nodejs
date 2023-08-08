@@ -3,9 +3,7 @@ import { GeneratedAsset, SourceFile, GeneratedFile } from "@kapeta/codegen";
 
 import prettier from "prettier";
 import Path from "path";
-import { exec } from "child_process";
-import {promisify} from "util";
-const execAsync = promisify(exec);
+import { exec } from "@kapeta/nodejs-process";
 
 type MapUnknown = { [key: string]: any };
 function copyUnknown(from: MapUnknown, to: MapUnknown): MapUnknown {
@@ -173,10 +171,12 @@ export default class NodeJS9Target extends Target {
 
     if (packageJsonChanged) {
       console.log("Running npm install in %s", targetDir);
-      await execAsync("npm install", {
+      const child = exec("npm install", {
         cwd: targetDir,
-        windowsHide: true,
       });
+
+      await child.wait();
+
       console.log("install done");
     }
   }
