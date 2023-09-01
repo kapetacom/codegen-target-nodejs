@@ -15,6 +15,7 @@ ADD index.ts /application/index.ts
 ADD src /application/src
 
 RUN npm run build
+ADD src /application/src
 
 HEALTHCHECK --interval=5s --timeout=15s --start-period=5s --retries=10 CMD curl --fail http://localhost:80/__kapeta/health || exit 1
 
