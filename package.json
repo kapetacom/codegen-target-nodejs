@@ -1,12 +1,12 @@
 {
   "name": "@kapeta/language-target-nodejs",
   "version": "local",
-  "description": "Provides code generation support for NodeJS",
+  "description": "Provides code generation support for Typescript in NodeJS",
   "main": "node/index.js",
   "types": "node/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kapetacom/codegen-target-nodejs9.git"
+    "url": "git+https://github.com/kapetacom/codegen-target-nodejs.git"
   },
   "private": false,
   "publishConfig": {
@@ -15,12 +15,11 @@
   "keywords": [
     "kapeta"
   ],
-  "author": "Henrik Hofmeister <hh@kapeta.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kapetacom/codegen-target-nodejs9/issues"
+    "url": "https://github.com/kapetacom/codegen-target-nodejs/issues"
   },
-  "homepage": "https://github.com/kapetacom/codegen-target-nodejs9#readme",
+  "homepage": "https://github.com/kapetacom/codegen-target-nodejs#readme",
   "dependencies": {
     "@kapeta/codegen-target": "<2",
     "@kapeta/nodejs-process": "^1.1.0",
