@@ -37,6 +37,14 @@ spec:
             description: Defines if the task is done or not
             type: boolean
             properties: null
+          age:
+            description: Age of the task
+            type: integer
+            properties: null
+          created:
+            description: Created date
+            type: date
+            properties: null
       - type: dto
         name: User
         description: User - from Users block

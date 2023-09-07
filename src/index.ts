@@ -95,13 +95,36 @@ export default class NodeJS9Target extends Target {
         return value;
       }
 
-      if (typeof value !== "string") {
+      if (typeof value !== 'string') {
         if (value.ref) {
-          value =
-            value.ref.substring(0, 1).toUpperCase() + value.ref.substring(1);
+          value = value.ref.substring(0, 1).toUpperCase() + value.ref.substring(1);
         } else if (value.type) {
           value = value.type;
         }
+      }
+
+      let type = value as string;
+      let array = false;
+      if (type.endsWith('[]')) {
+        type = type.substring(0, type.length - 2);
+        array = true;
+      }
+      console.log('type', type);
+      switch (type) {
+        case 'char':
+        case 'byte':
+          value = `string${array ? '[]' : ''}`;
+          break;
+        case 'date':
+          value =  'Date'
+          break;
+        case 'integer':
+        case 'int':
+        case 'float':
+        case 'double':
+        case 'short':
+          value = `number${array ? '[]' : ''}`;
+          break;
       }
 
       return Template.SafeString(value as string);
