@@ -5,6 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "start:dev": "NODE_ENV=development npm run migrate:generate --if-present && npm run migrate --if-present && nodemon --ext ts,tsx,js,json,yaml,yml --watch '**/*' index.ts",
+    "start:dev:docker": "NODE_ENV=development npm run migrate:generate --if-present && npm run migrate --if-present && nodemon --exitcrash --ext ts,tsx,js,json,yaml,yml --watch '**/*' index.ts",
     "start": "NODE_ENV=production npm run migrate --if-present && ts-node --transpile-only index.ts",
     {{#consumers-of-type 'kapeta/resource-type-mongodb'}}
     "migrate:db:{{metadata.name}}": "cross-env-shell DATABASE_URL=$(npx kap-mongodb-url {{metadata.name}}) prisma db push --schema ./db/{{metadata.name}}/schema.prisma",
