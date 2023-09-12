@@ -1,6 +1,6 @@
 
 import { IUsersRouteService } from '../rest/IUsersRouteService';
-    import { User } from "../entities/User";
+import { User } from "../entities/User";
 
 export class UsersRouteService implements IUsersRouteService {
 

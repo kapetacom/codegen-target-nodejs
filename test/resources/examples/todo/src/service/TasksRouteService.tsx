@@ -1,6 +1,6 @@
 
 import { ITasksRouteService } from '../rest/ITasksRouteService';
-    import { Task } from "../entities/Task";
+import { Task } from "../entities/Task";
 
 export class TasksRouteService implements ITasksRouteService {
 

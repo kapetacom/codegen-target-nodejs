@@ -3,7 +3,7 @@
 // GENERATED SOURCE - DO NOT EDIT
 //
 {{#eachTypeReference data.spec.methods all=true}}
-    import { {{name}} } from "../entities/{{name}}";
+import { {{type name}} } from "../entities/{{type name}}";
 {{/eachTypeReference}}
 
 export interface I{{type data.metadata.name}}RouteService {
