@@ -1,4 +1,4 @@
-FROM node:19 as build-env
+FROM node:20 as build-env
 
 ADD package.json /application/package.json
 ADD package-lock.json /application/package-lock.json
