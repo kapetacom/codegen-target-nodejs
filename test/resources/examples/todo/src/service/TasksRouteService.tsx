@@ -39,7 +39,7 @@ export class TasksRouteService implements ITasksRouteService {
 
 
         /**
-        * Get task by id
+        * 
         * HTTP: GET /tasks/{id}
         */
         getTask( id:string ): Promise<Task> {
