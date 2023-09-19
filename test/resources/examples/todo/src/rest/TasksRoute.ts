@@ -90,7 +90,7 @@ export class TasksRoute extends RestRoute {
         this.addEndpoint({
             method: "GET",
             path: "/tasks/{id}",
-            description: "Get task by id",
+            description: "",
             arguments: [{ name: "id", transport: "PATH" }],
             handler: service.getTask.bind(service),
         });

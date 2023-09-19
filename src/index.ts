@@ -109,7 +109,7 @@ export default class NodeJS9Target extends Target {
         type = type.substring(0, type.length - 2);
         array = true;
       }
-      console.log('type', type);
+
       switch (type) {
         case 'char':
         case 'byte':

@@ -23,7 +23,7 @@ export interface ITasksRouteService {
     removeTask(id: string): Promise<void>;
 
     /**
-     * Get task by id
+     *
      * HTTP: GET /tasks/{id}
      */
     getTask(id: string): Promise<Task>;

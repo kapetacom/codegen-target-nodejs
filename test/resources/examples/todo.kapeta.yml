@@ -183,7 +183,7 @@ spec:
               ref: Task
             method: GET
             path: /tasks/{id}
-            description: Get task by id
+            description: null
             arguments:
               id:
                 type: string
