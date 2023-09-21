@@ -3,6 +3,7 @@ metadata:
   name: kapeta/language-target-nodejs
   title: NodeJS
   description: Generate block service code in Typescript and NodeJS
+  visibility: public
 spec:
   icon:
     type: url
