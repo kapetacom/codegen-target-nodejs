@@ -9,5 +9,5 @@ export interface Task {
     description: string;
     done: boolean;
     age: number;
-    created: Date;
+    created: number;
 }
