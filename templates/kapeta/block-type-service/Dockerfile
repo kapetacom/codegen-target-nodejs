@@ -1,5 +1,5 @@
 ##FILENAME:Dockerfile:create-only
-FROM node:20.8.1 as build
+FROM node:20 as build
 
 ADD package.json /application/package.json
 ADD package-lock.json /application/package-lock.json
@@ -18,7 +18,7 @@ ADD src /application/src
 
 RUN npm run build
 
-FROM node:20.8.1-alpine3.18
+FROM node:20-alpine3.18
 COPY --from=build /application /application
 WORKDIR /application
 HEALTHCHECK --interval=5s --timeout=15s --start-period=5s --retries=10 CMD curl --fail http://localhost:80/__kapeta/health || exit 1
