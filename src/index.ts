@@ -5,6 +5,11 @@ import prettier from "prettier";
 import Path from "path";
 import { exec } from "@kapeta/nodejs-process";
 
+const DB_TYPES = [
+    'kapeta/resource-type-mongodb',
+    'kapeta/resource-type-postgresql'
+];
+
 type MapUnknown = { [key: string]: any };
 function copyUnknown(from: MapUnknown, to: MapUnknown): MapUnknown {
   Object.entries(from).forEach(([key, value]) => {
@@ -136,6 +141,23 @@ export default class NodeJS9Target extends Target {
       }
 
       return $fieldType(value);
+    });
+
+    engine.registerHelper('consumes-databases', function (this:any, options) {
+      const consumers = context.spec.consumers;
+
+      if (!consumers ||
+          consumers.length === 0) {
+        return '';
+      }
+
+      if (consumers.some((consumer:any) => {
+          return DB_TYPES.some(dbType => consumer.kind.includes(dbType));
+      })) {
+        return options.fn(this);
+      }
+
+      return '';
     });
 
     engine.registerHelper("ifValueType", (type, options) => {
