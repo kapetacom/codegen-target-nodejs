@@ -1,3 +1,8 @@
+/**
+ * Copyright 2023 Kapeta Inc.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { Target, Template, TypeLike } from "@kapeta/codegen-target";
 import { GeneratedAsset, SourceFile, GeneratedFile } from "@kapeta/codegen";
 
