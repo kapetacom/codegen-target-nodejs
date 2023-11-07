@@ -8,7 +8,12 @@ export interface ITasksRouteService {
      * Add task for user
      * HTTP: POST /tasks/{userId}/{id}
      */
-    addTask(userId: string, id: string, task: Task): Promise<void>;
+    addTask(
+        userId: string,
+        id: string,
+        task: Task,
+        overwrite: boolean
+    ): Promise<void>;
 
     /**
      * Mark task as done

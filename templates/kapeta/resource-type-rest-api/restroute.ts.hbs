@@ -16,35 +16,27 @@ export class {{type data.metadata.name}}Route extends RestRoute {
     {{#methods data.spec.methods}}
         //{{method methodName}}: Verify the method is available
         if (!service.{{method methodName}}) {
-            throw new Error('REST resource service for "{{type ../data.metadata.name}}" is missing method: "{{method methodName}}"');
+            throw new Error(
+                'REST resource service for "{{type ../data.metadata.name}}" is missing method: "{{method methodName}}"'
+            );
         }
 
         //{{method methodName}}: Verify the method is implemented correctly
-        this.validateMethod(service.{{method methodName}}, '{{method methodName}}', [
-            {{#arguments arguments}}
-                '{{variable argumentName}}'
-            {{/arguments}}
-        ]);
+        this.validateMethod(service.{{method methodName}}, "{{method methodName}}", [{{#arguments arguments}}"{{variable argumentName}}"{{/arguments}}]);
 
         //{{method methodName}}: Add route to server
-        this.addEndpoint(
-            {
-                method: '{{string method}}',
-                path: '{{string path}}',
-                description: '{{string description}}',
-                arguments: [
-                    {{#arguments arguments}}
-                        {
-                            name: '{{string argumentName}}',
-                            transport: '{{string transport}}'
-                        }
-                    {{/arguments}}
-                ],
-                handler: service.{{method methodName}}.bind(service)
-            }
-        );
-
+        this.addEndpoint({
+            method: "{{string method}}",
+            path: "{{string path}}",
+            description: "{{string description}}",
+            arguments: [{{#arguments arguments}}{
+                        name: "{{string argumentName}}",
+                        transport: "{{string transport}}"
+                        {{#if argument}},argument: "{{string argument}}"{{/if}}
+                    }
+                {{/arguments}}],
+            handler: service.{{method methodName}}.bind(service),
+        });
     {{/methods}}
-
     }
 }
