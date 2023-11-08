@@ -158,6 +158,10 @@ spec:
               task:
                 ref: Task
                 transport: BODY
+              overwrite:
+                type: boolean
+                transport: HEADER
+                argument: X-Kapeta-Overwrite
           markAsDone:
             responseType:
               type: void

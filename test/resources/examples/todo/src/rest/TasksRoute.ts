@@ -23,6 +23,7 @@ export class TasksRoute extends RestRoute {
             "userId",
             "id",
             "task",
+            "overwrite",
         ]);
 
         //addTask: Add route to server
@@ -34,6 +35,11 @@ export class TasksRoute extends RestRoute {
                 { name: "userId", transport: "PATH" },
                 { name: "id", transport: "PATH" },
                 { name: "task", transport: "BODY" },
+                {
+                    name: "overwrite",
+                    transport: "HEADER",
+                    argument: "X-Kapeta-Overwrite",
+                },
             ],
             handler: service.addTask.bind(service),
         });

@@ -9,7 +9,7 @@ export class TasksRouteService implements ITasksRouteService {
         * Add task for user
         * HTTP: POST /tasks/{userId}/{id}
         */
-        addTask( userId:string, id:string, task:Task ): Promise<void> {
+        addTask( userId:string, id:string, task:Task, overwrite:boolean ): Promise<void> {
             throw new Error('REST resource method not implemented: "addTask"');
         }
 
