@@ -45,6 +45,8 @@ spec:
             description: Created date
             type: date
             properties: null
+          metadata:
+            ref: any
       - type: dto
         name: User
         description: User - from Users block
@@ -116,6 +118,9 @@ spec:
               id:
                 type: string
                 transport: PATH
+              metadata:
+                ref: any
+                transport: HEADER
           deleteUser:
             responseType:
               type: void
@@ -126,6 +131,12 @@ spec:
               id:
                 type: string
                 transport: PATH
+              metadata:
+                ref: Map<string,State>
+                transport: BODY
+              tags:
+                ref: Set<string>
+                transport: QUERY
         source:
           type: kapeta-dsl
           value: |-

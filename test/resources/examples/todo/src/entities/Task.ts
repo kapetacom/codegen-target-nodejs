@@ -10,4 +10,5 @@ export interface Task {
     done: boolean;
     age: number;
     created: number;
+    metadata: any;
 }

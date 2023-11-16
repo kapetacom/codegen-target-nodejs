@@ -58,6 +58,12 @@ spec:
               user:
                 ref: User
                 transport: QUERY
+              metadata:
+                ref: Map<string,string>
+                transport: BODY
+              tags:
+                ref: Set<string>
+                transport: QUERY
           getUser:
             responseType:
               ref: User
@@ -68,6 +74,9 @@ spec:
               id:
                 type: string
                 transport: PATH
+              metadata:
+                ref: any
+                transport: HEADER
           deleteUser:
             responseType:
               type: void

@@ -3,6 +3,7 @@
 //
 import { RestClient } from "@kapeta/sdk-rest-client";
 import { User } from "../entities/User";
+import { State } from "../entities/State";
 
 export class UsersClient {
     private readonly client: RestClient;
@@ -19,9 +20,10 @@ export class UsersClient {
      *
      * HTTP: GET /users/{id}
      */
-    async getUserById(id: string): Promise<User | null> {
+    async getUserById(id: string, metadata: any): Promise<User | null> {
         const result = await this.client.execute("GET", "/users/{id}", [
             { name: "id", value: id, transport: "PATH" },
+            { name: "metadata", value: metadata, transport: "HEADER" },
         ]);
 
         if (result === null) {
@@ -38,9 +40,15 @@ export class UsersClient {
      *
      * HTTP: DELETE /users/{id}
      */
-    async deleteUser(id: string): Promise<void> {
+    async deleteUser(
+        id: string,
+        metadata: Map<string, State>,
+        tags: Set<string>
+    ): Promise<void> {
         await this.client.execute("DELETE", "/users/{id}", [
             { name: "id", value: id, transport: "PATH" },
+            { name: "metadata", value: metadata, transport: "BODY" },
+            { name: "tags", value: tags, transport: "QUERY" },
         ]);
     }
 }
