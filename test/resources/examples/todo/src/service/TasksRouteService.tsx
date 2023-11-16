@@ -15,7 +15,6 @@ export class TasksRouteService implements ITasksRouteService {
 
 
 
-
         /**
         * Mark task as done
         * HTTP: POST /tasks/{id}/done
@@ -26,7 +25,6 @@ export class TasksRouteService implements ITasksRouteService {
 
 
 
-
         /**
         * Delete task
         * HTTP: DELETE /tasks/{id}
@@ -34,7 +32,6 @@ export class TasksRouteService implements ITasksRouteService {
         removeTask( id:string ): Promise<void> {
             throw new Error('REST resource method not implemented: "removeTask"');
         }
-
 
 
 

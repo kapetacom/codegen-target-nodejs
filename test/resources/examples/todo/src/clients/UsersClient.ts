@@ -3,6 +3,7 @@
 //
 import { RestClient } from "@kapeta/sdk-rest-client";
 import { User } from "../entities/User";
+import { State } from "../entities/State";
 
 export class UsersClient {
     private readonly client: RestClient;
@@ -41,7 +42,7 @@ export class UsersClient {
      */
     async deleteUser(
         id: string,
-        metadata: Map<string, string>,
+        metadata: Map<string, State>,
         tags: Set<string>
     ): Promise<void> {
         await this.client.execute("DELETE", "/users/{id}", [

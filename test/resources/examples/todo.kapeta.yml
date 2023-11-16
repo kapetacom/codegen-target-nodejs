@@ -132,7 +132,7 @@ spec:
                 type: string
                 transport: PATH
               metadata:
-                ref: Map<string,string>
+                ref: Map<string,State>
                 transport: BODY
               tags:
                 ref: Set<string>

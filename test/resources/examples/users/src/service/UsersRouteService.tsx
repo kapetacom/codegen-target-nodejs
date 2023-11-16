@@ -15,7 +15,6 @@ export class UsersRouteService implements IUsersRouteService {
 
 
 
-
         /**
         * Get user by id
         * HTTP: GET /users/{id}
@@ -23,7 +22,6 @@ export class UsersRouteService implements IUsersRouteService {
         getUser( id:string, metadata:any ): Promise<User> {
             throw new Error('REST resource method not implemented: "getUser"');
         }
-
 
 
 
