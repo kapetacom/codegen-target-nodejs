@@ -19,7 +19,12 @@ export class UsersRoute extends RestRoute {
         }
 
         //createUser: Verify the method is implemented correctly
-        this.validateMethod(service.createUser, "createUser", ["id", "user"]);
+        this.validateMethod(service.createUser, "createUser", [
+            "id",
+            "user",
+            "metadata",
+            "tags",
+        ]);
 
         //createUser: Add route to server
         this.addEndpoint({
@@ -29,6 +34,8 @@ export class UsersRoute extends RestRoute {
             arguments: [
                 { name: "id", transport: "PATH" },
                 { name: "user", transport: "QUERY" },
+                { name: "metadata", transport: "BODY" },
+                { name: "tags", transport: "QUERY" },
             ],
             handler: service.createUser.bind(service),
         });
@@ -41,14 +48,17 @@ export class UsersRoute extends RestRoute {
         }
 
         //getUser: Verify the method is implemented correctly
-        this.validateMethod(service.getUser, "getUser", ["id"]);
+        this.validateMethod(service.getUser, "getUser", ["id", "metadata"]);
 
         //getUser: Add route to server
         this.addEndpoint({
             method: "GET",
             path: "/users/{id}",
             description: "Get user by id",
-            arguments: [{ name: "id", transport: "PATH" }],
+            arguments: [
+                { name: "id", transport: "PATH" },
+                { name: "metadata", transport: "HEADER" },
+            ],
             handler: service.getUser.bind(service),
         });
 

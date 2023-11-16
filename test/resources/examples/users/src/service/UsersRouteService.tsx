@@ -9,7 +9,7 @@ export class UsersRouteService implements IUsersRouteService {
         * Create user
         * HTTP: POST /users/{id}
         */
-        createUser( id:string, user:User ): Promise<User> {
+        createUser( id:string, user:User, metadata:Map<string,string>, tags:Set<string> ): Promise<User> {
             throw new Error('REST resource method not implemented: "createUser"');
         }
 
@@ -20,7 +20,7 @@ export class UsersRouteService implements IUsersRouteService {
         * Get user by id
         * HTTP: GET /users/{id}
         */
-        getUser( id:string ): Promise<User> {
+        getUser( id:string, metadata:any ): Promise<User> {
             throw new Error('REST resource method not implemented: "getUser"');
         }
 

@@ -10,8 +10,8 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     permissions:
-      contents: "write"
-      pull-requests: "write"
+      contents: 'write'
+      pull-requests: 'write'
     steps:
       - uses: actions/checkout@v3
         id: checkout
@@ -21,7 +21,6 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-
 
       - name: Publish to Kapeta
         id: kapeta-registry-push
@@ -38,4 +37,4 @@ jobs:
           webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          channel: "#github-actions"
+          channel: '#github-actions'
