@@ -4,7 +4,7 @@
  */
 
 import { Target, Template, TypeLike } from '@kapeta/codegen-target';
-import { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen';
+import type { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen';
 
 import prettier from 'prettier';
 import Path from 'path';
