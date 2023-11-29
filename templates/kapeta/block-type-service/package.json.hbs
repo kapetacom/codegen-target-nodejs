@@ -52,7 +52,7 @@
     {{#provides 'kapeta/resource-type-rest-api'}},
         "@kapeta/sdk-rest-route": "<2"
     {{/provides}}
-    {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider'  'kapeta/resource-type-auth-jwt-provider') }},
+    {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }},
         "@kapeta/sdk-auth-jwt": "<2"
     {{/usesAnyOf}}
     {{#consumes 'kapeta/resource-type-grpc-client'}},
