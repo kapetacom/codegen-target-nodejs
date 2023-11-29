@@ -1,13 +1,11 @@
-//
-// GENERATED SOURCE - DO NOT EDIT
-//
-import { Server } from "@kapeta/sdk-server";
+import { ConfigProvider, runApp } from "@kapeta/sdk-config";
+import { createServer } from "./src/server";
+import { createRoutes } from "generated:routes";
 
-import { TasksRoute } from "./src/rest/TasksRoute";
-import { TasksRouteService } from "./src/service/TasksRouteService";
+runApp(async (configProvider: ConfigProvider) => {
+    const server = await createServer(configProvider);
 
-const server = new Server("kapeta/todo", __dirname);
+    server.use(await createRoutes(configProvider));
 
-server.addRoute(new TasksRoute(new TasksRouteService()));
-
-server.start("rest");
+    server.start("rest");
+}, __dirname);

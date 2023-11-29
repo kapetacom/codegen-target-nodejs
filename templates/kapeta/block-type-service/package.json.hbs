@@ -28,6 +28,7 @@
     "@kapeta/eslint-config": "^0.6.0",
     "@kapeta/prettier-config": "^0.6.0",
     "@types/node": "^20.2.5",
+    "@types/express": "^4",
     "cross-env": "^7.0.3",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
@@ -40,8 +41,10 @@
   "dependencies": {
     "@kapeta/sdk-config": "<2",
     "@kapeta/sdk-server": "<2",
+    "express": "^4",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.3.2",
     "npm-run-pattern": "^1.1.2"
     {{#consumes 'kapeta/resource-type-rest-client'}},
         "@kapeta/sdk-rest-client": "<2"
@@ -49,6 +52,9 @@
     {{#provides 'kapeta/resource-type-rest-api'}},
         "@kapeta/sdk-rest-route": "<2"
     {{/provides}}
+    {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider'  'kapeta/resource-type-auth-jwt-provider') }},
+        "@kapeta/sdk-auth-jwt": "<2"
+    {{/usesAnyOf}}
     {{#consumes 'kapeta/resource-type-grpc-client'}},
         "@kapeta/sdk-grpc-client": "<2"
     {{/consumes}}

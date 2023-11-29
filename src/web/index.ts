@@ -19,6 +19,8 @@ const targetConfig: ILanguageTargetProvider = {
         'kapeta/resource-type-rest-api',
         'kapeta/resource-type-rest-client',
         'kapeta/resource-type-smtp-client',
+        'kapeta/resource-type-auth-jwt-provider',
+        'kapeta/resource-type-auth-jwt-consumer',
     ],
     definition: kapetaDefinition,
 };

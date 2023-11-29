@@ -1,36 +1,38 @@
 
-import { IUsersRouteService } from '../rest/IUsersRouteService';
-import { User } from "../entities/User";
+import type { Request, Response } from 'express';
+import '@kapeta/sdk-rest-route'; // Augments Express Request and Response types
+import { UsersRoutes } from 'generated:rest/UsersRoutes';
+import { User } from "generated:entities/User";
 
-export class UsersRouteService implements IUsersRouteService {
+export class UsersRouteService implements UsersRoutes {
 
 
         /**
         * Create user
-        * HTTP: POST /users/{id}
+        * HTTP: POST /users/:id
         */
-        createUser( id:string, user:User, metadata:Map<string,string>, tags:Set<string> ): Promise<User> {
-            throw new Error('REST resource method not implemented: "createUser"');
+        createUser( req:Request<{'id': string},User, Map<string,string>, {'user': User, 'tags': Set<string>}>, res:Response<User> ): void {
+            res.sendError('REST resource method not implemented: "createUser"', 501);
         }
 
 
 
         /**
         * Get user by id
-        * HTTP: GET /users/{id}
+        * HTTP: GET /users/:id
         */
-        getUser( id:string, metadata:any ): Promise<User> {
-            throw new Error('REST resource method not implemented: "getUser"');
+        getUser( req:Request<{'id': string},User, void, void>, res:Response<User> ): void {
+            res.sendError('REST resource method not implemented: "getUser"', 501);
         }
 
 
 
         /**
         * Delete user by id
-        * HTTP: DELETE /users/{id}
+        * HTTP: DELETE /users/:id
         */
-        deleteUser( id:string ): Promise<void> {
-            throw new Error('REST resource method not implemented: "deleteUser"');
+        deleteUser( req:Request<{'id': string},void, void, void>, res:Response<void> ): void {
+            res.sendError('REST resource method not implemented: "deleteUser"', 501);
         }
 
 }

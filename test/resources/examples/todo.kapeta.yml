@@ -100,6 +100,9 @@ spec:
         }
 
   consumers:
+    - kind: kapeta/resource-type-auth-jwt-consumer:0.0.2
+      metadata:
+        name: auth
     - kind: kapeta/resource-type-mongodb:0.0.2
       metadata:
         name: todo

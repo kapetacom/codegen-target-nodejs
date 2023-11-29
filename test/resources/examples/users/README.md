@@ -2,7 +2,7 @@
 
 Kapeta block implemented using Language Target "NodeJS"
 
-See the [kapeta.md](kapeta.md) readme file for more information.
+See [this file](src/.generated/README.md) for more information about the generated code
 
 ## Prerequisites
 - Docker installed and running

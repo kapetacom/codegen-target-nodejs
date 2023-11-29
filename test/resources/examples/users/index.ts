@@ -1,13 +1,11 @@
-//
-// GENERATED SOURCE - DO NOT EDIT
-//
-import { Server } from "@kapeta/sdk-server";
+import { ConfigProvider, runApp } from "@kapeta/sdk-config";
+import { createServer } from "./src/server";
+import { createRoutes } from "generated:routes";
 
-import { UsersRoute } from "./src/rest/UsersRoute";
-import { UsersRouteService } from "./src/service/UsersRouteService";
+runApp(async (configProvider: ConfigProvider) => {
+    const server = await createServer(configProvider);
 
-const server = new Server("kapeta/users", __dirname);
+    server.use(await createRoutes(configProvider));
 
-server.addRoute(new UsersRoute(new UsersRouteService()));
-
-server.start("rest");
+    server.start("rest");
+}, __dirname);
