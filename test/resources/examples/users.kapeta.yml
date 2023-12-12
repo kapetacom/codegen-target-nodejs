@@ -32,6 +32,21 @@ spec:
         	name: string	
         	email: string
         }
+  configuration:
+    types:
+      - type: dto
+        name: EmailConfig
+        description: Configuration for e-mails
+        properties:
+          from:
+            type: string
+            defaultValue: "'support@kapeta.com'"
+            description: Sender for e-mails. Note that you should be allowed to send e-mails
+              from this domain and user
+            properties: null
+            secret: false
+            required: false
+            global: true
   consumers:
     - kind: kapeta/resource-type-postgresql:0.0.2
       metadata:
@@ -40,6 +55,9 @@ spec:
       metadata:
         name: emailclient
   providers:
+    - kind: kapeta/resource-type-auth-jwt-provider:0.0.2
+      metadata:
+        name: auth
     - kind: kapeta/resource-type-rest-api:0.0.4
       metadata:
         name: users

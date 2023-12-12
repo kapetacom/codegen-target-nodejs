@@ -1,0 +1,22 @@
+//#FILENAME:src/service/{{type data.metadata.name}}RouteService.tsx:create-only
+
+import type { Request, Response } from 'express';
+import { {{type data.metadata.name}}Routes } from 'generated:rest/{{type data.metadata.name}}Routes';
+{{#eachTypeReference data.spec.methods all=true}}
+import { {{type name}} } from "generated:entities/{{type name}}";
+{{/eachTypeReference}}
+
+export class {{type data.metadata.name}}RouteService implements {{type data.metadata.name}}Routes {
+
+    {{#methods data.spec.methods}}
+
+        /**
+        * {{comment description}}
+        * HTTP: {{./method}} {{expressPath path}}
+        */
+        {{method methodName}}( req:Request<{{paramsMap this}},{{returnType responseType}}, {{bodyType this}}, {{queryMap this}}>, res:Response<{{returnType responseType}}> ): void {
+            res.sendError('REST resource method not implemented: "{{method methodName}}"', 501);
+        }
+
+    {{/methods}}
+}

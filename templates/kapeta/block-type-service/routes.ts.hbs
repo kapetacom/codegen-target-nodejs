@@ -1,0 +1,28 @@
+//#FILENAME:src/.generated/routes.ts:write-always
+import {Router} from "express";
+import {ConfigProvider} from "@kapeta/sdk-config";
+{{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }}
+    import {createAuthMiddleware} from "generated:auth/auth-middleware";
+{{/usesAnyOf}}
+
+{{#providers-of-type 'kapeta/resource-type-rest-api'}}
+    import { create{{type metadata.name}}Router } from "generated:rest/{{lowercase metadata.name}}-routes";
+{{/providers-of-type}}
+
+{{#providers-of-type 'kapeta/resource-type-grpc-api'}}
+    import { create{{type metadata.name}}Router } from "generated:grpc/{{lowercase metadata.name}}-routes";
+{{/providers-of-type}}
+
+export const createRoutes = async (config:ConfigProvider):Promise<Router> => {
+    const routes = Router();
+    {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }}
+        routes.use(await createAuthMiddleware(config));
+    {{/usesAnyOf}}
+    {{#providers-of-type 'kapeta/resource-type-rest-api'}}
+        routes.use(create{{type metadata.name}}Router());
+    {{/providers-of-type}}
+    {{#providers-of-type 'kapeta/resource-type-grpc-api'}}
+        routes.use(create{{type metadata.name}}Router());
+    {{/providers-of-type}}
+    return routes;
+};

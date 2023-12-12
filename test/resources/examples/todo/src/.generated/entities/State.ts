@@ -3,6 +3,6 @@
 //
 
 export enum State {
-    OK = "OK",
-    NOT_OK = "NOT_OK",
+    OK = 'OK',
+    NOT_OK = 'NOT_OK',
 }

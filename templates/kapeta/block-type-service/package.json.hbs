@@ -28,6 +28,7 @@
     "@kapeta/eslint-config": "^0.6.0",
     "@kapeta/prettier-config": "^0.6.0",
     "@types/node": "^20.2.5",
+    "@types/express": "^4",
     "cross-env": "^7.0.3",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
@@ -38,49 +39,54 @@
     {{/consumes}}
   },
   "dependencies": {
-    "@kapeta/sdk-config": "<2",
-    "@kapeta/sdk-server": "<2",
+    "@kapeta/sdk-config": "<3",
+    "@kapeta/sdk-server": "<3",
+    "express": "^4",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.3.2",
     "npm-run-pattern": "^1.1.2"
     {{#consumes 'kapeta/resource-type-rest-client'}},
-        "@kapeta/sdk-rest-client": "<2"
+        "@kapeta/sdk-rest-client": "<3"
     {{/consumes}}
     {{#provides 'kapeta/resource-type-rest-api'}},
-        "@kapeta/sdk-rest-route": "<2"
+        "@kapeta/sdk-rest-route": "<3"
     {{/provides}}
+    {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }},
+        "@kapeta/sdk-auth-jwt": "<3"
+    {{/usesAnyOf}}
     {{#consumes 'kapeta/resource-type-grpc-client'}},
-        "@kapeta/sdk-grpc-client": "<2"
+        "@kapeta/sdk-grpc-client": "<3"
     {{/consumes}}
     {{#provides 'kapeta/resource-type-grpc-api'}},
-        "@kapeta/sdk-grpc-route": "<2"
+        "@kapeta/sdk-grpc-route": "<3"
     {{/provides}}
     {{#consumes 'kapeta/resource-type-mongodb'}},
-        "@kapeta/sdk-nosql-mongodb": "<2"
+        "@kapeta/sdk-nosql-mongodb": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-couchdb'}},
-        "@kapeta/sdk-nosql-couchdb": "<2"
+        "@kapeta/sdk-nosql-couchdb": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-cassandra'}},
-        "@kapeta/sdk-nosql-cassandra": "<2"
+        "@kapeta/sdk-nosql-cassandra": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-redis'}},
-        "@kapeta/sdk-nosql-redis": "<2"
+        "@kapeta/sdk-nosql-redis": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-postgresql'}},
-        "@kapeta/sdk-sqldb-postgresql": "<2"
+        "@kapeta/sdk-sqldb-postgresql": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-mysql'}},
-        "@kapeta/sdk-sqldb-mysql": "<2"
+        "@kapeta/sdk-sqldb-mysql": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-mssql'}},
-        "@kapeta/sdk-sqldb-mssql": "<2"
+        "@kapeta/sdk-sqldb-mssql": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-oracle'}},
-        "@kapeta/sdk-sqldb-oracle": "<2"
+        "@kapeta/sdk-sqldb-oracle": "<3"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-smtp-client'}},
-        "@kapeta/sdk-smtp-client": "<2",
+        "@kapeta/sdk-smtp-client": "<3",
         "@react-email/button": "^0.0.8",
         "@react-email/html": "^0.0.4",
         "react": "^18.2.0"

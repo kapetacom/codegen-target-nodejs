@@ -9,8 +9,12 @@ import type { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen'
 import prettier from 'prettier';
 import Path from 'path';
 import { exec } from '@kapeta/nodejs-process';
+import { RESTMethod } from '@kapeta/ui-web-types';
+import { BlockDefinitionSpec, Resource } from '@kapeta/schemas';
+import { parseKapetaUri } from '@kapeta/nodejs-utils';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
+
 
 type MapUnknown = { [key: string]: any };
 
@@ -23,7 +27,7 @@ function copyUnknown(from: MapUnknown, to: MapUnknown): MapUnknown {
     return to;
 }
 
-export default class NodeJS9Target extends Target {
+export default class NodeJSTarget extends Target {
     constructor(options: any) {
         super(options, Path.resolve(__dirname, '../'));
     }
@@ -95,6 +99,11 @@ export default class NodeJS9Target extends Target {
             );
         });
 
+        const TypeMap: { [key: string]: string } = {
+            Instance: 'InstanceValue',
+            InstanceProvider: 'InstanceProviderValue',
+        };
+
         const $fieldType = (value: TypeLike) => {
             if (!value) {
                 return value;
@@ -104,6 +113,7 @@ export default class NodeJS9Target extends Target {
                 if (value.ref === 'any' || value.ref === 'any[]') {
                     return value.ref;
                 }
+
                 if (value.ref) {
                     value = value.ref.substring(0, 1).toUpperCase() + value.ref.substring(1);
                 } else if (value.type) {
@@ -116,6 +126,10 @@ export default class NodeJS9Target extends Target {
             if (type.endsWith('[]')) {
                 type = type.substring(0, type.length - 2);
                 array = true;
+            }
+
+            if (type in TypeMap) {
+                type = TypeMap[type];
             }
 
             switch (type) {
@@ -136,6 +150,9 @@ export default class NodeJS9Target extends Target {
                 case 'long':
                 case 'short':
                     value = `number${array ? '[]' : ''}`;
+                    break;
+                default:
+                    value = `${type}${array ? '[]' : ''}`;
                     break;
             }
 
@@ -174,6 +191,72 @@ export default class NodeJS9Target extends Target {
             }
             return Template.SafeString('');
         });
+
+        engine.registerHelper('expressPath', (path) => {
+            return path.replace(/\{([^}]+)}/g, ':$1');
+        });
+
+        const $toTypeMap = (method: RESTMethod, transport: string) => {
+            if (!method.arguments) {
+                return Template.SafeString('void');
+            }
+
+            const pathArguments = Object.entries(method.arguments).filter(
+                ([key, value]) => value.transport && value.transport.toLowerCase() === transport.toLowerCase()
+            );
+
+            if (pathArguments.length === 0) {
+                return Template.SafeString('void');
+            }
+
+            return Template.SafeString(
+                '{' + pathArguments.map(([key, value]) => `'${key}': ${$fieldType(value)}`).join(', ') + '}'
+            );
+        };
+
+        engine.registerHelper('paramsMap', (method: RESTMethod) => {
+            return $toTypeMap(method, 'path');
+        });
+
+        engine.registerHelper('toArray', (...value: any[]) => {
+            return value.slice(0, value.length - 1);
+        });
+
+        engine.registerHelper('usesAnyOf', (kinds: string[], options) => {
+            const data = context.spec as BlockDefinitionSpec;
+            const usesAny = kinds.some((kind) => {
+                const uri = parseKapetaUri(kind);
+                const matcher = (consumer: Resource) => parseKapetaUri(consumer.kind).fullName === uri.fullName;
+                return data.consumers?.some(matcher) || data.providers?.some(matcher);
+            });
+
+            if (usesAny) {
+                return options.fn(this);
+            }
+
+            return options.inverse(this);
+        });
+
+        engine.registerHelper('queryMap', (method: RESTMethod) => {
+            return $toTypeMap(method, 'query');
+        });
+
+        engine.registerHelper('bodyType', (method: RESTMethod) => {
+            if (!method.arguments) {
+                return Template.SafeString('void');
+            }
+
+            const bodyArgument = Object.entries(method.arguments).find(
+                ([key, value]) => value.transport && value.transport.toLowerCase() === 'body'
+            );
+
+            if (!bodyArgument || !bodyArgument[1]) {
+                return Template.SafeString('void');
+            }
+
+            return $fieldType(bodyArgument[1]);
+        });
+
         return engine;
     }
 
@@ -189,7 +272,8 @@ export default class NodeJS9Target extends Target {
             parser = 'babel';
         }
 
-        if (filename.endsWith('.ts')) {
+        if (filename.endsWith('.ts') ||
+            filename.endsWith('.tsx')) {
             parser = 'babel-ts';
         }
 
@@ -205,6 +289,9 @@ export default class NodeJS9Target extends Target {
         try {
             return prettier.format(code, {
                 tabWidth: tabWidth,
+                printWidth: 120,
+                proseWrap: "never",
+                singleQuote: true,
                 parser: parser,
             });
         } catch (e) {

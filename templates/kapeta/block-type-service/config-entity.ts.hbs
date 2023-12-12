@@ -1,0 +1,35 @@
+{{#each data.spec.configuration.types}}
+    //#FILENAME:src/.generated/config/{{type name}}Config.ts:write-always
+    import Config from "@kapeta/sdk-config";
+    {{#hasTypeReference this 'Instance'}}
+        import { InstanceValue } from "@kapeta/sdk-config";
+    {{/hasTypeReference}}
+    {{#hasTypeReference this 'InstanceProvider'}}
+        import { InstanceProviderValue } from "@kapeta/sdk-config";
+    {{/hasTypeReference}}
+    {{#eachTypeReference this all=true}}
+        import { {{name}} } from "./{{name}}Config";
+    {{/eachTypeReference}}
+
+    {{#switch this.type}}
+        {{#case 'dto'}}
+            export interface {{type this.name}}Config {
+
+            {{#eachProperty this.properties}}
+                {{propertyId}}:{{fieldtype this}};
+            {{/eachProperty}}
+
+            }
+
+            export const get{{type this.name}}Config = (defaultValue:{{type this.name}}Config):{{type this.name}}Config => {
+                return Config.getOrDefault<{{type this.name}}Config>('{{string this.name}}', defaultValue);
+            };
+        {{/case}}
+        {{#case 'enum'}}
+            export enum {{type this.name}}Config {
+            {{enumValues this.values}}
+            }
+        {{/case}}
+    {{/switch}}
+
+{{/each}}
