@@ -272,7 +272,8 @@ export default class NodeJSTarget extends Target {
             parser = 'babel';
         }
 
-        if (filename.endsWith('.ts')) {
+        if (filename.endsWith('.ts') ||
+            filename.endsWith('.tsx')) {
             parser = 'babel-ts';
         }
 
