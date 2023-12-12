@@ -5,9 +5,10 @@ import { Router } from "express";
 import { asyncHandler } from "@kapeta/sdk-server";
 import { restAPIMiddleware } from "@kapeta/sdk-rest-route";
 import { TasksRouteService } from "../../service/TasksRouteService";
-
+import { json } from "body-parser";
 export const createTasksRouter = () => {
     const router = Router();
+    router.use(json());
     router.use(restAPIMiddleware);
 
     const service = new TasksRouteService();

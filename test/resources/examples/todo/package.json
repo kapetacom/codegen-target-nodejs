@@ -37,6 +37,7 @@
         "npm-run-pattern": "^1.1.2",
         "@kapeta/sdk-rest-client": "<2",
         "@kapeta/sdk-rest-route": "<2",
+        "@kapeta/sdk-auth-jwt": "<2",
         "@kapeta/sdk-nosql-mongodb": "<2"
     }
 }

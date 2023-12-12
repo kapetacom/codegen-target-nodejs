@@ -1,6 +1,5 @@
 
 import type { Request, Response } from 'express';
-import '@kapeta/sdk-rest-route'; // Augments Express Request and Response types
 import { UsersRoutes } from 'generated:rest/UsersRoutes';
 import { User } from "generated:entities/User";
 
