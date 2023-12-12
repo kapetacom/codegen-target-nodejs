@@ -1,23 +1,15 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import type { RequestHandler } from "express";
-import { User } from "generated:entities/User";
+import type { RequestHandler } from 'express';
+import { User } from 'generated:entities/User';
 
-export interface UsersRoutes<
-    Locals extends Record<string, any> = Record<string, any>
-> {
+export interface UsersRoutes<Locals extends Record<string, any> = Record<string, any>> {
     /**
      * Create user
      * HTTP: POST /users/:id
      */
-    createUser: RequestHandler<
-        { id: string },
-        User,
-        Map<string, string>,
-        { user: User; tags: Set<string> },
-        Locals
-    >;
+    createUser: RequestHandler<{ id: string }, User, Map<string, string>, { user: User; tags: Set<string> }, Locals>;
 
     /**
      * Get user by id

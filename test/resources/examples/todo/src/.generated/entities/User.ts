@@ -1,7 +1,7 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import { State } from "./State";
+import { State } from './State';
 
 export interface User {
     id: string;

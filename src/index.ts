@@ -15,6 +15,7 @@ import { parseKapetaUri } from '@kapeta/nodejs-utils';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 
+
 type MapUnknown = { [key: string]: any };
 
 function copyUnknown(from: MapUnknown, to: MapUnknown): MapUnknown {
@@ -26,7 +27,7 @@ function copyUnknown(from: MapUnknown, to: MapUnknown): MapUnknown {
     return to;
 }
 
-export default class NodeJS9Target extends Target {
+export default class NodeJSTarget extends Target {
     constructor(options: any) {
         super(options, Path.resolve(__dirname, '../'));
     }
@@ -287,6 +288,9 @@ export default class NodeJS9Target extends Target {
         try {
             return prettier.format(code, {
                 tabWidth: tabWidth,
+                printWidth: 120,
+                proseWrap: "never",
+                singleQuote: true,
                 parser: parser,
             });
         } catch (e) {

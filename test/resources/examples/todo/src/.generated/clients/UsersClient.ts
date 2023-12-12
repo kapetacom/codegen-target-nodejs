@@ -1,18 +1,18 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import { RestClient, RestClientRequest } from "@kapeta/sdk-rest-client";
-import { User } from "../entities/User";
-import { State } from "../entities/State";
-import { getJWTToken } from "@kapeta/sdk-auth-jwt";
+import { RestClient, RestClientRequest } from '@kapeta/sdk-rest-client';
+import { User } from '../entities/User';
+import { State } from '../entities/State';
+import { getJWTToken } from '@kapeta/sdk-auth-jwt';
 
 export class UsersClient extends RestClient {
     constructor() {
-        super("users");
+        super('users');
     }
 
     protected afterCreate(request: RestClientRequest): void {
-        if (request.hasHeader("Authorization")) {
+        if (request.hasHeader('Authorization')) {
             // Do not overwrite existing authorization header
             return;
         }
@@ -33,9 +33,9 @@ export class UsersClient extends RestClient {
      * HTTP: GET /users/{id}
      */
     async getUserById(id: string, metadata: any): Promise<User | null> {
-        const result = await this.execute("GET", "/users/{id}", [
-            { name: "id", value: id, transport: "PATH" },
-            { name: "metadata", value: metadata, transport: "HEADER" },
+        const result = await this.execute('GET', '/users/{id}', [
+            { name: 'id', value: id, transport: 'PATH' },
+            { name: 'metadata', value: metadata, transport: 'HEADER' },
         ]);
 
         if (result === null) {
@@ -52,13 +52,10 @@ export class UsersClient extends RestClient {
      *
      * HTTP: GET /users/{id}
      */
-    getUserByIdRequest(
-        id: string,
-        metadata: any
-    ): RestClientRequest<User | null> {
-        return this.create("GET", "/users/{id}", [
-            { name: "id", value: id, transport: "PATH" },
-            { name: "metadata", value: metadata, transport: "HEADER" },
+    getUserByIdRequest(id: string, metadata: any): RestClientRequest<User | null> {
+        return this.create('GET', '/users/{id}', [
+            { name: 'id', value: id, transport: 'PATH' },
+            { name: 'metadata', value: metadata, transport: 'HEADER' },
         ]);
     }
 
@@ -70,15 +67,11 @@ export class UsersClient extends RestClient {
      *
      * HTTP: DELETE /users/{id}
      */
-    async deleteUser(
-        id: string,
-        metadata: Map<string, State>,
-        tags: Set<string>
-    ): Promise<void> {
-        await this.execute("DELETE", "/users/{id}", [
-            { name: "id", value: id, transport: "PATH" },
-            { name: "metadata", value: metadata, transport: "BODY" },
-            { name: "tags", value: tags, transport: "QUERY" },
+    async deleteUser(id: string, metadata: Map<string, State>, tags: Set<string>): Promise<void> {
+        await this.execute('DELETE', '/users/{id}', [
+            { name: 'id', value: id, transport: 'PATH' },
+            { name: 'metadata', value: metadata, transport: 'BODY' },
+            { name: 'tags', value: tags, transport: 'QUERY' },
         ]);
     }
 
@@ -90,15 +83,11 @@ export class UsersClient extends RestClient {
      *
      * HTTP: DELETE /users/{id}
      */
-    deleteUserRequest(
-        id: string,
-        metadata: Map<string, State>,
-        tags: Set<string>
-    ): RestClientRequest<void> {
-        return this.create("DELETE", "/users/{id}", [
-            { name: "id", value: id, transport: "PATH" },
-            { name: "metadata", value: metadata, transport: "BODY" },
-            { name: "tags", value: tags, transport: "QUERY" },
+    deleteUserRequest(id: string, metadata: Map<string, State>, tags: Set<string>): RestClientRequest<void> {
+        return this.create('DELETE', '/users/{id}', [
+            { name: 'id', value: id, transport: 'PATH' },
+            { name: 'metadata', value: metadata, transport: 'BODY' },
+            { name: 'tags', value: tags, transport: 'QUERY' },
         ]);
     }
 }

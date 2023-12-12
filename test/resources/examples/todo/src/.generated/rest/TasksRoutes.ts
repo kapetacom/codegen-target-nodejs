@@ -1,23 +1,15 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import type { RequestHandler } from "express";
-import { Task } from "generated:entities/Task";
+import type { RequestHandler } from 'express';
+import { Task } from 'generated:entities/Task';
 
-export interface TasksRoutes<
-    Locals extends Record<string, any> = Record<string, any>
-> {
+export interface TasksRoutes<Locals extends Record<string, any> = Record<string, any>> {
     /**
      * Add task for user
      * HTTP: POST /tasks/:userId/:id
      */
-    addTask: RequestHandler<
-        { userId: string; id: string },
-        void,
-        Task,
-        void,
-        Locals
-    >;
+    addTask: RequestHandler<{ userId: string; id: string }, void, Task, void, Locals>;
 
     /**
      * Mark task as done

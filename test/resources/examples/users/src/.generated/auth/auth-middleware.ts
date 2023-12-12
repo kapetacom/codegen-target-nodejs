@@ -1,16 +1,10 @@
-import {
-    jwksRoutes,
-    jwtAuthorization,
-    JWTKeyStore,
-} from "@kapeta/sdk-auth-jwt";
-import { ConfigProvider } from "@kapeta/sdk-config";
-import { Router } from "express";
+import { jwksRoutes, jwtAuthorization, JWTKeyStore } from '@kapeta/sdk-auth-jwt';
+import { ConfigProvider } from '@kapeta/sdk-config';
+import { Router } from 'express';
 
-import { createProviderKeyStore } from "../../auth/keystore-provider";
+import { createProviderKeyStore } from '../../auth/keystore-provider';
 
-export const createAuthMiddleware = async (
-    config: ConfigProvider
-): Promise<Router> => {
+export const createAuthMiddleware = async (config: ConfigProvider): Promise<Router> => {
     const providerKeyStore: JWTKeyStore = await createProviderKeyStore();
 
     const router = Router();
