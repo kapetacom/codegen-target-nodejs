@@ -3,7 +3,7 @@ import { createServer } from './src/server';
 import { createRoutes } from 'generated:routes';
 
 runApp(async (configProvider: ConfigProvider) => {
-    const server = await createServer(configProvider);
+    const server = createServer(configProvider);
 
     server.use(await createRoutes(configProvider));
 
