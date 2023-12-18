@@ -71,7 +71,8 @@
         "@kapeta/sdk-nosql-cassandra": "^2"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-redis'}},
-        "@kapeta/sdk-nosql-redis": "^2"
+        "@kapeta/sdk-redis": "<2",
+        "redis": "^4"
     {{/consumes}}
     {{#consumes 'kapeta/resource-type-postgresql'}},
         "@kapeta/sdk-sqldb-postgresql": "^2"
