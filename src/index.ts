@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Target, Template, TypeLike } from '@kapeta/codegen-target';
+import { format, Target, Template, TypeLike } from '@kapeta/codegen-target';
 import type { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen';
 
 import prettier from 'prettier';
@@ -13,10 +13,9 @@ import { RESTMethod } from '@kapeta/ui-web-types';
 import { BlockDefinitionSpec, Resource } from '@kapeta/schemas';
 import { parseKapetaUri } from '@kapeta/nodejs-utils';
 
-const DefaultPrettierConfig  = require('@kapeta/prettier-config');
+const DefaultPrettierConfig = require('@kapeta/prettier-config');
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
-
 
 type MapUnknown = { [key: string]: any };
 
@@ -263,37 +262,7 @@ export default class NodeJSTarget extends Target {
     }
 
     protected _postProcessCode(filename: string, code: string) {
-        const opts:any = {
-            ...DefaultPrettierConfig,
-            parser: null,
-        };
-
-        if (filename.endsWith('.json')) {
-            opts.parser = 'json';
-        }
-
-        if (filename.endsWith('.js') || filename.endsWith('.jsx')) {
-            opts.parser = 'babel';
-        }
-
-        if (filename.endsWith('.ts') || filename.endsWith('.tsx')) {
-            opts.parser = 'babel-ts';
-        }
-
-        if (filename.endsWith('.yaml') || filename.endsWith('.yml')) {
-            opts.parser = 'yaml';
-        }
-
-        if (!opts.parser) {
-            return code;
-        }
-
-        try {
-            return prettier.format(code, opts);
-        } catch (e) {
-            console.log('Failed to prettify source: ' + filename + '. ' + e);
-            return code;
-        }
+        return format(filename, code);
     }
 
     generate(data: any, context: any): GeneratedFile[] {
