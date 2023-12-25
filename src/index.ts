@@ -13,6 +13,8 @@ import { RESTMethod } from '@kapeta/ui-web-types';
 import { BlockDefinitionSpec, Resource } from '@kapeta/schemas';
 import { parseKapetaUri } from '@kapeta/nodejs-utils';
 
+const DefaultPrettierConfig  = require('@kapeta/prettier-config');
+
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 
 
@@ -261,39 +263,33 @@ export default class NodeJSTarget extends Target {
     }
 
     protected _postProcessCode(filename: string, code: string) {
-        let parser = null;
-        let tabWidth = 4;
+        const opts:any = {
+            ...DefaultPrettierConfig,
+            parser: null,
+        };
 
         if (filename.endsWith('.json')) {
-            parser = 'json';
+            opts.parser = 'json';
         }
 
-        if (filename.endsWith('.js')) {
-            parser = 'babel';
+        if (filename.endsWith('.js') || filename.endsWith('.jsx')) {
+            opts.parser = 'babel';
         }
 
-        if (filename.endsWith('.ts') ||
-            filename.endsWith('.tsx')) {
-            parser = 'babel-ts';
+        if (filename.endsWith('.ts') || filename.endsWith('.tsx')) {
+            opts.parser = 'babel-ts';
         }
 
         if (filename.endsWith('.yaml') || filename.endsWith('.yml')) {
-            parser = 'yaml';
-            tabWidth = 2;
+            opts.parser = 'yaml';
         }
 
-        if (!parser) {
+        if (!opts.parser) {
             return code;
         }
 
         try {
-            return prettier.format(code, {
-                tabWidth: tabWidth,
-                printWidth: 120,
-                proseWrap: "never",
-                singleQuote: true,
-                parser: parser,
-            });
+            return prettier.format(code, opts);
         } catch (e) {
             console.log('Failed to prettify source: ' + filename + '. ' + e);
             return code;
