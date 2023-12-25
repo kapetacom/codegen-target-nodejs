@@ -5,15 +5,11 @@
 
 import { format, Target, Template, TypeLike } from '@kapeta/codegen-target';
 import type { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen';
-
-import prettier from 'prettier';
 import Path from 'path';
 import { exec } from '@kapeta/nodejs-process';
 import { RESTMethod } from '@kapeta/ui-web-types';
 import { BlockDefinitionSpec, Resource } from '@kapeta/schemas';
 import { parseKapetaUri } from '@kapeta/nodejs-utils';
-
-const DefaultPrettierConfig = require('@kapeta/prettier-config');
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 
