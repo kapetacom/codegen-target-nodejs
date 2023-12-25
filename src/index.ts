@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Target, Template, TypeLike } from '@kapeta/codegen-target';
+import { format, Target, Template, TypeLike } from '@kapeta/codegen-target';
 import type { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen';
-
-import prettier from 'prettier';
 import Path from 'path';
 import { exec } from '@kapeta/nodejs-process';
 import { RESTMethod } from '@kapeta/ui-web-types';
@@ -14,7 +12,6 @@ import { BlockDefinitionSpec, Resource } from '@kapeta/schemas';
 import { parseKapetaUri } from '@kapeta/nodejs-utils';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
-
 
 type MapUnknown = { [key: string]: any };
 
@@ -261,43 +258,7 @@ export default class NodeJSTarget extends Target {
     }
 
     protected _postProcessCode(filename: string, code: string) {
-        let parser = null;
-        let tabWidth = 4;
-
-        if (filename.endsWith('.json')) {
-            parser = 'json';
-        }
-
-        if (filename.endsWith('.js')) {
-            parser = 'babel';
-        }
-
-        if (filename.endsWith('.ts') ||
-            filename.endsWith('.tsx')) {
-            parser = 'babel-ts';
-        }
-
-        if (filename.endsWith('.yaml') || filename.endsWith('.yml')) {
-            parser = 'yaml';
-            tabWidth = 2;
-        }
-
-        if (!parser) {
-            return code;
-        }
-
-        try {
-            return prettier.format(code, {
-                tabWidth: tabWidth,
-                printWidth: 120,
-                proseWrap: "never",
-                singleQuote: true,
-                parser: parser,
-            });
-        } catch (e) {
-            console.log('Failed to prettify source: ' + filename + '. ' + e);
-            return code;
-        }
+        return format(filename, code);
     }
 
     generate(data: any, context: any): GeneratedFile[] {
