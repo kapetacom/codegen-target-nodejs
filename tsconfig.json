@@ -3,8 +3,7 @@
     "compilerOptions": {
         "outDir": "./node",
         "declaration": true,
-        "esModuleInterop": true,
-        "module": "CommonJS"
+        "esModuleInterop": true
     },
     "exclude": ["node_modules", "web", "node"],
     "include": ["src/index.ts", "definitions.d.ts"]

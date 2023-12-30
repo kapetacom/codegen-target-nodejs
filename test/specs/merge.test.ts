@@ -15,7 +15,7 @@ describe('merging', () => {
         target = new Target({});
     });
 
-    function doMergeJSON(filename: string, original: any, changed: any) {
+    function doMergeJSON(filename: string, original: any, changed: any, last: any | null = null) {
         const merged = target.mergeFile(
             {
                 filename: filename,
@@ -27,7 +27,20 @@ describe('merging', () => {
                 permissions: '644',
                 content: JSON.stringify(changed),
                 mode: 'merge',
-            }
+            },
+            last
+                ? {
+                      filename: filename,
+                      permissions: '644',
+                      content: JSON.stringify(last),
+                      mode: 'merge',
+                  }
+                : {
+                      filename: filename,
+                      permissions: '644',
+                      content: JSON.stringify(original),
+                      mode: 'merge',
+                  }
         );
 
         return JSON.parse(merged.content);
@@ -43,11 +56,11 @@ describe('merging', () => {
             expect(result).toEqual(changed);
         });
 
-        test('removed dependencies will be ignored', () => {
+        test('removed dependencies will be removed if unchanged', () => {
             const original = readJSON('../resources/packages/original.json');
             const changed = readJSON('../resources/packages/removed-dependencies.json');
             const result = doMergeJSON(FILENAME, original, changed);
-            expect(result).toEqual(original);
+            expect(result).toEqual(changed);
         });
 
         test('existing dependencies will be upgraded', () => {
@@ -64,18 +77,18 @@ describe('merging', () => {
             expect(result).toEqual(changed);
         });
 
-        test('removed scripts will be ignored ', () => {
+        test('removed scripts will be removed  if unchanged', () => {
             const original = readJSON('../resources/packages/original.json');
             const changed = readJSON('../resources/packages/removed-scripts.json');
             const result = doMergeJSON(FILENAME, original, changed);
-            expect(result).toEqual(original);
+            expect(result).toEqual(changed);
         });
 
-        test('changed scripts will be ignored ', () => {
+        test('changed scripts will be updated if unchanged', () => {
             const original = readJSON('../resources/packages/original.json');
             const changed = readJSON('../resources/packages/changed-scripts.json');
             const result = doMergeJSON(FILENAME, original, changed);
-            expect(result).toEqual(original);
+            expect(result).toEqual(changed);
         });
 
         test('new top-level will be added', () => {
@@ -85,18 +98,18 @@ describe('merging', () => {
             expect(result).toEqual(changed);
         });
 
-        test('removed top-level will be ignored', () => {
+        test('removed top-level will be removed if unchanged', () => {
             const original = readJSON('../resources/packages/original.json');
             const changed = readJSON('../resources/packages/removed-top-level.json');
             const result = doMergeJSON(FILENAME, original, changed);
-            expect(result).toEqual(original);
+            expect(result).toEqual(changed);
         });
 
-        test('updated top-level will be ignored', () => {
+        test('updated top-level will be upated if unchanged', () => {
             const original = readJSON('../resources/packages/original.json');
             const changed = readJSON('../resources/packages/changed-top-level.json');
             const result = doMergeJSON(FILENAME, original, changed);
-            expect(result).toEqual(original);
+            expect(result).toEqual(changed);
         });
     });
 
