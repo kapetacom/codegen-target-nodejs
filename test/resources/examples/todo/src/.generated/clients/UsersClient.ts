@@ -33,7 +33,7 @@ export class UsersClient extends RestClient {
      * HTTP: GET /users/{id}
      */
     async getUserById(id: string, metadata: any): Promise<User | null> {
-        const result = await this.execute('GET', '/users/{id}', [
+        const result = await this.$execute('GET', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'HEADER' },
         ]);
@@ -53,7 +53,7 @@ export class UsersClient extends RestClient {
      * HTTP: GET /users/{id}
      */
     getUserByIdRequest(id: string, metadata: any): RestClientRequest<User | null> {
-        return this.create('GET', '/users/{id}', [
+        return this.$create('GET', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'HEADER' },
         ]);
@@ -68,7 +68,7 @@ export class UsersClient extends RestClient {
      * HTTP: DELETE /users/{id}
      */
     async deleteUser(id: string, metadata: Map<string, State>, tags: Set<string>): Promise<void> {
-        await this.execute('DELETE', '/users/{id}', [
+        await this.$execute('DELETE', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'BODY' },
             { name: 'tags', value: tags, transport: 'QUERY' },
@@ -84,7 +84,7 @@ export class UsersClient extends RestClient {
      * HTTP: DELETE /users/{id}
      */
     deleteUserRequest(id: string, metadata: Map<string, State>, tags: Set<string>): RestClientRequest<void> {
-        return this.create('DELETE', '/users/{id}', [
+        return this.$create('DELETE', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'BODY' },
             { name: 'tags', value: tags, transport: 'QUERY' },
