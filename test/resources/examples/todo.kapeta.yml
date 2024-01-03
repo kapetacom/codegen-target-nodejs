@@ -21,34 +21,40 @@ spec:
             description: Primary ID of task
             type: string
             properties: null
+            required: true
           userId:
             description: null
             type: string
             properties: null
+            required: true
           title:
             description: Name of the task
             type: string
             properties: null
+            required: true
           description:
             description: Longer description
             type: string
             properties: null
-            optional: true
+            required: false
           done:
             description: Defines if the task is done or not
             type: boolean
             properties: null
+            required: true
           age:
             description: Age of the task
             type: integer
             properties: null
-            optional: true
+            required: false
           created:
             description: Created date
             type: date
             properties: null
+            required: true
           metadata:
             ref: any
+            required: true
       - type: dto
         name: User
         description: User - from Users block
@@ -57,19 +63,22 @@ spec:
             description: null
             type: string
             properties: null
+            required: true
           name:
             description: null
             type: string
             properties: null
-            optional: true
+            required: false
           email:
             description: null
             type: string
             properties: null
+            required: true
           state:
             description: null
             ref: State
             properties: null
+            required: true
     source:
       type: kapeta-dsl
       value: |+
