@@ -5,7 +5,7 @@ import { State } from './State';
 
 export interface User {
     id: string;
-    name: string;
+    name?: string;
     email: string;
     state: State;
 }

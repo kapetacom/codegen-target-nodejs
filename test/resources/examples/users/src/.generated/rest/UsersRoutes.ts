@@ -9,7 +9,7 @@ export interface UsersRoutes<Locals extends Record<string, any> = Record<string,
      * Create user
      * HTTP: POST /users/:id
      */
-    createUser: RequestHandler<{ id: string }, User, Map<string, string>, { user: User; tags: Set<string> }, Locals>;
+    createUser: RequestHandler<{ id: string }, User, Map<string, string>, { user: User; tags?: Set<string> }, Locals>;
 
     /**
      * Get user by id

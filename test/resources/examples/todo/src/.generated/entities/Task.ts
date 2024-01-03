@@ -6,9 +6,9 @@ export interface Task {
     id: string;
     userId: string;
     title: string;
-    description: string;
+    description?: string;
     done: boolean;
-    age: number;
+    age?: number;
     created: number;
     metadata: any;
 }
