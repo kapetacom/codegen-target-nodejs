@@ -16,13 +16,15 @@ spec:
           id:
             type: string
             properties: null
+            required: true
           name:
             type: string
             properties: null
-            optional: true
+            required: false
           email:
             type: string
             properties: null
+            required: true
     source:
       type: kapeta-dsl
       value: |-
