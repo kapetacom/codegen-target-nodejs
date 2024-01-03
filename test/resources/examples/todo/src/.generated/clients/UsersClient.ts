@@ -32,7 +32,7 @@ export class UsersClient extends RestClient {
      *
      * HTTP: GET /users/{id}
      */
-    async getUserById(id: string, metadata: any): Promise<User | null> {
+    async getUserById(id: string, metadata?: any): Promise<User | null> {
         const result = await this.$execute('GET', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'HEADER' },
@@ -52,7 +52,7 @@ export class UsersClient extends RestClient {
      *
      * HTTP: GET /users/{id}
      */
-    getUserByIdRequest(id: string, metadata: any): RestClientRequest<User | null> {
+    getUserByIdRequest(id: string, metadata?: any): RestClientRequest<User | null> {
         return this.$create('GET', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'HEADER' },

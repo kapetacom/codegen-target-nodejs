@@ -8,7 +8,7 @@ export class UsersRouteService implements UsersRoutes {
      * HTTP: POST /users/:id
      */
     createUser(
-        req: Request<{ id: string }, User, Map<string, string>, { user: User; tags: Set<string> }>,
+        req: Request<{ id: string }, User, Map<string, string>, { user: User; tags?: Set<string> }>,
         res: Response<User>
     ): void {
         res.sendError('REST resource method not implemented: "createUser"', 501);

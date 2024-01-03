@@ -127,7 +127,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         }
 
         return Template.SafeString(
-            '{' + pathArguments.map(([key, value]) => `'${key}': ${$fieldType(value).toString()}`).join(', ') + '}'
+            '{' + pathArguments.map(([key, value]) => `'${key}'${value.optional ? '?' : ''}: ${$fieldType(value).toString()}`).join(', ') + '}'
         );
     };
 
