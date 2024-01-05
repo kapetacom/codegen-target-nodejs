@@ -57,6 +57,9 @@ spec:
     - kind: kapeta/resource-type-smtp-client:0.0.2
       metadata:
         name: emailclient
+    - kind: kapeta/resource-type-cloud-bucket:0.0.2
+      metadata:
+        name: cdn
   providers:
     - kind: kapeta/resource-type-auth-jwt-provider:0.0.2
       metadata:

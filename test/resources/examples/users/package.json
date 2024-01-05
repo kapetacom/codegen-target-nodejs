@@ -43,6 +43,7 @@
         "@kapeta/sdk-smtp-client": "^2",
         "@react-email/button": "^0.0.8",
         "@react-email/html": "^0.0.4",
-        "react": "^18.2.0"
+        "react": "^18.2.0",
+        "minio": "^7.1.3"
     }
 }

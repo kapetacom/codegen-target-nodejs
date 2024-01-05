@@ -25,6 +25,7 @@ const targetConfig: ILanguageTargetProvider = {
         'kapeta/resource-type-auth-jwt-provider',
         'kapeta/resource-type-auth-jwt-consumer',
         'kapeta/resource-type-external-services',
+        'kapeta/resource-type-cloud-bucket',
     ],
     definition: kapetaDefinition,
 };

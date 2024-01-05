@@ -1,0 +1,24 @@
+//#FILENAME:src/.generated/clients/{{type data.metadata.name}}Client.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+
+import * as minio from 'minio';
+
+export class {{type data.metadata.name}}Client {
+  private client: minio.Client;
+
+  constructor() {
+    this.client = new minio.Client({
+      endPoint: process.env.{{upperSnakeCase data.metadata.name}}_ENDPOINT,
+      port: parseInt(process.env.{{upperSnakeCase data.metadata.name}}_PORT),
+      useSSL: process.env.{{upperSnakeCase data.metadata.name}}_USE_SSL === 'true',
+      accessKey: process.env.{{upperSnakeCase data.metadata.name}}_ACCESS_KEY,
+      secretKey: process.env.{{upperSnakeCase data.metadata.name}}_SECRET_KEY,
+    });
+  }
+
+  public getClient(): minio.Client {
+    return this.client;
+  }
+}
