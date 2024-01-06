@@ -11,7 +11,7 @@ export class UsersClient extends RestClient {
         super('users');
     }
 
-    protected afterCreate(request: RestClientRequest): void {
+    protected $afterCreate(request: RestClientRequest): void {
         if (request.hasHeader('Authorization')) {
             // Do not overwrite existing authorization header
             return;
