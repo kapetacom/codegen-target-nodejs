@@ -17,7 +17,7 @@ export class {{type data.metadata.name}}Client extends RestClient {
         }
 
     {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }}
-        protected afterCreate(request: RestClientRequest):void {
+        protected $afterCreate(request: RestClientRequest):void {
             if (request.hasHeader('Authorization')) {
                 // Do not overwrite existing authorization header
                 return;
