@@ -2,6 +2,9 @@ import type { Request, Response } from 'express';
 import { UsersRoutes } from 'generated:rest/UsersRoutes';
 import { User } from 'generated:entities/User';
 
+/**
+ * Defines the implementation of all routes for the users API
+ */
 export class UsersRouteService implements UsersRoutes {
     /**
      * Create user

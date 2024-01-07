@@ -7,6 +7,9 @@ import type { RequestHandler } from "express";
 import { {{type name}} } from "generated:entities/{{type name}}";
 {{/eachTypeReference}}
 
+/**
+ * Defines the methods and routes for the {{data.metadata.name}} API
+ */
 export interface {{type data.metadata.name}}Routes<Locals extends Record<string, any> = Record<string, any>>  {
 
     {{#methods data.spec.methods}}
