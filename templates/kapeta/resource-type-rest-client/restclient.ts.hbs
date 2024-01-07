@@ -3,6 +3,7 @@
 // GENERATED SOURCE - DO NOT EDIT
 //
 import { RestClient, RestClientRequest} from '@kapeta/sdk-rest-client';
+import { ConfigProvider } from '@kapeta/sdk-config';
 {{#eachTypeReference data.spec.methods all=true}}
 import { {{type name}} } from "../entities/{{type name}}";
 {{/eachTypeReference}}
@@ -35,8 +36,8 @@ export async function create{{type data.metadata.name}}Client(configProvider:Con
  */
 export class {{type data.metadata.name}}Client extends RestClient {
 
-        constructor() {
-            super('{{string data.metadata.name}}');
+        constructor(autoInit:boolean = true) {
+            super('{{string data.metadata.name}}', autoInit);
         }
 
     {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }}
