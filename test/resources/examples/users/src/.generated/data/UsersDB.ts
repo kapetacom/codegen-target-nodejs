@@ -1,15 +1,38 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import { PostgresDB } from '@kapeta/sdk-sqldb-postgresql';
+import {
+    PostgresDB as $PostgresDB,
+    createPostgresDBClient as $createPostgresDBClient,
+} from '@kapeta/sdk-sqldb-postgresql';
 import { Prisma, PrismaClient } from './clients/users';
+import { ConfigProvider } from '@kapeta/sdk-config';
 
-export class UsersDB extends PostgresDB<PrismaClient> {
+function createClient(opts: Prisma.PrismaClientOptions): PrismaClient {
+    return new PrismaClient(opts);
+}
+
+/*
+ * Create a ready and connected UsersDB client.
+ *
+ * See https://github.com/kapetacom/sdk-nodejs-sqldb-postgresql for more information.
+ */
+export const createUsersDBClient = (config: ConfigProvider) => {
+    return $createPostgresDBClient<PrismaClient>(config, 'users', createClient);
+};
+
+/**
+ * Use this class to access the users database.
+ * Also see {@link createUsersDBClient} as the recommended way of connecting to the database.
+ *
+ * See https://github.com/kapetacom/sdk-nodejs-sqldb-postgresql for more information.
+ */
+export class UsersDB extends $PostgresDB<PrismaClient> {
     constructor() {
         super('users');
     }
 
-    createClient(opts: Prisma.PrismaClientOptions): PrismaClient {
-        return new PrismaClient(opts);
+    createClient(opts: any): PrismaClient {
+        return createClient(opts);
     }
 }

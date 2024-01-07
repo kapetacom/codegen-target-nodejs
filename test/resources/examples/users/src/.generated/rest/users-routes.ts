@@ -6,6 +6,10 @@ import { asyncHandler } from '@kapeta/sdk-server';
 import { restAPIMiddleware } from '@kapeta/sdk-rest-route';
 import { UsersRouteService } from '../../service/UsersRouteService';
 import { json } from 'body-parser';
+
+/**
+ * creates all routes for the users API
+ */
 export const createUsersRouter = () => {
     const router = Router();
     router.use(json());

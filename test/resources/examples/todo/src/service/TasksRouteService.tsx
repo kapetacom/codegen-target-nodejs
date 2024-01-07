@@ -2,6 +2,9 @@ import type { Request, Response } from 'express';
 import { TasksRoutes } from 'generated:rest/TasksRoutes';
 import { Task } from 'generated:entities/Task';
 
+/**
+ * Defines the implementation of all routes for the tasks API
+ */
 export class TasksRouteService implements TasksRoutes {
     /**
      * Add task for user

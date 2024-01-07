@@ -4,6 +4,9 @@
 import type { RequestHandler } from 'express';
 import { Task } from 'generated:entities/Task';
 
+/**
+ * Defines the methods and routes for the tasks API
+ */
 export interface TasksRoutes<Locals extends Record<string, any> = Record<string, any>> {
     /**
      * Add task for user

@@ -6,6 +6,9 @@ import { {{type data.metadata.name}}Routes } from 'generated:rest/{{type data.me
 import { {{type name}} } from "generated:entities/{{type name}}";
 {{/eachTypeReference}}
 
+/**
+ * Defines the implementation of all routes for the {{data.metadata.name}} API
+ */
 export class {{type data.metadata.name}}RouteService implements {{type data.metadata.name}}Routes {
 
     {{#methods data.spec.methods}}
