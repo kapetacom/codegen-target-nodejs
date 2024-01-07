@@ -7,6 +7,6 @@ import { createTasksRouter } from 'generated:rest/tasks-routes';
 export const createRoutes = async (config: ConfigProvider): Promise<Router> => {
     const routes = Router();
     routes.use(await createAuthMiddleware(config));
-    routes.use(createTasksRouter());
+    routes.use(await createTasksRouter(config));
     return routes;
 };

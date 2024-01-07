@@ -7,6 +7,6 @@ import { createUsersRouter } from 'generated:rest/users-routes';
 export const createRoutes = async (config: ConfigProvider): Promise<Router> => {
     const routes = Router();
     routes.use(await createAuthMiddleware(config));
-    routes.use(createUsersRouter());
+    routes.use(await createUsersRouter(config));
     return routes;
 };

@@ -19,10 +19,10 @@ export const createRoutes = async (config:ConfigProvider):Promise<Router> => {
         routes.use(await createAuthMiddleware(config));
     {{/usesAnyOf}}
     {{#providers-of-type 'kapeta/resource-type-rest-api'}}
-        routes.use(create{{type metadata.name}}Router());
+        routes.use(await create{{type metadata.name}}Router(config));
     {{/providers-of-type}}
     {{#providers-of-type 'kapeta/resource-type-grpc-api'}}
-        routes.use(create{{type metadata.name}}Router());
+        routes.use(await create{{type metadata.name}}Router(config));
     {{/providers-of-type}}
     return routes;
 };

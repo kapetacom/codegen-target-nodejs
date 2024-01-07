@@ -2,6 +2,7 @@
 // GENERATED SOURCE - DO NOT EDIT
 //
 import { RestClient, RestClientRequest } from '@kapeta/sdk-rest-client';
+import { ConfigProvider } from '@kapeta/sdk-config';
 import { User } from '../entities/User';
 import { State } from '../entities/State';
 import { getJWTToken } from '@kapeta/sdk-auth-jwt';
@@ -29,8 +30,8 @@ export async function createUsersClient(configProvider: ConfigProvider): Promise
  * See https://github.com/kapetacom/sdk-nodejs-rest-client for more information.
  */
 export class UsersClient extends RestClient {
-    constructor() {
-        super('users');
+    constructor(autoInit: boolean = true) {
+        super('users', autoInit);
     }
 
     protected $afterCreate(request: RestClientRequest): void {

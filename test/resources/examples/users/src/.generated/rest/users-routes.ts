@@ -3,19 +3,20 @@
 //
 import { Router } from 'express';
 import { asyncHandler } from '@kapeta/sdk-server';
+import { ConfigProvider } from '@kapeta/sdk-config';
 import { restAPIMiddleware } from '@kapeta/sdk-rest-route';
-import { UsersRouteService } from '../../service/UsersRouteService';
+import { createUsersRouteService } from '../../service/UsersRouteService';
 import { json } from 'body-parser';
 
 /**
  * creates all routes for the users API
  */
-export const createUsersRouter = () => {
+export const createUsersRouter = async (configProvider: ConfigProvider) => {
     const router = Router();
     router.use(json());
     router.use(restAPIMiddleware);
 
-    const service = new UsersRouteService();
+    const service = await createUsersRouteService(configProvider);
 
     // createUser: Verify the method is available
     if (!service.createUser) {
