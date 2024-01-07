@@ -8,7 +8,9 @@ import {
 import { Prisma, PrismaClient } from './clients/users';
 import { ConfigProvider } from '@kapeta/sdk-config';
 
-function createClient(opts: Prisma.PrismaClientOptions): PrismaClient {
+export type UsersDBClient = PrismaClient;
+
+function createClient(opts: Prisma.PrismaClientOptions): UsersDBClient {
     return new PrismaClient(opts);
 }
 
@@ -18,7 +20,7 @@ function createClient(opts: Prisma.PrismaClientOptions): PrismaClient {
  * See https://github.com/kapetacom/sdk-nodejs-sqldb-postgresql for more information.
  */
 export const createUsersDBClient = (config: ConfigProvider) => {
-    return $createPostgresDBClient<PrismaClient>(config, 'users', createClient);
+    return $createPostgresDBClient<UsersDBClient>(config, 'users', createClient);
 };
 
 /**
@@ -27,12 +29,12 @@ export const createUsersDBClient = (config: ConfigProvider) => {
  *
  * See https://github.com/kapetacom/sdk-nodejs-sqldb-postgresql for more information.
  */
-export class UsersDB extends $PostgresDB<PrismaClient> {
+export class UsersDB extends $PostgresDB<UsersDBClient> {
     constructor() {
         super('users');
     }
 
-    createClient(opts: any): PrismaClient {
+    createClient(opts: any): UsersDBClient {
         return createClient(opts);
     }
 }

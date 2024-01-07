@@ -6,7 +6,9 @@ import { MongoDB as $MongoDB, createMongoDBClient as $createMongoDBClient } from
 import { Prisma, PrismaClient } from './clients/todo';
 import { ConfigProvider } from '@kapeta/sdk-config';
 
-function createClient(opts: Prisma.PrismaClientOptions): PrismaClient {
+export type TodoDBClient = PrismaClient;
+
+function createClient(opts: Prisma.PrismaClientOptions): TodoDBClient {
     return new PrismaClient(opts);
 }
 
@@ -16,7 +18,7 @@ function createClient(opts: Prisma.PrismaClientOptions): PrismaClient {
  * See https://github.com/kapetacom/sdk-nodejs-nosql-mongodb for more information.
  */
 export const createTodoDBClient = (config: ConfigProvider) => {
-    return $createMongoDBClient<PrismaClient>(config, 'todo', createClient);
+    return $createMongoDBClient<TodoDBClient>(config, 'todo', createClient);
 };
 
 /**
@@ -25,12 +27,12 @@ export const createTodoDBClient = (config: ConfigProvider) => {
  *
  * See https://github.com/kapetacom/sdk-nodejs-nosql-mongodb for more information.
  */
-export class TodoDB extends $MongoDB<PrismaClient> {
+export class TodoDB extends $MongoDB<TodoDBClient> {
     constructor() {
         super('todo');
     }
 
-    createClient(opts: any): PrismaClient {
+    createClient(opts: any): TodoDBClient {
         return createClient(opts);
     }
 }

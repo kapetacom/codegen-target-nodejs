@@ -4,19 +4,20 @@
 //
 import {Router} from "express";
 import {asyncHandler} from "@kapeta/sdk-server";
+import { ConfigProvider } from '@kapeta/sdk-config';
 import { restAPIMiddleware } from "@kapeta/sdk-rest-route";
-import { {{type data.metadata.name}}RouteService } from "../../service/{{type data.metadata.name}}RouteService";
+import { create{{type data.metadata.name}}RouteService } from "../../service/{{type data.metadata.name}}RouteService";
 import { json } from "body-parser";
 
 /**
  * creates all routes for the {{data.metadata.name}} API
  */
-export const create{{type data.metadata.name}}Router = () => {
+export const create{{type data.metadata.name}}Router = async (configProvider:ConfigProvider) => {
     const router = Router();
     router.use(json());
     router.use(restAPIMiddleware);
 
-    const service = new {{type data.metadata.name}}RouteService();
+    const service = await create{{type data.metadata.name}}RouteService(configProvider);
 
     {{#methods data.spec.methods}}
         // {{method methodName}}: Verify the method is available
