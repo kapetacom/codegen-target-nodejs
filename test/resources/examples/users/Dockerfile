@@ -18,6 +18,7 @@ RUN npm run build
 FROM node:20-alpine3.18
 COPY --from=build /application /application
 WORKDIR /application
+RUN npm run migrate:generate --if-present #Needed for Prisma to use the right binaries
 HEALTHCHECK --interval=5s --timeout=15s --start-period=5s --retries=10 CMD wget --no-verbose --tries=1 --spider "http://localhost:80/.kapeta/health" || exit 1
 
 ENTRYPOINT [ "npm", "start" ]
