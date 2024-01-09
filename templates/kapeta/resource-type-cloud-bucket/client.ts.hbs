@@ -4,17 +4,14 @@
 //
 
 import * as minio from 'minio';
+import Config, { ConfigProvider } from "@kapeta/sdk-config";
 
 export class {{type data.metadata.name}}Client {
   private client: minio.Client;
 
   constructor() {
     this.client = new minio.Client({
-      endPoint: process.env.{{upperSnakeCase data.metadata.name}}_ENDPOINT,
-      port: parseInt(process.env.{{upperSnakeCase data.metadata.name}}_PORT),
-      useSSL: process.env.{{upperSnakeCase data.metadata.name}}_USE_SSL === 'true',
-      accessKey: process.env.{{upperSnakeCase data.metadata.name}}_ACCESS_KEY,
-      secretKey: process.env.{{upperSnakeCase data.metadata.name}}_SECRET_KEY,
+      
     });
   }
 
