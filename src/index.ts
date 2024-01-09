@@ -10,10 +10,11 @@ import { exec } from '@kapeta/nodejs-process';
 import { mergePackageJson } from './target/merge-package';
 import { mergeDevcontainers } from './target/merge-devcontainers';
 import { addTemplateHelpers } from './target/template-helpers';
+import { NodeJSTargetFormatter } from './formatter';
 
 export default class NodeJSTarget extends Target {
     constructor(options: any) {
-        super(options, Path.resolve(__dirname, '../'));
+        super(options, Path.resolve(__dirname, '../'), new NodeJSTargetFormatter());
     }
 
     mergeFile(sourceFile: SourceFile, newFile: GeneratedFile, lastFile: GeneratedFile): GeneratedFile {
