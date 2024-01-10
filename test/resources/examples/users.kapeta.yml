@@ -59,7 +59,7 @@ spec:
         name: emailclient
     - kind: kapeta/resource-type-cloud-bucket:0.0.2
       metadata:
-        name: cdn
+        name: cdnBucket
   providers:
     - kind: kapeta/resource-type-auth-jwt-provider:0.0.2
       metadata:
