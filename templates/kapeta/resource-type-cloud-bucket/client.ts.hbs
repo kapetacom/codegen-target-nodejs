@@ -13,22 +13,29 @@ export const RESOURCE_NAME = '{{data.metadata.name}}';
 export const DEFAULT_BUCKET = '{{kebabCase data.metadata.name}}';
 
 export async function create{{pascalCase data.metadata.name}}Client(config: ConfigProvider): Promise<{{pascalCase data.metadata.name}}Client> {
-  const resourceInfo = await config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, RESOURCE_NAME);
-  if (!resourceInfo) {
-    throw new Error(`Could not find resource info for ${RESOURCE_TYPE}#${PORT_TYPE} ${RESOURCE_NAME}`);
-  }
-  return new {{pascalCase data.metadata.name}}Client(resourceInfo);
+    const resourceInfo = await config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, RESOURCE_NAME);
+    if (!resourceInfo) {
+        throw new Error(`Could not find resource info for ${RESOURCE_TYPE}#${PORT_TYPE} ${RESOURCE_NAME}`);
+    }
+    const client = new {{pascalCase data.metadata.name}}Client(resourceInfo);
+    // Check that bucket exists as a way to validate credentials
+    try {
+        await client.bucketExists();
+    } catch (err) {
+        throw new AggregateError([new Error(`Could not connect to bucket resource ${RESOURCE_NAME}`), err]);
+    }
+    return client;
 }
 
 export class {{pascalCase data.metadata.name}}Client {
-  /**
-   * The underlying minio client. Use this if you need to access the minio client directly.
-   * Remember to pass the client.bucketName as the first argument to all methods.
-   */
-  public minio: minio.Client;
-  public bucketName: string = DEFAULT_BUCKET;
+    /**
+     * The underlying minio client. Use this if you need to access the minio client directly.
+     * Remember to pass the client.bucketName as the first argument to all methods.
+     */
+    public minio: minio.Client;
+    public bucketName: string = DEFAULT_BUCKET;
 
-  constructor(config: ResourceInfo) {
+    constructor(config: ResourceInfo) {
         if (!config.credentials) {
             throw new Error(`Missing credentials for ${config.type}#${config.port}`);
         }
@@ -55,7 +62,11 @@ export class {{pascalCase data.metadata.name}}Client {
         return this.minio.getObject(this.bucketName, objectPath);
     }
 
-    public async putObject(objectPath: string, data: Buffer): Promise<minio.UploadedObjectInfo> {
+    public async putObject(objectPath: string, data: Readable | Buffer | string): Promise<minio.UploadedObjectInfo> {
         return this.minio.putObject(this.bucketName, objectPath, data);
+    }
+
+    public async bucketExists(): Promise<boolean> {
+        return this.minio.bucketExists(this.bucketName);
     }
 }

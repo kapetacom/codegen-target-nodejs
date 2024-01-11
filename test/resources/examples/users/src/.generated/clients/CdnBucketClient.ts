@@ -16,7 +16,14 @@ export async function createCdnBucketClient(config: ConfigProvider): Promise<Cdn
     if (!resourceInfo) {
         throw new Error(`Could not find resource info for ${RESOURCE_TYPE}#${PORT_TYPE} ${RESOURCE_NAME}`);
     }
-    return new CdnBucketClient(resourceInfo);
+    const client = new CdnBucketClient(resourceInfo);
+    // Check that bucket exists as a way to validate credentials
+    try {
+        await client.bucketExists();
+    } catch (err) {
+        throw new AggregateError([new Error(`Could not connect to bucket resource ${RESOURCE_NAME}`), err]);
+    }
+    return client;
 }
 
 export class CdnBucketClient {
@@ -54,7 +61,11 @@ export class CdnBucketClient {
         return this.minio.getObject(this.bucketName, objectPath);
     }
 
-    public async putObject(objectPath: string, data: Buffer): Promise<minio.UploadedObjectInfo> {
+    public async putObject(objectPath: string, data: Readable | Buffer | string): Promise<minio.UploadedObjectInfo> {
         return this.minio.putObject(this.bucketName, objectPath, data);
+    }
+
+    public async bucketExists(): Promise<boolean> {
+        return this.minio.bucketExists(this.bucketName);
     }
 }
