@@ -57,7 +57,8 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
                 break;
             case 'char':
             case 'byte':
-                value = `string${array ? '[]' : ''}`;
+                // either way will be converted to a string
+                value = 'string';
                 break;
             case 'date':
             case 'integer':
