@@ -32,7 +32,7 @@ export class CdnBucketClient {
             throw new Error(`Missing credentials for ${config.type}#${config.port}`);
         }
 
-        if (config.options.fullName) {
+        if (config.options?.fullName) {
             this.bucketName = config.options.fullName;
         }
 
