@@ -39,8 +39,12 @@ export class CdnBucketClient {
             throw new Error(`Missing credentials for ${config.type}#${config.port}`);
         }
 
-        if (config.options?.fullName) {
-            this.bucketName = config.options.fullName;
+        const fullName = config.options?.fullName;
+        if (fullName) {
+            this.bucketName = fullName.replaceAll(/[^a-z0-9-]+$/g, '-');
+            if (this.bucketName !== fullName) {
+                console.warn(`Bucket name ${fullName} contains invalid characters. Using ${this.bucketName} instead.`);
+            }
         }
 
         this.minio = new minio.Client({
