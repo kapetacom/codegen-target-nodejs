@@ -57,7 +57,8 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
                 break;
             case 'char':
             case 'byte':
-                value = `string${array ? '[]' : ''}`;
+                // either way will be converted to a string
+                value = 'string';
                 break;
             case 'date':
             case 'integer':
@@ -127,7 +128,11 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         }
 
         return Template.SafeString(
-            '{' + pathArguments.map(([key, value]) => `'${key}'${value.optional ? '?' : ''}: ${$fieldType(value).toString()}`).join(', ') + '}'
+            '{' +
+                pathArguments
+                    .map(([key, value]) => `'${key}'${value.optional ? '?' : ''}: ${$fieldType(value).toString()}`)
+                    .join(', ') +
+                '}'
         );
     };
 
@@ -172,5 +177,35 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         }
 
         return $fieldType(bodyArgument[1]);
+    });
+
+    const toCamelCase = (value: string) => {
+        return value.replaceAll(/[^a-zA-Z0-9]([a-z])/g, (g) => g[1].toUpperCase());
+    };
+
+    engine.registerHelper('camelCase', (value: string) => {
+        return toCamelCase(value);
+    });
+
+    engine.registerHelper('pascalCase', (value: string) => {
+        const camel = toCamelCase(value);
+        return camel.substring(0, 1).toUpperCase() + camel.substring(1);
+    });
+
+    engine.registerHelper('kebabCase', (value: string) => {
+        return value
+            .replace(/([a-z])([A-Z])/g, '$1-$2')
+            .replace(/[\s_]+/g, '-')
+            .toLowerCase();
+    });
+
+    // Debug helper
+    engine.registerHelper('toJSON', (value: any) => {
+        return JSON.stringify(value, null, 4);
+    });
+
+    engine.registerHelper('fullName', (value: string) => {
+        const uri = parseKapetaUri(value);
+        return uri.fullName;
     });
 };
