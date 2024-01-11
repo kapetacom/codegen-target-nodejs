@@ -10,12 +10,12 @@ import { ConfigProvider, ResourceInfo } from "@kapeta/sdk-config";
 export const RESOURCE_TYPE = '{{fullName data.kind}}';
 export const PORT_TYPE = 'http';
 export const RESOURCE_NAME = '{{data.metadata.name}}';
-export const BUCKET_NAME = '{{kebabCase data.metadata.name}}';
+export const DEFAULT_BUCKET = '{{kebabCase data.metadata.name}}';
 
 export async function create{{pascalCase data.metadata.name}}Client(config: ConfigProvider): Promise<{{pascalCase data.metadata.name}}Client> {
-  const resourceInfo = await config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, BUCKET_NAME);
+  const resourceInfo = await config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, RESOURCE_NAME);
   if (!resourceInfo) {
-    throw new Error(`Could not find resource info for ${RESOURCE_TYPE}#${PORT_TYPE} ${BUCKET_NAME}`);
+    throw new Error(`Could not find resource info for ${RESOURCE_TYPE}#${PORT_TYPE} ${RESOURCE_NAME}`);
   }
   return new {{pascalCase data.metadata.name}}Client(resourceInfo);
 }
@@ -23,34 +23,39 @@ export async function create{{pascalCase data.metadata.name}}Client(config: Conf
 export class {{pascalCase data.metadata.name}}Client {
   /**
    * The underlying minio client. Use this if you need to access the minio client directly.
-   * Remember to pass the BUCKET_NAME as the first argument to all methods.
+   * Remember to pass the client.bucketName as the first argument to all methods.
    */
   public minio: minio.Client;
+  public bucketName: string = DEFAULT_BUCKET;
 
   constructor(config: ResourceInfo) {
-    if (!config.credentials) {
-      throw new Error(`Missing credentials for ${config.type}#${config.port}`);
+        if (!config.credentials) {
+            throw new Error(`Missing credentials for ${config.type}#${config.port}`);
+        }
+
+        if (config.options.fullName) {
+            this.bucketName = config.options.fullName;
+        }
+
+        this.minio = new minio.Client({
+            endPoint: config.host,
+            port: parseInt(`${config.port}`, 10),
+            useSSL: false,
+            accessKey: config.credentials.username,
+            secretKey: config.credentials.password,
+        });
     }
 
-    this.minio = new minio.Client({
-      endPoint: config.host,
-      port: parseInt(`${config.port}`, 10),
-      useSSL: false,
-      accessKey: config.credentials.username,
-      secretKey: config.credentials.password,
-    });
-  }
+    public async listObjects(): Promise<minio.BucketItem[]> {
+        const objects = await this.minio.listObjectsV2(this.bucketName, '', true);
+        return objects.toArray();
+    }
 
-  public async listObjects(): Promise<minio.BucketItem[]> {
-      const objects = await this.minio.listObjectsV2(BUCKET_NAME, '', true);
-      return objects.toArray();
-  }
+    public async getObject(objectPath: string): Promise<Readable> {
+        return this.minio.getObject(this.bucketName, objectPath);
+    }
 
-  public async getObject(objectPath: string): Promise<Readable> {
-      return this.minio.getObject(BUCKET_NAME, objectPath);
-  }
-
-  public async putObject(objectPath: string, data: Buffer): Promise<minio.UploadedObjectInfo> {
-      return this.minio.putObject(BUCKET_NAME, objectPath, data);
-  }
+    public async putObject(objectPath: string, data: Buffer): Promise<minio.UploadedObjectInfo> {
+        return this.minio.putObject(this.bucketName, objectPath, data);
+    }
 }

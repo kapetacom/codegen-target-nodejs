@@ -9,12 +9,12 @@ import { ConfigProvider, ResourceInfo } from '@kapeta/sdk-config';
 export const RESOURCE_TYPE = 'kapeta/resource-type-cloud-bucket';
 export const PORT_TYPE = 'http';
 export const RESOURCE_NAME = 'cdnBucket';
-export const BUCKET_NAME = 'cdn-bucket';
+export const DEFAULT_BUCKET = 'cdn-bucket';
 
 export async function createCdnBucketClient(config: ConfigProvider): Promise<CdnBucketClient> {
-    const resourceInfo = await config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, BUCKET_NAME);
+    const resourceInfo = await config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, RESOURCE_NAME);
     if (!resourceInfo) {
-        throw new Error(`Could not find resource info for ${RESOURCE_TYPE}#${PORT_TYPE} ${BUCKET_NAME}`);
+        throw new Error(`Could not find resource info for ${RESOURCE_TYPE}#${PORT_TYPE} ${RESOURCE_NAME}`);
     }
     return new CdnBucketClient(resourceInfo);
 }
@@ -22,13 +22,18 @@ export async function createCdnBucketClient(config: ConfigProvider): Promise<Cdn
 export class CdnBucketClient {
     /**
      * The underlying minio client. Use this if you need to access the minio client directly.
-     * Remember to pass the BUCKET_NAME as the first argument to all methods.
+     * Remember to pass the client.bucketName as the first argument to all methods.
      */
     public minio: minio.Client;
+    public bucketName: string = DEFAULT_BUCKET;
 
     constructor(config: ResourceInfo) {
         if (!config.credentials) {
             throw new Error(`Missing credentials for ${config.type}#${config.port}`);
+        }
+
+        if (config.options.fullName) {
+            this.bucketName = config.options.fullName;
         }
 
         this.minio = new minio.Client({
@@ -41,15 +46,15 @@ export class CdnBucketClient {
     }
 
     public async listObjects(): Promise<minio.BucketItem[]> {
-        const objects = await this.minio.listObjectsV2(BUCKET_NAME, '', true);
+        const objects = await this.minio.listObjectsV2(this.bucketName, '', true);
         return objects.toArray();
     }
 
     public async getObject(objectPath: string): Promise<Readable> {
-        return this.minio.getObject(BUCKET_NAME, objectPath);
+        return this.minio.getObject(this.bucketName, objectPath);
     }
 
     public async putObject(objectPath: string, data: Buffer): Promise<minio.UploadedObjectInfo> {
-        return this.minio.putObject(BUCKET_NAME, objectPath, data);
+        return this.minio.putObject(this.bucketName, objectPath, data);
     }
 }
