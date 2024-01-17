@@ -2,14 +2,12 @@
 // GENERATED SOURCE - DO NOT EDIT
 //
 
+import { Idable } from 'generated:entities/Idable';
+import { SomeNativeType } from '@kapeta/ui-web-types';
 /**
  * Task type
  */
-export interface Task {
-    /**
-     * Primary ID of task
-     */
-    id: string;
+export interface Task extends Idable {
     userId: string;
     /**
      * Name of the task
@@ -32,4 +30,11 @@ export interface Task {
      */
     created: number;
     metadata: any;
+    someNativeType: SomeNativeType;
+    details: {
+        innerProp: string;
+        moreDetails: {
+            innerProp2: string;
+        };
+    };
 }

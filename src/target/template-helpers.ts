@@ -190,17 +190,10 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return uri.fullName;
     });
 
-    engine.registerHelper('typescript-imports', function (this: DSLEntity, options: HelperOptions) {
+    engine.registerHelper('typescript-imports-dto', function (this: DSLEntity, options: HelperOptions) {
         const entities = getParsedEntities();
         const resolver = new DSLReferenceResolver();
-        const references = resolver.resolveReference(this);
-        const referencesEntities = references
-            .map((reference: string) => {
-                return entities.find((entity) => {
-                    return entity.name === reference;
-                });
-            })
-            .filter((entity: DSLData | undefined) => Boolean(entity)) as DSLData[];
+        const referencesEntities = resolver.resolveReferencesFrom([this], entities);
 
         if (referencesEntities.length === 0) {
             return '';
@@ -215,6 +208,29 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
                     }
 
                     return `import { ${ucFirst(entity.name)} } from 'generated:entities/${ucFirst(entity.name)}';`;
+                })
+                .join('\n')
+        );
+    });
+
+    engine.registerHelper('typescript-imports-config', function (this: DSLEntity, options: HelperOptions) {
+        const entities = getParsedEntities();
+        const resolver = new DSLReferenceResolver();
+        const referencesEntities = resolver.resolveReferencesFrom([this], entities);
+
+        if (referencesEntities.length === 0) {
+            return '';
+        }
+
+        return Template.SafeString(
+            referencesEntities
+                .map((entity) => {
+                    const native = DataTypeReader.getNative(entity);
+                    if (native) {
+                        return `import { ${entity.name} } from "${native}";`;
+                    }
+
+                    return `import { ${ucFirst(entity.name)}Config } from './${ucFirst(entity.name)}';`;
                 })
                 .join('\n')
         );
@@ -235,6 +251,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         const writer = new TypescriptWriter();
 
         try {
+            // All config entities are postfixed with Config
             const copy = {...entity, name: entity.name + 'Config'};
             return Template.SafeString(writer.write([copy]));
         } catch (e) {

@@ -9,17 +9,25 @@ spec:
     source:
       type: kapeta-dsl
       value: |+
+        @Native("@kapeta/ui-web-types")
+        type SomeNativeType {
+            id: string
+            name: string
+        }
         
         //A state
         enum State {
         	OK, 
         	NOT_OK
         }
+        
+        Idable {
+            //Primary ID
+            id: string
+        }
 
         //Task type
-        Task {	
-        	//Primary ID of task
-        	id: string	
+        Task extends Idable {
         	userId: string	
         	//Name of the task
         	title: string	
@@ -34,15 +42,35 @@ spec:
     
             //Created date
             created: date
+        
             metadata: any
+        
+            someNativeType: SomeNativeType
+        
+            details: {
+                innerProp: string
+                
+                moreDetails: {
+                    innerProp2: string
+                }
+            }
         }
 
         //User - from Users block
-        User {	
-        	id: string	
+        User extends Idable {	
         	name?: string	
         	email: string
         	state: State
+        }
+        
+        Page<T> {
+            content: T[]
+        }
+        
+        //User page
+        UserPage extends Page<User> {
+            //Total number of users
+            total: number
         }
 
   consumers:
