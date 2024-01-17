@@ -3,23 +3,42 @@
  * SPDX-License-Identifier: MIT
  */
 import Handlebars = require('handlebars');
-import { Template, TypeLike } from '@kapeta/codegen-target';
-import { BlockDefinitionSpec, Resource } from '@kapeta/schemas';
+import {parseEntities, Template, TypeLike} from '@kapeta/codegen-target';
+import { HelperOptions } from 'handlebars';
 import { RESTMethod } from '@kapeta/ui-web-types';
 import { parseKapetaUri } from '@kapeta/nodejs-utils';
+import {
+    DataTypeReader,
+    DSLData, DSLDataType,
+    DSLEntity,
+    ucFirst,
+    DSLReferenceResolver,
+    TypescriptWriter
+} from '@kapeta/kaplang-core';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 export type HandleBarsType = typeof Handlebars;
 
 export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: any): void => {
-    engine.registerHelper('enumValues', (values: string[]) => {
-        return Template.SafeString('\t' + values.map((value) => `${value} = ${JSON.stringify(value)}`).join(',\n\t'));
-    });
 
     const TypeMap: { [key: string]: string } = {
         Instance: 'InstanceValue',
         InstanceProvider: 'InstanceProviderValue',
     };
+
+    let parsedEntities: DSLData[] | undefined = undefined;
+    function getParsedEntities(): DSLData[] {
+        if (!parsedEntities &&
+            context.spec?.entities?.source?.value) {
+            parsedEntities = parseEntities(context.spec?.entities?.source?.value);
+        }
+
+        if (!parsedEntities) {
+            return [];
+        }
+
+        return parsedEntities as DSLData[];
+    }
 
     const $fieldType = (value: TypeLike) => {
         if (!value) {
@@ -76,7 +95,13 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
         return Template.SafeString(value);
     };
+
+    engine.registerHelper('enumValues', (values: string[]) => {
+        return Template.SafeString('\t' + values.map((value) => `${value} = ${JSON.stringify(value)}`).join(',\n\t'));
+    });
+
     engine.registerHelper('fieldtype', $fieldType);
+
     engine.registerHelper('returnType', (value) => {
         if (!value) {
             return 'void';
@@ -140,25 +165,6 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return $toTypeMap(method, 'path');
     });
 
-    engine.registerHelper('toArray', (...value: any[]) => {
-        return value.slice(0, value.length - 1);
-    });
-
-    engine.registerHelper('usesAnyOf', (kinds: string[], options) => {
-        const blockSpec = context.spec as BlockDefinitionSpec;
-        const usesAny = kinds.some((kind) => {
-            const uri = parseKapetaUri(kind);
-            const matcher = (consumer: Resource) => parseKapetaUri(consumer.kind).fullName === uri.fullName;
-            return blockSpec.consumers?.some(matcher) || blockSpec.providers?.some(matcher);
-        });
-
-        if (usesAny) {
-            return options.fn(this);
-        }
-
-        return options.inverse(this);
-    });
-
     engine.registerHelper('queryMap', (method: RESTMethod) => {
         return $toTypeMap(method, 'query');
     });
@@ -179,33 +185,61 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return $fieldType(bodyArgument[1]);
     });
 
-    const toCamelCase = (value: string) => {
-        return value.replaceAll(/[^a-zA-Z0-9]([a-z])/g, (g) => g[1].toUpperCase());
-    };
-
-    engine.registerHelper('camelCase', (value: string) => {
-        return toCamelCase(value);
-    });
-
-    engine.registerHelper('pascalCase', (value: string) => {
-        const camel = toCamelCase(value);
-        return camel.substring(0, 1).toUpperCase() + camel.substring(1);
-    });
-
-    engine.registerHelper('kebabCase', (value: string) => {
-        return value
-            .replace(/([a-z])([A-Z])/g, '$1-$2')
-            .replace(/[\s_]+/g, '-')
-            .toLowerCase();
-    });
-
-    // Debug helper
-    engine.registerHelper('toJSON', (value: any) => {
-        return JSON.stringify(value, null, 4);
-    });
-
     engine.registerHelper('fullName', (value: string) => {
         const uri = parseKapetaUri(value);
         return uri.fullName;
+    });
+
+    engine.registerHelper('typescript-imports', function (this: DSLEntity, options: HelperOptions) {
+        const entities = getParsedEntities();
+        const resolver = new DSLReferenceResolver();
+        const references = resolver.resolveReference(this);
+        const referencesEntities = references
+            .map((reference: string) => {
+                return entities.find((entity) => {
+                    return entity.name === reference;
+                });
+            })
+            .filter((entity: DSLData | undefined) => Boolean(entity)) as DSLData[];
+
+        if (referencesEntities.length === 0) {
+            return '';
+        }
+
+        return Template.SafeString(
+            referencesEntities
+                .map((entity) => {
+                    const native = DataTypeReader.getNative(entity);
+                    if (native) {
+                        return `import { ${entity.name} } from "${native}";`;
+                    }
+
+                    return `import { ${ucFirst(entity.name)} } from 'generated:entities/${ucFirst(entity.name)}';`;
+                })
+                .join('\n')
+        );
+    });
+
+    engine.registerHelper('typescript-dto', (entity: DSLData) => {
+        const writer = new TypescriptWriter();
+
+        try {
+            return Template.SafeString(writer.write([entity]));
+        } catch (e) {
+            console.warn('Failed to write entity', entity);
+            throw e;
+        }
+    });
+
+    engine.registerHelper('typescript-config', (entity: DSLData) => {
+        const writer = new TypescriptWriter();
+
+        try {
+            const copy = {...entity, name: entity.name + 'Config'};
+            return Template.SafeString(writer.write([copy]));
+        } catch (e) {
+            console.warn('Failed to write entity', entity);
+            throw e;
+        }
     });
 };

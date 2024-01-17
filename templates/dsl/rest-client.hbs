@@ -1,0 +1,12 @@
+{{#switch type}}
+    {{#case 'controller'}}
+        {{> dsl/rest-client/restclient.java}}
+    {{/case}}
+    {{#case 'datatype'}}
+        {{> dsl/entitybase.java}}
+        {{> dsl/entity.java}}
+    {{/case}}
+    {{#case 'enum'}}
+        {{> dsl/entitybase.java}}
+    {{/case}}
+{{/switch}}

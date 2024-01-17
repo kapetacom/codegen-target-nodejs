@@ -1,8 +1,11 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import { State } from './State';
 
+import { State } from 'generated:entities/State';
+/**
+ * User - from Users block
+ */
 export interface User {
     id: string;
     name?: string;

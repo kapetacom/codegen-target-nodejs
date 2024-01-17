@@ -6,79 +6,6 @@ spec:
   target:
     kind: kapeta/language-target-nodejs:local
   entities:
-    types:
-      - type: enum
-        name: State
-        description: A state
-        values:
-          - OK
-          - NOT_OK
-      - type: dto
-        name: Task
-        description: Task type
-        properties:
-          id:
-            description: Primary ID of task
-            type: string
-            properties: null
-            required: true
-          userId:
-            description: null
-            type: string
-            properties: null
-            required: true
-          title:
-            description: Name of the task
-            type: string
-            properties: null
-            required: true
-          description:
-            description: Longer description
-            type: string
-            properties: null
-            required: false
-          done:
-            description: Defines if the task is done or not
-            type: boolean
-            properties: null
-            required: true
-          age:
-            description: Age of the task
-            type: integer
-            properties: null
-            required: false
-          created:
-            description: Created date
-            type: date
-            properties: null
-            required: true
-          metadata:
-            ref: any
-            required: true
-      - type: dto
-        name: User
-        description: User - from Users block
-        properties:
-          id:
-            description: null
-            type: string
-            properties: null
-            required: true
-          name:
-            description: null
-            type: string
-            properties: null
-            required: false
-          email:
-            description: null
-            type: string
-            properties: null
-            required: true
-          state:
-            description: null
-            ref: State
-            properties: null
-            required: true
     source:
       type: kapeta-dsl
       value: |+
@@ -86,7 +13,7 @@ spec:
         //A state
         enum State {
         	OK, 
-        	NOT_OK2
+        	NOT_OK
         }
 
         //Task type
@@ -97,16 +24,23 @@ spec:
         	//Name of the task
         	title: string	
         	//Longer description
-        	description: string	
+        	description?: string	
 
         	//Defines if the task is done or not
         	done: boolean
+    
+            //Age of the task    
+            age?: number
+    
+            //Created date
+            created: date
+            metadata: any
         }
 
         //User - from Users block
         User {	
         	id: string	
-        	name: string	
+        	name?: string	
         	email: string
         	state: State
         }

@@ -6,25 +6,6 @@ spec:
   target:
     kind: kapeta/language-target-nodejs:local
   entities:
-    types:
-      - name: User
-        type: dto
-        description: |-
-          User object
-          More lines
-        properties:
-          id:
-            type: string
-            properties: null
-            required: true
-          name:
-            type: string
-            properties: null
-            required: false
-          email:
-            type: string
-            properties: null
-            required: true
     source:
       type: kapeta-dsl
       value: |-
@@ -32,24 +13,20 @@ spec:
         //More lines
         User {	
         	id: string	
-        	name: string	
+        	name?: string	
         	email: string
         }
   configuration:
-    types:
-      - type: dto
-        name: EmailConfig
-        description: Configuration for e-mails
-        properties:
-          from:
-            type: string
-            defaultValue: "'support@kapeta.com'"
-            description: Sender for e-mails. Note that you should be allowed to send e-mails
-              from this domain and user
-            properties: null
-            secret: false
-            required: false
-            global: true
+    source:
+      type: kapeta-dsl
+      value: |-
+        //Configuration for e-mails
+        EmailConfig {
+        	//Sender for e-mails. Note that you should be allowed to send e-mails from this domain and user
+            @global
+        	from: string = 'support@kapeta.com'
+        }
+
   consumers:
     - kind: kapeta/resource-type-postgresql:0.0.2
       metadata:

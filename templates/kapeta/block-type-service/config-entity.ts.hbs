@@ -1,35 +1,20 @@
-{{#each data.spec.configuration.types}}
+{{#kaplang-config data.spec.configuration.source}}
     //#FILENAME:src/.generated/config/{{type name}}Config.ts:write-always
     import Config from "@kapeta/sdk-config";
-    {{#hasTypeReference this 'Instance'}}
+    {{#kaplang-has-reference this 'Instance'}}
         import { InstanceValue } from "@kapeta/sdk-config";
-    {{/hasTypeReference}}
-    {{#hasTypeReference this 'InstanceProvider'}}
+    {{/kaplang-has-reference}}
+    {{#kaplang-has-reference this 'InstanceProvider'}}
         import { InstanceProviderValue } from "@kapeta/sdk-config";
-    {{/hasTypeReference}}
-    {{#eachTypeReference this all=true}}
-        import { {{name}} } from "./{{name}}Config";
-    {{/eachTypeReference}}
+    {{/kaplang-has-reference}}
 
-    {{#switch this.type}}
-        {{#case 'dto'}}
-            export interface {{type this.name}}Config {
+    {{typescript-imports}}
+    {{typescript-config this}}
 
-            {{#eachProperty this.properties}}
-                {{propertyId}}:{{fieldtype this}};
-            {{/eachProperty}}
+    {{#when type type='datatype'}}
+        export const get{{type name}}Config = (defaultValue:{{type name}}Config):{{type name}}Config => {
+            return Config.getOrDefault<{{type name}}Config>('{{string name}}', defaultValue);
+        };
+    {{/when}}
 
-            }
-
-            export const get{{type this.name}}Config = (defaultValue:{{type this.name}}Config):{{type this.name}}Config => {
-                return Config.getOrDefault<{{type this.name}}Config>('{{string this.name}}', defaultValue);
-            };
-        {{/case}}
-        {{#case 'enum'}}
-            export enum {{type this.name}}Config {
-            {{enumValues this.values}}
-            }
-        {{/case}}
-    {{/switch}}
-
-{{/each}}
+{{/kaplang-config}}
