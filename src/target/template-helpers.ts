@@ -12,7 +12,14 @@ import {
     DSLEntity,
     ucFirst,
     DSLReferenceResolver,
-    TypescriptWriter, DSLType, asComplexType, RESTMethodReader, isVoid, RESTMethodParameterReader
+    TypescriptWriter,
+    DSLType,
+    asComplexType,
+    RESTMethodReader,
+    isVoid,
+    RESTMethodParameterReader,
+    RESTControllerReader,
+    DSLController
 } from '@kapeta/kaplang-core';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
@@ -80,8 +87,28 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return Template.SafeString('');
     });
 
-    engine.registerHelper('expressPath', (path) => {
-        return path.replace(/\{([^}]+)}/g, ':$1');
+    const resolvePath = (path:string, options:HelperOptions) => {
+        let fullPath = path;
+        if (options.hash.base) {
+            let baseUrl:string = options.hash.base;
+            while (baseUrl.endsWith('/')) {
+                baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+            }
+            if (!fullPath.startsWith('/')) {
+                fullPath = '/' + fullPath;
+            }
+
+            fullPath = baseUrl + fullPath;
+        }
+        return fullPath;
+    }
+
+    engine.registerHelper('path', resolvePath);
+
+    engine.registerHelper('expressPath', (path, options:HelperOptions) => {
+        let fullPath = resolvePath(path, options);
+
+        return fullPath.replace(/\{([^}]+)}/g, ':$1');
     });
 
     const $toTypeMap = (method: RESTMethodReader, transport: string) => {
@@ -204,4 +231,11 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
             throw e;
         }
     });
+
+    engine.registerHelper('controller-name', (entity: RESTControllerReader) => {
+        if (entity.namespace) {
+            return `${ucFirst(entity.namespace)}${ucFirst(entity.name)}`;
+        }
+        return ucFirst(entity.name);
+    })
 };

@@ -1,4 +1,4 @@
-//#FILENAME:src/.generated/clients/{{type name}}Client.ts:write-always
+//#FILENAME:src/.generated/clients/{{controller-name this}}Client.ts:write-always
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
@@ -11,28 +11,28 @@ import { getJWTToken } from "@kapeta/sdk-auth-jwt";
 
 
 /**
- * Creates a new ready {{type name}}Client.
+ * Creates a new ready {{controller-name this}}Client.
  *
  * See https://github.com/kapetacom/sdk-nodejs-rest-client for more information.
  */
-export async function create{{type name}}Client(configProvider:ConfigProvider):Promise<{{type name}}Client> {
-    return new {{type name}}Client(false).$withConfigProvider(configProvider);
+export async function create{{controller-name this}}Client(configProvider:ConfigProvider):Promise<{{controller-name this}}Client> {
+    return new {{controller-name this}}Client(false).$withConfigProvider(configProvider);
 }
 
 /**
  * A client for the {{name}} API.
  *
  * Note that this client is not ready to use until it is configured with a ```ConfigProvider```.
- * This happens automatically when using the ```create{{type name}}Client``` function or
+ * This happens automatically when using the ```create{{controller-name this}}Client``` function or
  * setting ```autoInit``` to true (the default).
  *
  * If you want to configure the client manually, set autoInit to false and call ```$withConfigProvider```.
  *
- * Recommended method is using ```create{{type name}}Client(configProvider:ConfigProvider)```;
+ * Recommended method is using ```create{{controller-name this}}Client(configProvider:ConfigProvider)```;
  *
  * See https://github.com/kapetacom/sdk-nodejs-rest-client for more information.
  */
-export class {{type name}}Client extends RestClient {
+export class {{controller-name this}}Client extends RestClient {
 
         constructor(autoInit:boolean = true) {
             super('{{string name}}', autoInit);
@@ -62,7 +62,7 @@ export class {{type name}}Client extends RestClient {
          * Throws if service responds with a status code higher than 399 and not 404.
          * For 404 responses, null is returned.
          *
-         * HTTP: {{./method}} {{path}}
+         * HTTP: {{./method}} {{path path base=../path}}
          */
         async {{method name}}(
                 {{#arguments parameters}}
@@ -72,7 +72,7 @@ export class {{type name}}Client extends RestClient {
 
             {{#ifValueType returnType}}const result = {{/ifValueType}}await this.$execute(
                 '{{string method}}',
-                '{{string path}}',
+                '{{string (path path base=../path)}}',
                 [
                     {{#arguments parameters}}
                         {
@@ -97,7 +97,7 @@ export class {{type name}}Client extends RestClient {
          *
          * Creates a request that can be manipulated before sending it with the ```call()``` method.
          *
-         * HTTP: {{./method}} {{path}}
+         * HTTP: {{./method}} {{path path base=../path}}
          */
         {{method name}}Request(
                 {{#arguments parameters}}
@@ -107,7 +107,7 @@ export class {{type name}}Client extends RestClient {
 
             return this.$create(
                 '{{string method}}',
-                '{{string path}}',
+                '{{string (path path base=../path)}}',
                 [
                     {{#arguments parameters}}
                         {

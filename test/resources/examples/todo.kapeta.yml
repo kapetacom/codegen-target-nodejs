@@ -94,6 +94,16 @@ spec:
             //Delete user by id
             @DELETE("/users/{id}")
             deleteUser(@Path id:string, @Body metadata:Map<string,State>, tags:Set<string>):void
+            
+            controller Inner('/v2/users') {
+              //Get users by id
+              @GET("/{id}")
+              getUserById(@Path id:string, @Header metadata?:any):User
+  
+              //Delete user by id
+              @DELETE("/{id}")
+              deleteUser(@Path id:string, @Body metadata:Map<string,State>, tags:Set<string>):void
+            }
   providers:
     - kind: kapeta/resource-type-rest-api:0.0.4
       metadata:
@@ -109,10 +119,12 @@ spec:
             //Mark task as done
             @POST("/tasks/{id}/done")
             markAsDone(@Path id:string):void
-
-            //Delete task
-            @DELETE("/tasks/{id}")
-            removeTask(@Path id:string):void
-
-            @GET("/tasks/{id}")
-            getTask(@Path id:string):Task
+            
+            controller Inner('/v2/tasks') {
+              //Delete task
+              @DELETE("/{id}")
+              removeTask(@Path id:string):void
+              
+              @GET("/{id}")
+              getTask(@Path id:string):Task
+            }

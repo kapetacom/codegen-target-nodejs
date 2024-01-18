@@ -22,26 +22,8 @@ export type MarkAsDoneRequest<Locals extends Record<string, any> = Record<string
 >;
 export type MarkAsDoneResponse<Locals extends Record<string, any> = Record<string, any>> = Response<void, Locals>;
 
-export type RemoveTaskRequest<Locals extends Record<string, any> = Record<string, any>> = Request<
-    { id: string },
-    void,
-    void,
-    void,
-    Locals
->;
-export type RemoveTaskResponse<Locals extends Record<string, any> = Record<string, any>> = Response<void, Locals>;
-
-export type GetTaskRequest<Locals extends Record<string, any> = Record<string, any>> = Request<
-    { id: string },
-    Task,
-    void,
-    void,
-    Locals
->;
-export type GetTaskResponse<Locals extends Record<string, any> = Record<string, any>> = Response<Task, Locals>;
-
 /**
- * Defines the methods and routes for the tasks API
+ * Defines the types for methods and routes of the Tasks API
  */
 export interface TasksRoutes<Locals extends Record<string, any> = Record<string, any>> {
     /**
@@ -55,16 +37,4 @@ export interface TasksRoutes<Locals extends Record<string, any> = Record<string,
      * HTTP: POST /tasks/:id/done
      */
     markAsDone(req: MarkAsDoneRequest<Locals>, res: MarkAsDoneResponse<Locals>): void | Promise<void>;
-
-    /**
-     * Delete task
-     * HTTP: DELETE /tasks/:id
-     */
-    removeTask(req: RemoveTaskRequest<Locals>, res: RemoveTaskResponse<Locals>): void | Promise<void>;
-
-    /**
-     *
-     * HTTP: GET /tasks/:id
-     */
-    getTask(req: GetTaskRequest<Locals>, res: GetTaskResponse<Locals>): void | Promise<void>;
 }

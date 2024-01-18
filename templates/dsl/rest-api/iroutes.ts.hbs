@@ -1,4 +1,4 @@
-//#FILENAME:src/.generated/rest/{{type name}}Routes.ts:write-always
+//#FILENAME:src/.generated/rest/{{controller-name this}}Routes.ts:write-always
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
@@ -11,15 +11,15 @@ import type { Request, Response } from "express";
 {{/methods}}
 
 /**
-* Defines the methods and routes for the {{name}} API
+* Defines the types for methods and routes of the {{controller-name this}} API
 */
-export interface {{type name}}Routes<Locals extends Record<string, any> = Record<string, any>>  {
+export interface {{controller-name this}}Routes<Locals extends Record<string, any> = Record<string, any>>  {
 
 {{#methods methods}}
 
     /**
     * {{comment description}}
-    * HTTP: {{./method}} {{expressPath path}}
+    * HTTP: {{./method}} {{expressPath path base=../path}}
     */
     {{method name}}(req: {{type name}}Request<Locals>, res:{{type name}}Response<Locals>):void|Promise<void>;
 
