@@ -88,7 +88,7 @@ export class {{controller-name this}}Client extends RestClient {
                 if (result === null) {
                     return null;
                 }
-                return result as {{returnType ../returnType}};
+                return result as {{returnType returnType}};
             {{/ifValueType}}
         }
 

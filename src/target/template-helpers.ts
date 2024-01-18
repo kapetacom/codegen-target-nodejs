@@ -46,6 +46,23 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return parsedEntities as DSLData[];
     }
 
+
+    const resolvePath = (path:string, options:HelperOptions) => {
+        let fullPath = path;
+        if (options.hash.base) {
+            let baseUrl:string = options.hash.base;
+            while (baseUrl.endsWith('/')) {
+                baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+            }
+            if (!fullPath.startsWith('/')) {
+                fullPath = '/' + fullPath;
+            }
+
+            fullPath = baseUrl + fullPath;
+        }
+        return fullPath;
+    }
+
     engine.registerHelper('valueType', (value: DSLType) => {
         const type = asComplexType(value);
         if (TypeMap[type.name]) {
@@ -61,6 +78,8 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
         return Template.SafeString(TypescriptWriter.toTypeCode(value));
     });
+
+    engine.registerHelper('path', resolvePath);
 
     engine.registerHelper('consumes-databases', function (this: any, options) {
         const consumers = context.spec.consumers;
@@ -80,30 +99,6 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return '';
     });
 
-    engine.registerHelper('ifValueType', (type:DSLType, options:HelperOptions) => {
-        if (!isVoid(type)) {
-            return Template.SafeString(options.fn(this));
-        }
-        return Template.SafeString('');
-    });
-
-    const resolvePath = (path:string, options:HelperOptions) => {
-        let fullPath = path;
-        if (options.hash.base) {
-            let baseUrl:string = options.hash.base;
-            while (baseUrl.endsWith('/')) {
-                baseUrl = baseUrl.substring(0, baseUrl.length - 1);
-            }
-            if (!fullPath.startsWith('/')) {
-                fullPath = '/' + fullPath;
-            }
-
-            fullPath = baseUrl + fullPath;
-        }
-        return fullPath;
-    }
-
-    engine.registerHelper('path', resolvePath);
 
     engine.registerHelper('expressPath', (path, options:HelperOptions) => {
         let fullPath = resolvePath(path, options);
@@ -237,5 +232,5 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
             return `${ucFirst(entity.namespace)}${ucFirst(entity.name)}`;
         }
         return ucFirst(entity.name);
-    })
+    });
 };
