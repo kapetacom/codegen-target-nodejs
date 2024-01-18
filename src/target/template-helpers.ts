@@ -226,11 +226,4 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
             throw e;
         }
     });
-
-    engine.registerHelper('controller-name', (entity: RESTControllerReader) => {
-        if (entity.namespace) {
-            return `${ucFirst(entity.namespace)}${ucFirst(entity.name)}`;
-        }
-        return ucFirst(entity.name);
-    });
 };
