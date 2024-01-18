@@ -84,103 +84,21 @@ spec:
       metadata:
         name: users
       spec:
-        methods:
-          getUserById:
-            responseType:
-              ref: User
-            method: GET
-            path: /users/{id}
-            description: Get users by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              metadata:
-                ref: any
-                transport: HEADER
-                optional: true
-          deleteUser:
-            responseType:
-              type: void
-            method: DELETE
-            path: /users/{id}
-            description: Delete user by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              metadata:
-                ref: Map<string,State>
-                transport: BODY
-              tags:
-                ref: Set<string>
-                transport: QUERY
         source:
           type: kapeta-dsl
           value: |-
             //Get users by id
             @GET("/users/{id}")
-            getUserById(@Path id:string):User
+            getUserById(@Path id:string, @Header metadata?:any):User
 
             //Delete user by id
             @DELETE("/users/{id}")
-            deleteUser(@Path id:string):void
+            deleteUser(@Path id:string, @Body metadata:Map<string,State>, tags:Set<string>):void
   providers:
     - kind: kapeta/resource-type-rest-api:0.0.4
       metadata:
         name: tasks
       spec:
-        methods:
-          addTask:
-            responseType:
-              type: void
-            method: POST
-            path: /tasks/{userId}/{id}
-            description: Add task for user
-            arguments:
-              userId:
-                type: string
-                transport: PATH
-              id:
-                type: string
-                transport: PATH
-              task:
-                ref: Task
-                transport: BODY
-              overwrite:
-                type: boolean
-                transport: HEADER
-                argument: X-Kapeta-Overwrite
-          markAsDone:
-            responseType:
-              type: void
-            method: POST
-            path: /tasks/{id}/done
-            description: Mark task as done
-            arguments:
-              id:
-                type: string
-                transport: PATH
-          removeTask:
-            responseType:
-              type: void
-            method: DELETE
-            path: /tasks/{id}
-            description: Delete task
-            arguments:
-              id:
-                type: string
-                transport: PATH
-          getTask:
-            responseType:
-              ref: Task
-            method: GET
-            path: /tasks/{id}
-            description: null
-            arguments:
-              id:
-                type: string
-                transport: PATH
         source:
           type: kapeta-dsl
           value: |-
@@ -196,6 +114,5 @@ spec:
             @DELETE("/tasks/{id}")
             removeTask(@Path id:string):void
 
-            //Get task by id
             @GET("/tasks/{id}")
             getTask(@Path id:string):Task

@@ -1,14 +1,15 @@
 {{#switch type}}
     {{#case 'controller'}}
-        {{> dsl/rest-api/restresource.java}}
-        {{> dsl/rest-api/restservice.java}}
-        {{> dsl/rest-api/restserviceimpl.java}}
+        {{#kaplang-reader-rest-controller}}
+            {{> dsl/rest-api/iroutes.ts.hbs}}
+            {{> dsl/rest-api/routes.ts.hbs}}
+            {{> dsl/rest-api/routeservice.ts.hbs}}
+        {{/kaplang-reader-rest-controller}}
     {{/case}}
     {{#case 'datatype'}}
-        {{> dsl/entitybase.java}}
-        {{> dsl/entity.java}}
+        {{> dsl/entity.ts.hbs}}
     {{/case}}
     {{#case 'enum'}}
-        {{> dsl/entitybase.java}}
+        {{> dsl/entity.ts.hbs}}
     {{/case}}
 {{/switch}}

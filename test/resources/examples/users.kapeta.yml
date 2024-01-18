@@ -45,60 +45,16 @@ spec:
       metadata:
         name: users
       spec:
-        methods:
-          createUser:
-            responseType:
-              ref: User
-            method: POST
-            path: /users/{id}
-            description: Create user
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              user:
-                ref: User
-                transport: QUERY
-              metadata:
-                ref: Map<string,string>
-                transport: BODY
-              tags:
-                ref: Set<string>
-                transport: QUERY
-                optional: true
-          getUser:
-            responseType:
-              ref: User
-            method: GET
-            path: /users/{id}
-            description: Get user by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              metadata:
-                ref: any
-                transport: HEADER
-          deleteUser:
-            responseType:
-              type: void
-            method: DELETE
-            path: /users/{id}
-            description: Delete user by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
         source:
           type: kapeta-dsl
           value: |-
             //Create user
             @POST("/users/{id}")
-            createUser(@Path id:string, @Query user:User):User
+            createUser(@Path id:string, @Query user:User, @Body metadata:Map<string,string>, @Query tags?:Set<string>):User
 
             //Get user by id
             @GET("/users/{id}")
-            getUser(@Path id:string):User
+            getUser(@Path id:string, @Header metadata:any):User
 
             //Delete user by id
             @DELETE("/users/{id}")

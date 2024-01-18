@@ -3,8 +3,8 @@
 //
 import { RestClient, RestClientRequest } from '@kapeta/sdk-rest-client';
 import { ConfigProvider } from '@kapeta/sdk-config';
-import { User } from '../entities/User';
-import { State } from '../entities/State';
+import { User } from 'generated:entities/User';
+import { State } from 'generated:entities/State';
 import { getJWTToken } from '@kapeta/sdk-auth-jwt';
 
 /**
@@ -89,7 +89,7 @@ export class UsersClient extends RestClient {
      *
      * HTTP: DELETE /users/{id}
      */
-    async deleteUser(id: string, metadata: Map<string, State>, tags: Set<string>): Promise<void> {
+    async deleteUser(id: string, metadata: { [key: string]: State }, tags: Set<string>): Promise<void> {
         await this.$execute('DELETE', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'BODY' },
@@ -104,7 +104,7 @@ export class UsersClient extends RestClient {
      *
      * HTTP: DELETE /users/{id}
      */
-    deleteUserRequest(id: string, metadata: Map<string, State>, tags: Set<string>): RestClientRequest<void> {
+    deleteUserRequest(id: string, metadata: { [key: string]: State }, tags: Set<string>): RestClientRequest<void> {
         return this.$create('DELETE', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'BODY' },

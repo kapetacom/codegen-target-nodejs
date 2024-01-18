@@ -1,12 +1,13 @@
 {{#switch type}}
     {{#case 'controller'}}
-        {{> dsl/rest-client/restclient.java}}
+        {{#kaplang-reader-rest-controller}}
+            {{> dsl/rest-client/restclient.ts.hbs}}
+        {{/kaplang-reader-rest-controller}}
     {{/case}}
     {{#case 'datatype'}}
-        {{> dsl/entitybase.java}}
-        {{> dsl/entity.java}}
+        {{> dsl/entity.ts.hbs}}
     {{/case}}
     {{#case 'enum'}}
-        {{> dsl/entitybase.java}}
+        {{> dsl/entity.ts.hbs}}
     {{/case}}
 {{/switch}}

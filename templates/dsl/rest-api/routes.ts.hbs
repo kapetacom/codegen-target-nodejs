@@ -1,0 +1,34 @@
+//#FILENAME:src/.generated/rest/{{lowercase name}}-routes.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+import {Router} from "express";
+import {asyncHandler} from "@kapeta/sdk-server";
+import { ConfigProvider } from '@kapeta/sdk-config';
+import { restAPIMiddleware } from "@kapeta/sdk-rest-route";
+import { create{{type name}}RouteService } from "../../service/{{type name}}RouteService";
+import { json } from "body-parser";
+
+/**
+ * creates all routes for the {{name}} API
+ */
+export const create{{type name}}Router = async (configProvider:ConfigProvider) => {
+    const router = Router();
+    router.use(json());
+    router.use(restAPIMiddleware);
+
+    const service = await create{{type name}}RouteService(configProvider);
+
+    {{#methods methods}}
+        // {{method name}}: Verify the method is available
+        if (!service.{{method name}}) {
+            throw new Error('REST resource service for "{{type ../name}}" is missing method: "{{method name}}"');
+        }
+
+        console.log('Publishing REST method: {{uppercase method}} {{expressPath path}}');
+        router.{{lowercase method}}('{{expressPath path}}', asyncHandler(service.{{method name}}.bind(service)));
+
+    {{/methods}}
+
+    return router;
+}

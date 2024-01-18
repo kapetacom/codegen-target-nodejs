@@ -1,0 +1,27 @@
+//#FILENAME:src/.generated/rest/{{type name}}Routes.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+import type { Request, Response } from "express";
+{{typescript-imports-dto raw}}
+
+{{#methods methods}}
+    export type {{type name}}Request<Locals extends Record<string, any> = Record<string, any>> =  Request<{{paramsMap this}},{{returnType returnType}}, {{bodyType this}}, {{queryMap this}}, Locals>;
+    export type {{type name}}Response<Locals extends Record<string, any> = Record<string, any>> = Response<{{returnType returnType}}, Locals>;
+{{/methods}}
+
+/**
+* Defines the methods and routes for the {{name}} API
+*/
+export interface {{type name}}Routes<Locals extends Record<string, any> = Record<string, any>>  {
+
+{{#methods methods}}
+
+    /**
+    * {{comment description}}
+    * HTTP: {{./method}} {{expressPath path}}
+    */
+    {{method name}}(req: {{type name}}Request<Locals>, res:{{type name}}Response<Locals>):void|Promise<void>;
+
+{{/methods}}
+}

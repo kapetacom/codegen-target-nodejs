@@ -3,17 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 import Handlebars = require('handlebars');
-import {parseEntities, Template, TypeLike} from '@kapeta/codegen-target';
+import {parseEntities, Template} from '@kapeta/codegen-target';
 import { HelperOptions } from 'handlebars';
-import { RESTMethod } from '@kapeta/ui-web-types';
 import { parseKapetaUri } from '@kapeta/nodejs-utils';
 import {
     DataTypeReader,
-    DSLData, DSLDataType,
+    DSLData,
     DSLEntity,
     ucFirst,
     DSLReferenceResolver,
-    TypescriptWriter
+    TypescriptWriter, DSLType, asComplexType, RESTMethodReader, isVoid, RESTMethodParameterReader
 } from '@kapeta/kaplang-core';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
@@ -40,74 +39,20 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return parsedEntities as DSLData[];
     }
 
-    const $fieldType = (value: TypeLike) => {
-        if (!value) {
-            return value;
+    engine.registerHelper('valueType', (value: DSLType) => {
+        const type = asComplexType(value);
+        if (TypeMap[type.name]) {
+            type.name = TypeMap[type.name];
         }
-
-        if (typeof value !== 'string') {
-            if (value.ref === 'any' || value.ref === 'any[]') {
-                return value.ref;
-            }
-
-            if (value.ref) {
-                value = value.ref.substring(0, 1).toUpperCase() + value.ref.substring(1);
-            } else if (value.type) {
-                value = value.type;
-            }
-        }
-
-        let type = value as string;
-        let array = false;
-        if (type.endsWith('[]')) {
-            type = type.substring(0, type.length - 2);
-            array = true;
-        }
-
-        if (type in TypeMap) {
-            type = TypeMap[type];
-        }
-
-        switch (type.toLowerCase()) {
-            case 'unknown':
-            case 'any':
-            case 'object':
-                value = `any${array ? '[]' : ''}`;
-                break;
-            case 'char':
-            case 'byte':
-                // either way will be converted to a string
-                value = 'string';
-                break;
-            case 'date':
-            case 'integer':
-            case 'int':
-            case 'float':
-            case 'double':
-            case 'long':
-            case 'short':
-                value = `number${array ? '[]' : ''}`;
-                break;
-            default:
-                value = `${type}${array ? '[]' : ''}`;
-                break;
-        }
-
-        return Template.SafeString(value);
-    };
-
-    engine.registerHelper('enumValues', (values: string[]) => {
-        return Template.SafeString('\t' + values.map((value) => `${value} = ${JSON.stringify(value)}`).join(',\n\t'));
+        return Template.SafeString(TypescriptWriter.toTypeCode(type));
     });
 
-    engine.registerHelper('fieldtype', $fieldType);
-
-    engine.registerHelper('returnType', (value) => {
+    engine.registerHelper('returnType', (value: DSLType) => {
         if (!value) {
             return 'void';
         }
 
-        return $fieldType(value);
+        return Template.SafeString(TypescriptWriter.toTypeCode(value));
     });
 
     engine.registerHelper('consumes-databases', function (this: any, options) {
@@ -128,9 +73,9 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return '';
     });
 
-    engine.registerHelper('ifValueType', (type, options) => {
-        if ((type?.type || type?.ref) && type?.type?.toLowerCase() !== 'void') {
-            return Template.SafeString(options.fn());
+    engine.registerHelper('ifValueType', (type:DSLType, options:HelperOptions) => {
+        if (!isVoid(type)) {
+            return Template.SafeString(options.fn(this));
         }
         return Template.SafeString('');
     });
@@ -139,50 +84,50 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return path.replace(/\{([^}]+)}/g, ':$1');
     });
 
-    const $toTypeMap = (method: RESTMethod, transport: string) => {
-        if (!method.arguments) {
+    const $toTypeMap = (method: RESTMethodReader, transport: string) => {
+        if (!method.parameters) {
             return Template.SafeString('void');
         }
 
-        const pathArguments = Object.entries(method.arguments).filter(
-            ([key, value]) => value.transport && value.transport.toLowerCase() === transport.toLowerCase()
+        const transportArgs:RESTMethodParameterReader[] = method.parameters.filter(
+            (value:RESTMethodParameterReader) => value.transport && value.transport.toLowerCase() === transport.toLowerCase()
         );
 
-        if (pathArguments.length === 0) {
+        if (transportArgs.length === 0) {
             return Template.SafeString('void');
         }
 
         return Template.SafeString(
             '{' +
-                pathArguments
-                    .map(([key, value]) => `'${key}'${value.optional ? '?' : ''}: ${$fieldType(value).toString()}`)
+                transportArgs
+                    .map((value) => `'${value.name}'${value.optional ? '?' : ''}: ${TypescriptWriter.toTypeCode(value.type)}`)
                     .join(', ') +
                 '}'
         );
     };
 
-    engine.registerHelper('paramsMap', (method: RESTMethod) => {
+    engine.registerHelper('paramsMap', (method: RESTMethodReader) => {
         return $toTypeMap(method, 'path');
     });
 
-    engine.registerHelper('queryMap', (method: RESTMethod) => {
+    engine.registerHelper('queryMap', (method: RESTMethodReader) => {
         return $toTypeMap(method, 'query');
     });
 
-    engine.registerHelper('bodyType', (method: RESTMethod) => {
-        if (!method.arguments) {
+    engine.registerHelper('bodyType', (method: RESTMethodReader) => {
+        if (!method.parameters) {
             return Template.SafeString('void');
         }
 
-        const bodyArgument = Object.entries(method.arguments).find(
-            ([key, value]) => value.transport && value.transport.toLowerCase() === 'body'
+        const bodyArgument = method.parameters.find(
+            (value) => value.transport && value.transport.toLowerCase() === 'body'
         );
 
-        if (!bodyArgument || !bodyArgument[1]) {
+        if (!bodyArgument) {
             return Template.SafeString('void');
         }
 
-        return $fieldType(bodyArgument[1]);
+        return TypescriptWriter.toTypeCode(bodyArgument.type);
     });
 
     engine.registerHelper('fullName', (value: string) => {
@@ -190,10 +135,10 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return uri.fullName;
     });
 
-    engine.registerHelper('typescript-imports-dto', function (this: DSLEntity, options: HelperOptions) {
+    engine.registerHelper('typescript-imports-dto', function (arg:DSLEntity) {
         const entities = getParsedEntities();
         const resolver = new DSLReferenceResolver();
-        const referencesEntities = resolver.resolveReferencesFrom([this], entities);
+        const referencesEntities = resolver.resolveReferencesFrom([arg], entities);
 
         if (referencesEntities.length === 0) {
             return '';
@@ -213,10 +158,10 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         );
     });
 
-    engine.registerHelper('typescript-imports-config', function (this: DSLEntity, options: HelperOptions) {
+    engine.registerHelper('typescript-imports-config', function (arg:DSLEntity) {
         const entities = getParsedEntities();
         const resolver = new DSLReferenceResolver();
-        const referencesEntities = resolver.resolveReferencesFrom([this], entities);
+        const referencesEntities = resolver.resolveReferencesFrom([arg], entities);
 
         if (referencesEntities.length === 0) {
             return '';
