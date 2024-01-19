@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import Handlebars = require('handlebars');
-import {parseEntities, Template} from '@kapeta/codegen-target';
+import { parseEntities, Template } from '@kapeta/codegen-target';
 import { HelperOptions } from 'handlebars';
 import { parseKapetaUri } from '@kapeta/nodejs-utils';
 import {
@@ -19,14 +19,13 @@ import {
     isVoid,
     RESTMethodParameterReader,
     RESTControllerReader,
-    DSLController
+    DSLController,
 } from '@kapeta/kaplang-core';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 export type HandleBarsType = typeof Handlebars;
 
 export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: any): void => {
-
     const TypeMap: { [key: string]: string } = {
         Instance: 'InstanceValue',
         InstanceProvider: 'InstanceProviderValue',
@@ -34,8 +33,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
     let parsedEntities: DSLData[] | undefined = undefined;
     function getParsedEntities(): DSLData[] {
-        if (!parsedEntities &&
-            context.spec?.entities?.source?.value) {
+        if (!parsedEntities && context.spec?.entities?.source?.value) {
             parsedEntities = parseEntities(context.spec?.entities?.source?.value);
         }
 
@@ -46,11 +44,10 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return parsedEntities as DSLData[];
     }
 
-
-    const resolvePath = (path:string, options:HelperOptions) => {
+    const resolvePath = (path: string, options: HelperOptions) => {
         let fullPath = path;
         if (options.hash.base) {
-            let baseUrl:string = options.hash.base;
+            let baseUrl: string = options.hash.base;
             while (baseUrl.endsWith('/')) {
                 baseUrl = baseUrl.substring(0, baseUrl.length - 1);
             }
@@ -61,7 +58,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
             fullPath = baseUrl + fullPath;
         }
         return fullPath;
-    }
+    };
 
     engine.registerHelper('valueType', (value: DSLType) => {
         const type = asComplexType(value);
@@ -99,8 +96,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return '';
     });
 
-
-    engine.registerHelper('expressPath', (path, options:HelperOptions) => {
+    engine.registerHelper('expressPath', (path, options: HelperOptions) => {
         let fullPath = resolvePath(path, options);
 
         return fullPath.replace(/\{([^}]+)}/g, ':$1');
@@ -111,8 +107,9 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
             return Template.SafeString('void');
         }
 
-        const transportArgs:RESTMethodParameterReader[] = method.parameters.filter(
-            (value:RESTMethodParameterReader) => value.transport && value.transport.toLowerCase() === transport.toLowerCase()
+        const transportArgs: RESTMethodParameterReader[] = method.parameters.filter(
+            (value: RESTMethodParameterReader) =>
+                value.transport && value.transport.toLowerCase() === transport.toLowerCase()
         );
 
         if (transportArgs.length === 0) {
@@ -122,7 +119,10 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return Template.SafeString(
             '{' +
                 transportArgs
-                    .map((value) => `'${value.name}'${value.optional ? '?' : ''}: ${TypescriptWriter.toTypeCode(value.type)}`)
+                    .map(
+                        (value) =>
+                            `'${value.name}'${value.optional ? '?' : ''}: ${TypescriptWriter.toTypeCode(value.type)}`
+                    )
                     .join(', ') +
                 '}'
         );
@@ -157,7 +157,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         return uri.fullName;
     });
 
-    engine.registerHelper('typescript-imports-dto', function (arg:DSLEntity) {
+    engine.registerHelper('typescript-imports-dto', function (arg: DSLEntity) {
         const entities = getParsedEntities();
         const resolver = new DSLReferenceResolver();
         const referencesEntities = resolver.resolveReferencesFrom([arg], entities);
@@ -180,7 +180,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         );
     });
 
-    engine.registerHelper('typescript-imports-config', function (arg:DSLEntity) {
+    engine.registerHelper('typescript-imports-config', function (arg: DSLEntity) {
         const entities = getParsedEntities();
         const resolver = new DSLReferenceResolver();
         const referencesEntities = resolver.resolveReferencesFrom([arg], entities);
@@ -219,7 +219,7 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
         try {
             // All config entities are postfixed with Config
-            const copy = {...entity, name: entity.name + 'Config'};
+            const copy = { ...entity, name: entity.name + 'Config' };
             return Template.SafeString(writer.write([copy]));
         } catch (e) {
             console.warn('Failed to write entity', entity);
