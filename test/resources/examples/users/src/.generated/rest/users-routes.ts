@@ -9,7 +9,7 @@ import { createUsersRouteService } from '../../service/UsersRouteService';
 import { json } from 'body-parser';
 
 /**
- * creates all routes for the users API
+ * creates all routes for the Users API
  */
 export const createUsersRouter = async (configProvider: ConfigProvider) => {
     const router = Router();

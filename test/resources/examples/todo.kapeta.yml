@@ -6,109 +6,71 @@ spec:
   target:
     kind: kapeta/language-target-nodejs:local
   entities:
-    types:
-      - type: enum
-        name: State
-        description: A state
-        values:
-          - OK
-          - NOT_OK
-      - type: dto
-        name: Task
-        description: Task type
-        properties:
-          id:
-            description: Primary ID of task
-            type: string
-            properties: null
-            required: true
-          userId:
-            description: null
-            type: string
-            properties: null
-            required: true
-          title:
-            description: Name of the task
-            type: string
-            properties: null
-            required: true
-          description:
-            description: Longer description
-            type: string
-            properties: null
-            required: false
-          done:
-            description: Defines if the task is done or not
-            type: boolean
-            properties: null
-            required: true
-          age:
-            description: Age of the task
-            type: integer
-            properties: null
-            required: false
-          created:
-            description: Created date
-            type: date
-            properties: null
-            required: true
-          metadata:
-            ref: any
-            required: true
-      - type: dto
-        name: User
-        description: User - from Users block
-        properties:
-          id:
-            description: null
-            type: string
-            properties: null
-            required: true
-          name:
-            description: null
-            type: string
-            properties: null
-            required: false
-          email:
-            description: null
-            type: string
-            properties: null
-            required: true
-          state:
-            description: null
-            ref: State
-            properties: null
-            required: true
     source:
       type: kapeta-dsl
       value: |+
+        @Native("@kapeta/ui-web-types")
+        type SomeNativeType {
+            id: string
+            name: string
+        }
         
         //A state
         enum State {
         	OK, 
-        	NOT_OK2
+        	NOT_OK
+        }
+        
+        Idable {
+            //Primary ID
+            id: string
         }
 
         //Task type
-        Task {	
-        	//Primary ID of task
-        	id: string	
+        Task extends Idable {
         	userId: string	
         	//Name of the task
         	title: string	
         	//Longer description
-        	description: string	
+        	description?: string	
 
         	//Defines if the task is done or not
         	done: boolean
+    
+            //Age of the task    
+            age?: number
+    
+            //Created date
+            created: date
+        
+            metadata: any
+        
+            someNativeType: SomeNativeType
+        
+            details: {
+                innerProp: string
+                
+                moreDetails: {
+                    innerProp2: string
+                }
+            }
         }
 
         //User - from Users block
-        User {	
-        	id: string	
-        	name: string	
+        User extends Idable {	
+        	name?: string	
         	email: string
         	state: State
+        }
+        
+        Page<T> {
+            content: T[]
+        }
+        
+        //User page
+        UserPage extends Page<User> {
+            //Total number of users
+            total: number
         }
 
   consumers:
@@ -122,103 +84,31 @@ spec:
       metadata:
         name: users
       spec:
-        methods:
-          getUserById:
-            responseType:
-              ref: User
-            method: GET
-            path: /users/{id}
-            description: Get users by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              metadata:
-                ref: any
-                transport: HEADER
-                optional: true
-          deleteUser:
-            responseType:
-              type: void
-            method: DELETE
-            path: /users/{id}
-            description: Delete user by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              metadata:
-                ref: Map<string,State>
-                transport: BODY
-              tags:
-                ref: Set<string>
-                transport: QUERY
         source:
           type: kapeta-dsl
           value: |-
             //Get users by id
             @GET("/users/{id}")
-            getUserById(@Path id:string):User
+            getUserById(@Path id:string, @Header metadata?:any):User
 
             //Delete user by id
             @DELETE("/users/{id}")
-            deleteUser(@Path id:string):void
+            deleteUser(@Path id:string, @Body metadata:Map<string,State>, tags:Set<string>):void
+            
+            controller Inner('/v2/users') {
+              //Get users by id
+              @GET("/{id}")
+              getUserById(@Path id:string, @Header metadata?:any):User
+  
+              //Delete user by id
+              @DELETE("/{id}")
+              deleteUser(@Path id:string, @Body metadata:Map<string,State>, tags:Set<string>):void
+            }
   providers:
     - kind: kapeta/resource-type-rest-api:0.0.4
       metadata:
         name: tasks
       spec:
-        methods:
-          addTask:
-            responseType:
-              type: void
-            method: POST
-            path: /tasks/{userId}/{id}
-            description: Add task for user
-            arguments:
-              userId:
-                type: string
-                transport: PATH
-              id:
-                type: string
-                transport: PATH
-              task:
-                ref: Task
-                transport: BODY
-              overwrite:
-                type: boolean
-                transport: HEADER
-                argument: X-Kapeta-Overwrite
-          markAsDone:
-            responseType:
-              type: void
-            method: POST
-            path: /tasks/{id}/done
-            description: Mark task as done
-            arguments:
-              id:
-                type: string
-                transport: PATH
-          removeTask:
-            responseType:
-              type: void
-            method: DELETE
-            path: /tasks/{id}
-            description: Delete task
-            arguments:
-              id:
-                type: string
-                transport: PATH
-          getTask:
-            responseType:
-              ref: Task
-            method: GET
-            path: /tasks/{id}
-            description: null
-            arguments:
-              id:
-                type: string
-                transport: PATH
         source:
           type: kapeta-dsl
           value: |-
@@ -229,11 +119,12 @@ spec:
             //Mark task as done
             @POST("/tasks/{id}/done")
             markAsDone(@Path id:string):void
-
-            //Delete task
-            @DELETE("/tasks/{id}")
-            removeTask(@Path id:string):void
-
-            //Get task by id
-            @GET("/tasks/{id}")
-            getTask(@Path id:string):Task
+            
+            controller Inner('/v2/tasks') {
+              //Delete task
+              @DELETE("/{id}")
+              removeTask(@Path id:string):void
+              
+              @GET("/{id}")
+              getTask(@Path id:string):Task
+            }

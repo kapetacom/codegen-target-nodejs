@@ -28,21 +28,5 @@ export const createTasksRouteService = async (configProvider: ConfigProvider): P
         markAsDone(req, res): void {
             res.sendError('REST resource method not implemented: "markAsDone"', 501);
         },
-
-        /**
-         * Delete task
-         * HTTP: DELETE /tasks/:id
-         */
-        removeTask(req, res): void {
-            res.sendError('REST resource method not implemented: "removeTask"', 501);
-        },
-
-        /**
-         *
-         * HTTP: GET /tasks/:id
-         */
-        getTask(req, res): void {
-            res.sendError('REST resource method not implemented: "getTask"', 501);
-        },
     };
 };

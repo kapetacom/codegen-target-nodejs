@@ -1,43 +1,41 @@
-//#FILENAME:src/.generated/clients/{{type data.metadata.name}}Client.ts:write-always
+//#FILENAME:src/.generated/clients/{{controller-name this}}Client.ts:write-always
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
 import { RestClient, RestClientRequest} from '@kapeta/sdk-rest-client';
 import { ConfigProvider } from '@kapeta/sdk-config';
-{{#eachTypeReference data.spec.methods all=true}}
-import { {{type name}} } from "../entities/{{type name}}";
-{{/eachTypeReference}}
+{{typescript-imports-dto raw}}
 {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }}
 import { getJWTToken } from "@kapeta/sdk-auth-jwt";
 {{/usesAnyOf}}
 
 
 /**
- * Creates a new ready {{type data.metadata.name}}Client.
+ * Creates a new ready {{controller-name this}}Client.
  *
  * See https://github.com/kapetacom/sdk-nodejs-rest-client for more information.
  */
-export async function create{{type data.metadata.name}}Client(configProvider:ConfigProvider):Promise<{{type data.metadata.name}}Client> {
-    return new {{type data.metadata.name}}Client(false).$withConfigProvider(configProvider);
+export async function create{{controller-name this}}Client(configProvider:ConfigProvider):Promise<{{controller-name this}}Client> {
+    return new {{controller-name this}}Client(false).$withConfigProvider(configProvider);
 }
 
 /**
- * A client for the {{data.metadata.name}} API.
+ * A client for the {{name}} API.
  *
  * Note that this client is not ready to use until it is configured with a ```ConfigProvider```.
- * This happens automatically when using the ```create{{type data.metadata.name}}Client``` function or
+ * This happens automatically when using the ```create{{controller-name this}}Client``` function or
  * setting ```autoInit``` to true (the default).
  *
  * If you want to configure the client manually, set autoInit to false and call ```$withConfigProvider```.
  *
- * Recommended method is using ```create{{type data.metadata.name}}Client(configProvider:ConfigProvider)```;
+ * Recommended method is using ```create{{controller-name this}}Client(configProvider:ConfigProvider)```;
  *
  * See https://github.com/kapetacom/sdk-nodejs-rest-client for more information.
  */
-export class {{type data.metadata.name}}Client extends RestClient {
+export class {{controller-name this}}Client extends RestClient {
 
         constructor(autoInit:boolean = true) {
-            super('{{string data.metadata.name}}', autoInit);
+            super('{{string name}}', autoInit);
         }
 
     {{#usesAnyOf (toArray 'kapeta/resource-type-auth-jwt-provider' 'kapeta/resource-type-auth-jwt-consumer') }}
@@ -55,7 +53,7 @@ export class {{type data.metadata.name}}Client extends RestClient {
         }
     {{/usesAnyOf}}
 
-    {{#methods data.spec.methods}}
+    {{#methods methods}}
 
 
         /**
@@ -64,33 +62,33 @@ export class {{type data.metadata.name}}Client extends RestClient {
          * Throws if service responds with a status code higher than 399 and not 404.
          * For 404 responses, null is returned.
          *
-         * HTTP: {{./method}} {{path}}
+         * HTTP: {{./method}} {{path path base=../path}}
          */
-        async {{method methodName}}(
-                {{#arguments arguments}}
-                    {{variable argumentName}}{{#if this.optional}}?{{/if}}:{{fieldtype this}}
+        async {{method name}}(
+                {{#arguments parameters}}
+                    {{variable name}}{{#if this.optional}}?{{/if}}:{{valueType type}}
                 {{/arguments}}
-                ):Promise<{{returnType responseType}}{{#ifValueType responseType}}|null{{/ifValueType}}> {
+                ):Promise<{{returnType returnType}}{{#ifValueType returnType}}|null{{/ifValueType}}> {
 
-            {{#ifValueType responseType}}const result = {{/ifValueType}}await this.$execute(
+            {{#ifValueType returnType}}const result = {{/ifValueType}}await this.$execute(
                 '{{string method}}',
-                '{{string path}}',
+                '{{string (path path base=../path)}}',
                 [
-                    {{#arguments arguments}}
+                    {{#arguments parameters}}
                         {
-                            name: '{{string argumentName}}',
-                            value: {{variable argumentName}},
+                            name: '{{string name}}',
+                            value: {{variable name}},
                             transport: '{{string transport}}'
                         }
                     {{/arguments}}
                 ]
             );
 
-            {{#ifValueType responseType}}
+            {{#ifValueType returnType}}
                 if (result === null) {
                     return null;
                 }
-                return result as {{returnType ../responseType}};
+                return result as {{returnType returnType}};
             {{/ifValueType}}
         }
 
@@ -99,22 +97,22 @@ export class {{type data.metadata.name}}Client extends RestClient {
          *
          * Creates a request that can be manipulated before sending it with the ```call()``` method.
          *
-         * HTTP: {{./method}} {{path}}
+         * HTTP: {{./method}} {{path path base=../path}}
          */
-        {{method methodName}}Request(
-                {{#arguments arguments}}
-                    {{variable argumentName}}{{#if optional}}?{{/if}}:{{fieldtype this}}
+        {{method name}}Request(
+                {{#arguments parameters}}
+                    {{variable name}}{{#if optional}}?{{/if}}:{{valueType type}}
                 {{/arguments}}
-                ):RestClientRequest<{{returnType responseType}}{{#ifValueType responseType}}|null{{/ifValueType}}> {
+                ):RestClientRequest<{{returnType returnType}}{{#ifValueType returnType}}|null{{/ifValueType}}> {
 
             return this.$create(
                 '{{string method}}',
-                '{{string path}}',
+                '{{string (path path base=../path)}}',
                 [
-                    {{#arguments arguments}}
+                    {{#arguments parameters}}
                         {
-                            name: '{{string argumentName}}',
-                            value: {{variable argumentName}},
+                            name: '{{string name}}',
+                            value: {{variable name}},
                             transport: '{{string transport}}'
                         }
                     {{/arguments}}

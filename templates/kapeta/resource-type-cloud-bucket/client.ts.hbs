@@ -10,7 +10,7 @@ import { ConfigProvider, ResourceInfo } from "@kapeta/sdk-config";
 export const RESOURCE_TYPE = '{{fullName data.kind}}';
 export const PORT_TYPE = 'http';
 export const RESOURCE_NAME = '{{data.metadata.name}}';
-export const DEFAULT_BUCKET = '{{kebabCase data.metadata.name}}';
+export const DEFAULT_BUCKET = '{{kebab data.metadata.name}}';
 
 export async function create{{pascalCase data.metadata.name}}Client(config: ConfigProvider): Promise<{{pascalCase data.metadata.name}}Client> {
     const resourceInfo = await config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, RESOURCE_NAME);

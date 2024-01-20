@@ -7,7 +7,7 @@ import { User } from 'generated:entities/User';
 export type CreateUserRequest<Locals extends Record<string, any> = Record<string, any>> = Request<
     { id: string },
     User,
-    Map<string, string>,
+    { [key: string]: string },
     { user: User; tags?: Set<string> },
     Locals
 >;
@@ -32,7 +32,7 @@ export type DeleteUserRequest<Locals extends Record<string, any> = Record<string
 export type DeleteUserResponse<Locals extends Record<string, any> = Record<string, any>> = Response<void, Locals>;
 
 /**
- * Defines the methods and routes for the users API
+ * Defines the types for methods and routes of the Users API
  */
 export interface UsersRoutes<Locals extends Record<string, any> = Record<string, any>> {
     /**

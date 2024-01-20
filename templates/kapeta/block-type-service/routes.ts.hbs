@@ -6,12 +6,11 @@ import {ConfigProvider} from "@kapeta/sdk-config";
 {{/usesAnyOf}}
 
 {{#providers-of-type 'kapeta/resource-type-rest-api'}}
-    import { create{{type metadata.name}}Router } from "generated:rest/{{lowercase metadata.name}}-routes";
+    {{#kaplang-rest-methods spec.source namespace=metadata.name}}
+    import { create{{controller-name this}}Router } from "generated:rest/{{kebab (controller-name this)}}-routes";
+    {{/kaplang-rest-methods}}
 {{/providers-of-type}}
 
-{{#providers-of-type 'kapeta/resource-type-grpc-api'}}
-    import { create{{type metadata.name}}Router } from "generated:grpc/{{lowercase metadata.name}}-routes";
-{{/providers-of-type}}
 
 export const createRoutes = async (config:ConfigProvider):Promise<Router> => {
     const routes = Router();
@@ -19,10 +18,9 @@ export const createRoutes = async (config:ConfigProvider):Promise<Router> => {
         routes.use(await createAuthMiddleware(config));
     {{/usesAnyOf}}
     {{#providers-of-type 'kapeta/resource-type-rest-api'}}
-        routes.use(await create{{type metadata.name}}Router(config));
-    {{/providers-of-type}}
-    {{#providers-of-type 'kapeta/resource-type-grpc-api'}}
-        routes.use(await create{{type metadata.name}}Router(config));
+        {{#kaplang-rest-methods spec.source namespace=metadata.name}}
+        routes.use(await create{{controller-name this}}Router(config));
+        {{/kaplang-rest-methods}}
     {{/providers-of-type}}
     return routes;
 };

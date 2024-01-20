@@ -8,30 +8,30 @@ import { State } from 'generated:entities/State';
 import { getJWTToken } from '@kapeta/sdk-auth-jwt';
 
 /**
- * Creates a new ready UsersClient.
+ * Creates a new ready UsersInnerClient.
  *
  * See https://github.com/kapetacom/sdk-nodejs-rest-client for more information.
  */
-export async function createUsersClient(configProvider: ConfigProvider): Promise<UsersClient> {
-    return new UsersClient(false).$withConfigProvider(configProvider);
+export async function createUsersInnerClient(configProvider: ConfigProvider): Promise<UsersInnerClient> {
+    return new UsersInnerClient(false).$withConfigProvider(configProvider);
 }
 
 /**
- * A client for the users API.
+ * A client for the Inner API.
  *
  * Note that this client is not ready to use until it is configured with a ```ConfigProvider```.
- * This happens automatically when using the ```createUsersClient``` function or
+ * This happens automatically when using the ```createUsersInnerClient``` function or
  * setting ```autoInit``` to true (the default).
  *
  * If you want to configure the client manually, set autoInit to false and call ```$withConfigProvider```.
  *
- * Recommended method is using ```createUsersClient(configProvider:ConfigProvider)```;
+ * Recommended method is using ```createUsersInnerClient(configProvider:ConfigProvider)```;
  *
  * See https://github.com/kapetacom/sdk-nodejs-rest-client for more information.
  */
-export class UsersClient extends RestClient {
+export class UsersInnerClient extends RestClient {
     constructor(autoInit: boolean = true) {
-        super('users', autoInit);
+        super('Inner', autoInit);
     }
 
     protected $afterCreate(request: RestClientRequest): void {
@@ -53,10 +53,10 @@ export class UsersClient extends RestClient {
      * Throws if service responds with a status code higher than 399 and not 404.
      * For 404 responses, null is returned.
      *
-     * HTTP: GET /users/{id}
+     * HTTP: GET /v2/users/{id}
      */
     async getUserById(id: string, metadata?: any): Promise<User | null> {
-        const result = await this.$execute('GET', '/users/{id}', [
+        const result = await this.$execute('GET', '/v2/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'HEADER' },
         ]);
@@ -72,10 +72,10 @@ export class UsersClient extends RestClient {
      *
      * Creates a request that can be manipulated before sending it with the ```call()``` method.
      *
-     * HTTP: GET /users/{id}
+     * HTTP: GET /v2/users/{id}
      */
     getUserByIdRequest(id: string, metadata?: any): RestClientRequest<User | null> {
-        return this.$create('GET', '/users/{id}', [
+        return this.$create('GET', '/v2/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'HEADER' },
         ]);
@@ -87,10 +87,10 @@ export class UsersClient extends RestClient {
      * Throws if service responds with a status code higher than 399 and not 404.
      * For 404 responses, null is returned.
      *
-     * HTTP: DELETE /users/{id}
+     * HTTP: DELETE /v2/users/{id}
      */
     async deleteUser(id: string, metadata: { [key: string]: State }, tags: Set<string>): Promise<void> {
-        await this.$execute('DELETE', '/users/{id}', [
+        await this.$execute('DELETE', '/v2/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'BODY' },
             { name: 'tags', value: tags, transport: 'QUERY' },
@@ -102,10 +102,10 @@ export class UsersClient extends RestClient {
      *
      * Creates a request that can be manipulated before sending it with the ```call()``` method.
      *
-     * HTTP: DELETE /users/{id}
+     * HTTP: DELETE /v2/users/{id}
      */
     deleteUserRequest(id: string, metadata: { [key: string]: State }, tags: Set<string>): RestClientRequest<void> {
-        return this.$create('DELETE', '/users/{id}', [
+        return this.$create('DELETE', '/v2/users/{id}', [
             { name: 'id', value: id, transport: 'PATH' },
             { name: 'metadata', value: metadata, transport: 'BODY' },
             { name: 'tags', value: tags, transport: 'QUERY' },

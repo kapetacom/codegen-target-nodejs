@@ -6,25 +6,6 @@ spec:
   target:
     kind: kapeta/language-target-nodejs:local
   entities:
-    types:
-      - name: User
-        type: dto
-        description: |-
-          User object
-          More lines
-        properties:
-          id:
-            type: string
-            properties: null
-            required: true
-          name:
-            type: string
-            properties: null
-            required: false
-          email:
-            type: string
-            properties: null
-            required: true
     source:
       type: kapeta-dsl
       value: |-
@@ -32,24 +13,20 @@ spec:
         //More lines
         User {	
         	id: string	
-        	name: string	
+        	name?: string	
         	email: string
         }
   configuration:
-    types:
-      - type: dto
-        name: EmailConfig
-        description: Configuration for e-mails
-        properties:
-          from:
-            type: string
-            defaultValue: "'support@kapeta.com'"
-            description: Sender for e-mails. Note that you should be allowed to send e-mails
-              from this domain and user
-            properties: null
-            secret: false
-            required: false
-            global: true
+    source:
+      type: kapeta-dsl
+      value: |-
+        //Configuration for e-mails
+        EmailConfig {
+        	//Sender for e-mails. Note that you should be allowed to send e-mails from this domain and user
+            @global
+        	from: string = 'support@kapeta.com'
+        }
+
   consumers:
     - kind: kapeta/resource-type-postgresql:0.0.2
       metadata:
@@ -68,60 +45,16 @@ spec:
       metadata:
         name: users
       spec:
-        methods:
-          createUser:
-            responseType:
-              ref: User
-            method: POST
-            path: /users/{id}
-            description: Create user
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              user:
-                ref: User
-                transport: QUERY
-              metadata:
-                ref: Map<string,string>
-                transport: BODY
-              tags:
-                ref: Set<string>
-                transport: QUERY
-                optional: true
-          getUser:
-            responseType:
-              ref: User
-            method: GET
-            path: /users/{id}
-            description: Get user by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
-              metadata:
-                ref: any
-                transport: HEADER
-          deleteUser:
-            responseType:
-              type: void
-            method: DELETE
-            path: /users/{id}
-            description: Delete user by id
-            arguments:
-              id:
-                type: string
-                transport: PATH
         source:
           type: kapeta-dsl
           value: |-
             //Create user
             @POST("/users/{id}")
-            createUser(@Path id:string, @Query user:User):User
+            createUser(@Path id:string, @Query user:User, @Body metadata:Map<string,string>, @Query tags?:Set<string>):User
 
             //Get user by id
             @GET("/users/{id}")
-            getUser(@Path id:string):User
+            getUser(@Path id:string, @Header metadata:any):User
 
             //Delete user by id
             @DELETE("/users/{id}")
