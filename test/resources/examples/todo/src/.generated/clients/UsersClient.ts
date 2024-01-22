@@ -57,8 +57,8 @@ export class UsersClient extends RestClient {
      */
     async getUserById(id: string, metadata?: any): Promise<User | null> {
         const result = await this.$execute('GET', '/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'HEADER' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'HEADER', typeName: 'any' },
         ]);
 
         if (result === null) {
@@ -91,9 +91,9 @@ export class UsersClient extends RestClient {
      */
     async deleteUser(id: string, metadata: { [key: string]: State }, tags: Set<string>): Promise<void> {
         await this.$execute('DELETE', '/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'BODY' },
-            { name: 'tags', value: tags, transport: 'QUERY' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'BODY', typeName: '{ [key:string]: State }' },
+            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'Set<string>' },
         ]);
     }
 

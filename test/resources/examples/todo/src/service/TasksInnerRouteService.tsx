@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
 import { ConfigProvider } from '@kapeta/sdk-config';
-import { Task } from 'generated:entities/Task';
 import { TasksInnerRoutes } from 'generated:rest/TasksInnerRoutes';
 
 /**
@@ -13,6 +12,14 @@ import { TasksInnerRoutes } from 'generated:rest/TasksInnerRoutes';
  */
 export const createTasksInnerRouteService = async (configProvider: ConfigProvider): Promise<TasksInnerRoutes> => {
     return {
+        /**
+         * Get users
+         * HTTP: GET /v2/tasks/
+         */
+        getTasks(req, res): void {
+            res.sendError('REST resource method not implemented: "getTasks"', 501);
+        },
+
         /**
          * Delete task
          * HTTP: DELETE /v2/tasks/:id

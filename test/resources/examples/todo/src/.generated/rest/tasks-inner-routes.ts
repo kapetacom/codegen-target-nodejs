@@ -4,7 +4,7 @@
 import { Router } from 'express';
 import { asyncHandler } from '@kapeta/sdk-server';
 import { ConfigProvider } from '@kapeta/sdk-config';
-import { restAPIMiddleware } from '@kapeta/sdk-rest-route';
+import { restAPIMiddleware, createRESTParameterParser } from '@kapeta/sdk-rest-route';
 import { createTasksInnerRouteService } from '../../service/TasksInnerRouteService';
 import { json } from 'body-parser';
 
@@ -18,13 +18,31 @@ export const createTasksInnerRouter = async (configProvider: ConfigProvider) => 
 
     const service = await createTasksInnerRouteService(configProvider);
 
+    // getTasks: Verify the method is available
+    if (!service.getTasks) {
+        throw new Error('REST resource service for "Inner" is missing method: "getTasks"');
+    }
+
+    console.log('Publishing REST method: GET /v2/tasks/');
+
+    router.get(
+        '/v2/tasks/',
+        createRESTParameterParser([{ name: 'pageable', transport: 'QUERY', typeName: 'Pageable' }]),
+        asyncHandler(service.getTasks.bind(service))
+    );
+
     // removeTask: Verify the method is available
     if (!service.removeTask) {
         throw new Error('REST resource service for "Inner" is missing method: "removeTask"');
     }
 
     console.log('Publishing REST method: DELETE /v2/tasks/:id');
-    router.delete('/v2/tasks/:id', asyncHandler(service.removeTask.bind(service)));
+
+    router.delete(
+        '/v2/tasks/:id',
+        createRESTParameterParser([{ name: 'id', transport: 'PATH', typeName: 'string' }]),
+        asyncHandler(service.removeTask.bind(service))
+    );
 
     // getTask: Verify the method is available
     if (!service.getTask) {
@@ -32,7 +50,12 @@ export const createTasksInnerRouter = async (configProvider: ConfigProvider) => 
     }
 
     console.log('Publishing REST method: GET /v2/tasks/:id');
-    router.get('/v2/tasks/:id', asyncHandler(service.getTask.bind(service)));
+
+    router.get(
+        '/v2/tasks/:id',
+        createRESTParameterParser([{ name: 'id', transport: 'PATH', typeName: 'string' }]),
+        asyncHandler(service.getTask.bind(service))
+    );
 
     return router;
 };
