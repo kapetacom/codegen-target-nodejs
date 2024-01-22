@@ -76,8 +76,8 @@ export class UsersClient extends RestClient {
      */
     getUserByIdRequest(id: string, metadata?: any): RestClientRequest<User | null> {
         return this.$create('GET', '/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'HEADER' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'HEADER', typeName: 'any' },
         ]);
     }
 
@@ -106,9 +106,9 @@ export class UsersClient extends RestClient {
      */
     deleteUserRequest(id: string, metadata: { [key: string]: State }, tags: Set<string>): RestClientRequest<void> {
         return this.$create('DELETE', '/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'BODY' },
-            { name: 'tags', value: tags, transport: 'QUERY' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'BODY', typeName: '{ [key:string]: State }' },
+            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'Set<string>' },
         ]);
     }
 }

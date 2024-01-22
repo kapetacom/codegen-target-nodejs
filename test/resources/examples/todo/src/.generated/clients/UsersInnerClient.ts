@@ -75,7 +75,9 @@ export class UsersInnerClient extends RestClient {
      * HTTP: GET /v2/users/
      */
     getUsersRequest(pageable: Pageable): RestClientRequest<User[] | null> {
-        return this.$create('GET', '/v2/users/', [{ name: 'pageable', value: pageable, transport: 'QUERY' }]);
+        return this.$create('GET', '/v2/users/', [
+            { name: 'pageable', value: pageable, transport: 'QUERY', typeName: 'Pageable' },
+        ]);
     }
 
     /**
@@ -107,8 +109,8 @@ export class UsersInnerClient extends RestClient {
      */
     getUserByIdRequest(id: string, metadata?: any): RestClientRequest<User | null> {
         return this.$create('GET', '/v2/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'HEADER' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'HEADER', typeName: 'any' },
         ]);
     }
 
@@ -137,9 +139,9 @@ export class UsersInnerClient extends RestClient {
      */
     deleteUserRequest(id: string, metadata: { [key: string]: State }, tags: Set<string>): RestClientRequest<void> {
         return this.$create('DELETE', '/v2/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'BODY' },
-            { name: 'tags', value: tags, transport: 'QUERY' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'BODY', typeName: '{ [key:string]: State }' },
+            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'Set<string>' },
         ]);
     }
 }
