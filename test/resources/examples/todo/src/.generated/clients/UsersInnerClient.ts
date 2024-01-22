@@ -1,8 +1,9 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import { RestClient, RestClientRequest } from '@kapeta/sdk-rest-client';
+import { RestClient } from '@kapeta/sdk-rest-client';
 import { ConfigProvider } from '@kapeta/sdk-config';
+import { RestClientRequest } from '@kapeta/sdk-rest';
 import { User } from 'generated:entities/User';
 import { Pageable } from '@kapeta/sdk-rest';
 import { State } from 'generated:entities/State';

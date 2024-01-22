@@ -6,6 +6,14 @@ import { asyncHandler } from '@kapeta/sdk-server';
 import { ConfigProvider } from '@kapeta/sdk-config';
 import { restAPIMiddleware, createRESTParameterParser } from '@kapeta/sdk-rest-route';
 import { createTasksInnerRouteService } from '../../service/TasksInnerRouteService';
+import {
+    GetTasksRequest,
+    GetTasksResponse,
+    RemoveTaskRequest,
+    RemoveTaskResponse,
+    GetTaskRequest,
+    GetTaskResponse,
+} from './TasksInnerRoutes';
 import { json } from 'body-parser';
 
 /**
@@ -27,7 +35,9 @@ export const createTasksInnerRouter = async (configProvider: ConfigProvider) => 
 
     router.get(
         '/v2/tasks/',
-        createRESTParameterParser([{ name: 'pageable', transport: 'QUERY', typeName: 'Pageable' }]),
+        createRESTParameterParser<GetTasksRequest, GetTasksResponse>([
+            { name: 'pageable', transport: 'QUERY', typeName: 'Pageable' },
+        ]),
         asyncHandler(service.getTasks.bind(service))
     );
 
@@ -40,7 +50,9 @@ export const createTasksInnerRouter = async (configProvider: ConfigProvider) => 
 
     router.delete(
         '/v2/tasks/:id',
-        createRESTParameterParser([{ name: 'id', transport: 'PATH', typeName: 'string' }]),
+        createRESTParameterParser<RemoveTaskRequest, RemoveTaskResponse>([
+            { name: 'id', transport: 'PATH', typeName: 'string' },
+        ]),
         asyncHandler(service.removeTask.bind(service))
     );
 
@@ -53,7 +65,9 @@ export const createTasksInnerRouter = async (configProvider: ConfigProvider) => 
 
     router.get(
         '/v2/tasks/:id',
-        createRESTParameterParser([{ name: 'id', transport: 'PATH', typeName: 'string' }]),
+        createRESTParameterParser<GetTaskRequest, GetTaskResponse>([
+            { name: 'id', transport: 'PATH', typeName: 'string' },
+        ]),
         asyncHandler(service.getTask.bind(service))
     );
 

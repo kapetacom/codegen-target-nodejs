@@ -6,6 +6,7 @@ import { asyncHandler } from '@kapeta/sdk-server';
 import { ConfigProvider } from '@kapeta/sdk-config';
 import { restAPIMiddleware, createRESTParameterParser } from '@kapeta/sdk-rest-route';
 import { createTasksRouteService } from '../../service/TasksRouteService';
+import { AddTaskRequest, AddTaskResponse, MarkAsDoneRequest, MarkAsDoneResponse } from './TasksRoutes';
 import { json } from 'body-parser';
 
 /**
@@ -27,7 +28,7 @@ export const createTasksRouter = async (configProvider: ConfigProvider) => {
 
     router.post(
         '/tasks/:userId/:id',
-        createRESTParameterParser([
+        createRESTParameterParser<AddTaskRequest, AddTaskResponse>([
             { name: 'userId', transport: 'PATH', typeName: 'string' },
             { name: 'id', transport: 'PATH', typeName: 'string' },
             { name: 'task', transport: 'BODY', typeName: 'Task' },
@@ -44,7 +45,9 @@ export const createTasksRouter = async (configProvider: ConfigProvider) => {
 
     router.post(
         '/tasks/:id/done',
-        createRESTParameterParser([{ name: 'id', transport: 'PATH', typeName: 'string' }]),
+        createRESTParameterParser<MarkAsDoneRequest, MarkAsDoneResponse>([
+            { name: 'id', transport: 'PATH', typeName: 'string' },
+        ]),
         asyncHandler(service.markAsDone.bind(service))
     );
 

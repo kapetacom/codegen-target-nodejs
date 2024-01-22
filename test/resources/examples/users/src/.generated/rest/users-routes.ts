@@ -6,6 +6,14 @@ import { asyncHandler } from '@kapeta/sdk-server';
 import { ConfigProvider } from '@kapeta/sdk-config';
 import { restAPIMiddleware, createRESTParameterParser } from '@kapeta/sdk-rest-route';
 import { createUsersRouteService } from '../../service/UsersRouteService';
+import {
+    CreateUserRequest,
+    CreateUserResponse,
+    GetUserRequest,
+    GetUserResponse,
+    DeleteUserRequest,
+    DeleteUserResponse,
+} from './UsersRoutes';
 import { json } from 'body-parser';
 
 /**
@@ -27,7 +35,7 @@ export const createUsersRouter = async (configProvider: ConfigProvider) => {
 
     router.post(
         '/users/:id',
-        createRESTParameterParser([
+        createRESTParameterParser<CreateUserRequest, CreateUserResponse>([
             { name: 'id', transport: 'PATH', typeName: 'string' },
             { name: 'user', transport: 'QUERY', typeName: 'User' },
             { name: 'metadata', transport: 'BODY', typeName: '{ [key:string]: string }' },
@@ -45,7 +53,7 @@ export const createUsersRouter = async (configProvider: ConfigProvider) => {
 
     router.get(
         '/users/:id',
-        createRESTParameterParser([
+        createRESTParameterParser<GetUserRequest, GetUserResponse>([
             { name: 'id', transport: 'PATH', typeName: 'string' },
             { name: 'metadata', transport: 'HEADER', typeName: 'any' },
         ]),
@@ -61,7 +69,9 @@ export const createUsersRouter = async (configProvider: ConfigProvider) => {
 
     router.delete(
         '/users/:id',
-        createRESTParameterParser([{ name: 'id', transport: 'PATH', typeName: 'string' }]),
+        createRESTParameterParser<DeleteUserRequest, DeleteUserResponse>([
+            { name: 'id', transport: 'PATH', typeName: 'string' },
+        ]),
         asyncHandler(service.deleteUser.bind(service))
     );
 
