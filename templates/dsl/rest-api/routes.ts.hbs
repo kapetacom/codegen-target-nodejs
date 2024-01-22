@@ -7,6 +7,12 @@ import {asyncHandler} from "@kapeta/sdk-server";
 import { ConfigProvider } from '@kapeta/sdk-config';
 import { restAPIMiddleware, createRESTParameterParser } from "@kapeta/sdk-rest-route";
 import { create{{controller-name this}}RouteService } from "../../service/{{controller-name this}}RouteService";
+import {
+{{#methods methods}}
+    {{type name}}Request,
+    {{type name}}Response,
+{{/methods}}
+} from './{{controller-name this}}Routes'
 import { json } from "body-parser";
 
 /**
@@ -28,7 +34,7 @@ export const create{{controller-name this}}Router = async (configProvider:Config
         console.log('Publishing REST method: {{uppercase method}} {{expressPath path base=../path}}');
 
         router.{{lowercase method}}('{{expressPath path base=../path}}',
-            createRESTParameterParser([
+            createRESTParameterParser<{{type name}}Request, {{type name}}Response>([
                 {{#arguments parameters}}
                     {
                     name: '{{string name}}',
