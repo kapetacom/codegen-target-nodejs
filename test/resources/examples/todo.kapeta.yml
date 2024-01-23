@@ -96,6 +96,11 @@ spec:
             deleteUser(@Path id:string, @Body metadata:Map<string,State>, tags:Set<string>):void
             
             controller Inner('/v2/users') {
+            
+              //Get users
+              @GET("/")
+              getUsers(@Query pageable:Pageable):User[]
+            
               //Get users by id
               @GET("/{id}")
               getUserById(@Path id:string, @Header metadata?:any):User
@@ -121,6 +126,10 @@ spec:
             markAsDone(@Path id:string):void
             
             controller Inner('/v2/tasks') {
+              //Get users
+              @GET("/")
+              getTasks(@Query pageable:Pageable):Task[]
+            
               //Delete task
               @DELETE("/{id}")
               removeTask(@Path id:string):void

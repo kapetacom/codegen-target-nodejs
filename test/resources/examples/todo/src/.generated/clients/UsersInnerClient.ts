@@ -1,9 +1,11 @@
 //
 // GENERATED SOURCE - DO NOT EDIT
 //
-import { RestClient, RestClientRequest } from '@kapeta/sdk-rest-client';
+import { RestClient } from '@kapeta/sdk-rest-client';
 import { ConfigProvider } from '@kapeta/sdk-config';
+import { RestClientRequest } from '@kapeta/sdk-rest';
 import { User } from 'generated:entities/User';
+import { Pageable } from '@kapeta/sdk-rest';
 import { State } from 'generated:entities/State';
 import { getJWTToken } from '@kapeta/sdk-auth-jwt';
 
@@ -48,6 +50,38 @@ export class UsersInnerClient extends RestClient {
     }
 
     /**
+     * Get users
+     *
+     * Throws if service responds with a status code higher than 399 and not 404.
+     * For 404 responses, null is returned.
+     *
+     * HTTP: GET /v2/users/
+     */
+    async getUsers(pageable: Pageable): Promise<User[] | null> {
+        const result = await this.$execute('GET', '/v2/users/', [
+            { name: 'pageable', value: pageable, transport: 'QUERY', typeName: 'Pageable' },
+        ]);
+
+        if (result === null) {
+            return null;
+        }
+        return result as User[];
+    }
+
+    /**
+     * Get users
+     *
+     * Creates a request that can be manipulated before sending it with the ```call()``` method.
+     *
+     * HTTP: GET /v2/users/
+     */
+    getUsersRequest(pageable: Pageable): RestClientRequest<User[] | null> {
+        return this.$create('GET', '/v2/users/', [
+            { name: 'pageable', value: pageable, transport: 'QUERY', typeName: 'Pageable' },
+        ]);
+    }
+
+    /**
      * Get users by id
      *
      * Throws if service responds with a status code higher than 399 and not 404.
@@ -57,8 +91,8 @@ export class UsersInnerClient extends RestClient {
      */
     async getUserById(id: string, metadata?: any): Promise<User | null> {
         const result = await this.$execute('GET', '/v2/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'HEADER' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'HEADER', typeName: 'any' },
         ]);
 
         if (result === null) {
@@ -76,8 +110,8 @@ export class UsersInnerClient extends RestClient {
      */
     getUserByIdRequest(id: string, metadata?: any): RestClientRequest<User | null> {
         return this.$create('GET', '/v2/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'HEADER' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'HEADER', typeName: 'any' },
         ]);
     }
 
@@ -91,9 +125,9 @@ export class UsersInnerClient extends RestClient {
      */
     async deleteUser(id: string, metadata: { [key: string]: State }, tags: Set<string>): Promise<void> {
         await this.$execute('DELETE', '/v2/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'BODY' },
-            { name: 'tags', value: tags, transport: 'QUERY' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'BODY', typeName: '{ [key:string]: State }' },
+            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'Set<string>' },
         ]);
     }
 
@@ -106,9 +140,9 @@ export class UsersInnerClient extends RestClient {
      */
     deleteUserRequest(id: string, metadata: { [key: string]: State }, tags: Set<string>): RestClientRequest<void> {
         return this.$create('DELETE', '/v2/users/{id}', [
-            { name: 'id', value: id, transport: 'PATH' },
-            { name: 'metadata', value: metadata, transport: 'BODY' },
-            { name: 'tags', value: tags, transport: 'QUERY' },
+            { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', value: metadata, transport: 'BODY', typeName: '{ [key:string]: State }' },
+            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'Set<string>' },
         ]);
     }
 }

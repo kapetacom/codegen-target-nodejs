@@ -4,8 +4,16 @@
 import { Router } from 'express';
 import { asyncHandler } from '@kapeta/sdk-server';
 import { ConfigProvider } from '@kapeta/sdk-config';
-import { restAPIMiddleware } from '@kapeta/sdk-rest-route';
+import { restAPIMiddleware, createRESTParameterParser } from '@kapeta/sdk-rest-route';
 import { createUsersRouteService } from '../../service/UsersRouteService';
+import {
+    CreateUserRequest,
+    CreateUserResponse,
+    GetUserRequest,
+    GetUserResponse,
+    DeleteUserRequest,
+    DeleteUserResponse,
+} from './UsersRoutes';
 import { json } from 'body-parser';
 
 /**
@@ -24,7 +32,17 @@ export const createUsersRouter = async (configProvider: ConfigProvider) => {
     }
 
     console.log('Publishing REST method: POST /users/:id');
-    router.post('/users/:id', asyncHandler(service.createUser.bind(service)));
+
+    router.post(
+        '/users/:id',
+        createRESTParameterParser<CreateUserRequest, CreateUserResponse>([
+            { name: 'id', transport: 'PATH', typeName: 'string' },
+            { name: 'user', transport: 'QUERY', typeName: 'User' },
+            { name: 'metadata', transport: 'BODY', typeName: '{ [key:string]: string }' },
+            { name: 'tags', transport: 'QUERY', typeName: 'Set<string>' },
+        ]),
+        asyncHandler(service.createUser.bind(service))
+    );
 
     // getUser: Verify the method is available
     if (!service.getUser) {
@@ -32,7 +50,15 @@ export const createUsersRouter = async (configProvider: ConfigProvider) => {
     }
 
     console.log('Publishing REST method: GET /users/:id');
-    router.get('/users/:id', asyncHandler(service.getUser.bind(service)));
+
+    router.get(
+        '/users/:id',
+        createRESTParameterParser<GetUserRequest, GetUserResponse>([
+            { name: 'id', transport: 'PATH', typeName: 'string' },
+            { name: 'metadata', transport: 'HEADER', typeName: 'any' },
+        ]),
+        asyncHandler(service.getUser.bind(service))
+    );
 
     // deleteUser: Verify the method is available
     if (!service.deleteUser) {
@@ -40,7 +66,14 @@ export const createUsersRouter = async (configProvider: ConfigProvider) => {
     }
 
     console.log('Publishing REST method: DELETE /users/:id');
-    router.delete('/users/:id', asyncHandler(service.deleteUser.bind(service)));
+
+    router.delete(
+        '/users/:id',
+        createRESTParameterParser<DeleteUserRequest, DeleteUserResponse>([
+            { name: 'id', transport: 'PATH', typeName: 'string' },
+        ]),
+        asyncHandler(service.deleteUser.bind(service))
+    );
 
     return router;
 };

@@ -9,6 +9,7 @@ import { ILanguageTargetProvider } from '@kapeta/ui-web-types';
 import kapetaDefinition from '../../kapeta.yml';
 // @ts-ignore
 import packageJson from '../../package.json';
+import {includes} from "../includes";
 
 const targetConfig: ILanguageTargetProvider = {
     kind: kapetaDefinition.metadata.name,
@@ -28,6 +29,7 @@ const targetConfig: ILanguageTargetProvider = {
         'kapeta/resource-type-cloud-bucket',
     ],
     definition: kapetaDefinition,
+    getDSLIncludes: includes,
 };
 
 export default targetConfig;

@@ -21,6 +21,7 @@ import {
     RESTControllerReader,
     DSLController,
 } from '@kapeta/kaplang-core';
+import {includes} from "../includes";
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 export type HandleBarsType = typeof Handlebars;
@@ -33,8 +34,13 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
     let parsedEntities: DSLData[] | undefined = undefined;
     function getParsedEntities(): DSLData[] {
-        if (!parsedEntities && context.spec?.entities?.source?.value) {
-            parsedEntities = parseEntities(context.spec?.entities?.source?.value);
+
+        if (!parsedEntities) {
+            const code: string[] = [includes().source];
+            if (context.spec?.entities?.source?.value) {
+                code.push(context.spec?.entities?.source?.value)
+            }
+            parsedEntities = parseEntities(code.join('\n\n'));
         }
 
         if (!parsedEntities) {
