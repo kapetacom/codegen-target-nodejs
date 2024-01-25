@@ -26,12 +26,10 @@
         "@kapeta/nodejs-process": "^1.2.0",
         "@kapeta/nodejs-utils": "^0.1.3",
         "@kapeta/schemas": "^2.0.0",
-        "prettier": "^2.8.8"
-    },
-    "prettier": "@kapeta/prettier-config",
-    "peerDependencies": {
+        "prettier": "^2.8.8",
         "@kapeta/ui-web-types": "^1.2.0"
     },
+    "prettier": "@kapeta/prettier-config",
     "bundleDependencies": true,
     "bundledDependencies": true,
     "devDependencies": {
@@ -49,7 +47,6 @@
         "@kapeta/codegen": "<2",
         "@kapeta/eslint-config": "^0.7.0",
         "@kapeta/prettier-config": "^0.6.2",
-        "@kapeta/ui-web-types": "^1.2.0",
         "@tsconfig/node18": "^18.2.2",
         "@types/lodash": "^4.14.202",
         "@types/node": "^20.10.6",
