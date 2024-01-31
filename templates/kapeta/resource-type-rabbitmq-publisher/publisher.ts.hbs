@@ -1,0 +1,26 @@
+//#FILENAME:src/.generated/queues/{{snakeCase data.metadata.name}}-publisher.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+
+import { ConfigProvider } from "@kapeta/sdk-config";
+import { PublisherOptions, createPublisher } from "@kapeta/sdk-rabbitmq";
+import { {{data.spec.payloadType.type}} } from "generated:entities/{{data.spec.payloadType.type}}";
+
+export enum {{pascalCase data.metadata.name}}RoutingKey {
+    {{#each data.spec.routeKeys.data}}
+        {{enumName this}} = '{{this}}',
+    {{/each}}
+}
+
+export interface {{pascalCase data.metadata.name}}Headers {
+    {{#each data.spec.headers.data}}
+        '{{name}}': '{{join values "'|'"}}'
+    {{/each}}
+}
+
+export const create{{pascalCase data.metadata.name}}Publisher = async (config: ConfigProvider, options?:PublisherOptions) => {
+    return await createPublisher<{{data.spec.payloadType.type}},
+                                {{pascalCase data.metadata.name}}Headers,
+                                {{pascalCase data.metadata.name}}RoutingKey>(config, '{{string data.metadata.name}}', options);
+}

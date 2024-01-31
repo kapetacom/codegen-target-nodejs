@@ -27,6 +27,8 @@ const targetConfig: ILanguageTargetProvider = {
         'kapeta/resource-type-auth-jwt-consumer',
         'kapeta/resource-type-external-services',
         'kapeta/resource-type-cloud-bucket',
+        'kapeta/resource-type-rabbitmq-subscriber',
+        'kapeta/resource-type-rabbitmq-publisher',
     ],
     definition: kapetaDefinition,
     getDSLIncludes: includes,

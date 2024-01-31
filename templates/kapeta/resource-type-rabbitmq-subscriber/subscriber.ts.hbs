@@ -1,0 +1,15 @@
+//#FILENAME:src/.generated/queues/{{snakeCase data.metadata.name}}-subscriber.ts:write-always
+//
+// GENERATED SOURCE - DO NOT EDIT
+//
+
+import {ConfigProvider} from "@kapeta/sdk-config";
+import {createConsumer, MessageHandler, ConsumerOptions} from "@kapeta/sdk-rabbitmq";
+import { {{data.spec.payloadType.type}} } from "generated:entities/{{data.spec.payloadType.type}}";
+
+export type {{pascalCase data.metadata.name}}MessageHandler = MessageHandler<{{data.spec.payloadType.type}}>;
+
+export const add{{pascalCase data.metadata.name}}Subscriber = async (config: ConfigProvider, consumer: {{pascalCase data.metadata.name}}MessageHandler, options?: ConsumerOptions) => {
+
+    return await createConsumer<{{data.spec.payloadType.type}}>(config, '{{string data.metadata.name}}', consumer, options);
+}
