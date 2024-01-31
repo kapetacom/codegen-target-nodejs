@@ -84,6 +84,14 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
     engine.registerHelper('path', resolvePath);
 
+    engine.registerHelper('enumName', (name:string) => {
+        return Template.SafeString(name.replaceAll(/[^a-z0-9]+/ig, '_').toUpperCase());
+    });
+
+    engine.registerHelper('join', (values:string[], separator:string = ',') => {
+        return Template.SafeString(Array.from(values).join(separator));
+    });
+
     engine.registerHelper('consumes-databases', function (this: any, options) {
         const consumers = context.spec.consumers;
 
