@@ -1,4 +1,4 @@
-#FILENAME:src/.generated/README.md:write-always
+#FILENAME:kapeta.md:write-always
 # Kapeta Readme
 This file contains some structural information about this service.
 
