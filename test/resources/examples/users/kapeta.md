@@ -162,4 +162,21 @@ It has a web interface and API where you can see the e-mails that would have bee
 Read more here:
 https://gitlab.com/sorenmat/gosmtpd
 
+## RabbitMQ Publisher
+To publish messages to the RabbitMQ queue a publisher is generated for you for each resource.
 
+Use the constructor function to create a new publisher.
+
+Below is an example of how to use the publisher to publish a message to one or more exchanges:
+```javascript
+import { ConfigProvider } from '@kapeta/sdk-config';
+import { createEventsPublisher } from 'generated:queues/events-publisher';
+
+const configProvider = null; // Get this from somewhere
+
+const eventsPublisher = await createEventsPublisher(configProvider);
+
+await eventsPublisher.publish({
+    data: { ... },
+});
+```

@@ -268,4 +268,56 @@ Read more here:
 https://gitlab.com/sorenmat/gosmtpd
 
 {{/consumes}}
+{{#consumes 'kapeta/resource-type-rabbitmq-subscriber'}}
+## RabbitMQ Subscriber
+To consume messages from a RabbitMQ queue a consumer is generated for you for each resource.
 
+Use the constructor function to create a new consumer.
+
+Below is an example of how to use the consumer to listen for messages on the queue:
+```javascript
+import { ConfigProvider, runApp } from '@kapeta/sdk-config';
+import { createServer } from './src/server';
+import { createRoutes } from 'generated:routes';
+import { addEventsSubscriber } from 'generated:queues/events-subscriber';
+import { TypedAsyncMessage } from '@kapeta/sdk-rabbitmq';
+import { Event } from 'generated:entities/Logs';
+
+// runApp is a helper function that will load the configuration from Kapeta and then run the provided function
+runApp(async (configProvider: ConfigProvider) => {
+    // Create the server - see src/server/server.ts for more information
+    const server = createServer(configProvider);
+
+    // Add a subscriber to the events queue
+    await addEventsSubscriber(configProvider, (event:Event, msg:TypedAsyncMessage<Event>) => {
+        console.log('Received events', events, msg);
+    })
+
+    // Includes the generated routes for your API resources
+    server.use(await createRoutes(configProvider));
+
+    server.start('rest');
+}, __dirname);
+
+```
+{{/consumes}}
+{{#provides 'kapeta/resource-type-rabbitmq-publisher'}}
+## RabbitMQ Publisher
+To publish messages to the RabbitMQ queue a publisher is generated for you for each resource.
+
+Use the constructor function to create a new publisher.
+
+Below is an example of how to use the publisher to publish a message to one or more exchanges:
+```javascript
+import { ConfigProvider } from '@kapeta/sdk-config';
+import { createEventsPublisher } from 'generated:queues/events-publisher';
+
+const configProvider = null; // Get this from somewhere
+
+const eventsPublisher = await createEventsPublisher(configProvider);
+
+await eventsPublisher.publish({
+    data: { ... },
+});
+```
+{{/provides}}
