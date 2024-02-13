@@ -21,7 +21,7 @@ import {
     RESTControllerReader,
     DSLController,
 } from '@kapeta/kaplang-core';
-import {includes} from "../includes";
+import { includes } from '../includes';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 export type HandleBarsType = typeof Handlebars;
@@ -34,11 +34,10 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
     let parsedEntities: DSLData[] | undefined = undefined;
     function getParsedEntities(): DSLData[] {
-
         if (!parsedEntities) {
             const code: string[] = [includes().source];
             if (context.spec?.entities?.source?.value) {
-                code.push(context.spec?.entities?.source?.value)
+                code.push(context.spec?.entities?.source?.value);
             }
             parsedEntities = parseEntities(code.join('\n\n'));
         }
@@ -84,11 +83,11 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
 
     engine.registerHelper('path', resolvePath);
 
-    engine.registerHelper('enumName', (name:string) => {
-        return Template.SafeString(name.replaceAll(/[^a-z0-9]+/ig, '_').toUpperCase());
+    engine.registerHelper('enumName', (name: string) => {
+        return Template.SafeString(name.replaceAll(/[^a-z0-9]+/gi, '_').toUpperCase());
     });
 
-    engine.registerHelper('join', (values:string[], separator:string = ',') => {
+    engine.registerHelper('join', (values: string[], separator: string = ',') => {
         return Template.SafeString(Array.from(values).join(separator));
     });
 

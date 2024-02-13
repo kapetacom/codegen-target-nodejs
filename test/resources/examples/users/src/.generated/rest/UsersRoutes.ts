@@ -8,7 +8,7 @@ export type CreateUserRequest<Locals extends Record<string, any> = Record<string
     { id: string },
     User,
     { [key: string]: string },
-    { user: User; tags?: Set<string> },
+    { user: User; tags?: string[] },
     Locals
 >;
 export type CreateUserResponse<Locals extends Record<string, any> = Record<string, any>> = Response<User, Locals>;
