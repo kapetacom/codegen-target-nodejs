@@ -39,7 +39,7 @@ export const createUsersRouter = async (configProvider: ConfigProvider) => {
             { name: 'id', transport: 'PATH', typeName: 'string' },
             { name: 'user', transport: 'QUERY', typeName: 'User' },
             { name: 'metadata', transport: 'BODY', typeName: '{ [key:string]: string }' },
-            { name: 'tags', transport: 'QUERY', typeName: 'Set<string>' },
+            { name: 'tags', transport: 'QUERY', typeName: 'string[]' },
         ]),
         asyncHandler(service.createUser.bind(service))
     );

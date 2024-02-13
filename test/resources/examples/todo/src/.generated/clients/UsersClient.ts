@@ -90,11 +90,11 @@ export class UsersClient extends RestClient {
      *
      * HTTP: DELETE /users/{id}
      */
-    async deleteUser(id: string, metadata: { [key: string]: State }, tags: Set<string>): Promise<void> {
+    async deleteUser(id: string, metadata: { [key: string]: State }, tags: string[]): Promise<void> {
         await this.$execute('DELETE', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
             { name: 'metadata', value: metadata, transport: 'BODY', typeName: '{ [key:string]: State }' },
-            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'Set<string>' },
+            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'string[]' },
         ]);
     }
 
@@ -105,11 +105,11 @@ export class UsersClient extends RestClient {
      *
      * HTTP: DELETE /users/{id}
      */
-    deleteUserRequest(id: string, metadata: { [key: string]: State }, tags: Set<string>): RestClientRequest<void> {
+    deleteUserRequest(id: string, metadata: { [key: string]: State }, tags: string[]): RestClientRequest<void> {
         return this.$create('DELETE', '/users/{id}', [
             { name: 'id', value: id, transport: 'PATH', typeName: 'string' },
             { name: 'metadata', value: metadata, transport: 'BODY', typeName: '{ [key:string]: State }' },
-            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'Set<string>' },
+            { name: 'tags', value: tags, transport: 'QUERY', typeName: 'string[]' },
         ]);
     }
 }
