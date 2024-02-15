@@ -1,0 +1,22 @@
+{{#consumes 'kapeta/resource-type-rest-client'}}
+    //#FILENAME:src/.generated/clients/index.ts:write-always
+    import hostsConfig from '../../../config/hosts.development.json';
+    {{#consumers-of-type 'kapeta/resource-type-rest-client'}}
+    {{#kaplang-rest-methods spec.source namespace=metadata.name~}}
+        import { {{controller-name this}}Client } from './{{controller-name this}}Client';
+    {{~/kaplang-rest-methods}}
+    {{/consumers-of-type}}    
+
+
+    export const initRestClients = () => {
+        return {
+            {{#consumers-of-type 'kapeta/resource-type-rest-client'}}
+            {{#kaplang-rest-methods spec.source namespace=metadata.name~}}
+                {{lowerFirst (controller-name this)}}Client: new {{controller-name this}}Client(false).$withBaseUrl(hostsConfig.{{string ../metadata.name}}),
+            {{~/kaplang-rest-methods}}
+            {{/consumers-of-type}}    
+        };
+    };
+{{/consumes}}
+
+

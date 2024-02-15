@@ -24,4 +24,11 @@ describe('blocks', () => {
 
         return CodegenHelpers.testCodeGenFor(target, new BlockCodeGenerator(data), basedir);
     });
+
+    test('cli', async () => {
+        const basedir = Path.resolve(__dirname, '../resources/examples/cli');
+        const data = require('../resources/examples/cli.kapeta.yml');
+
+        return CodegenHelpers.testCodeGenFor(target, new BlockCodeGenerator(data), basedir);
+    });
 });

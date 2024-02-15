@@ -1,0 +1,106 @@
+kind: kapeta/block-type-cli:0.0.1
+metadata:
+  name: kapeta/cli
+  title: Kapeta CLI
+spec:
+  entities:
+    types:
+      - type: dto
+        name: User
+        properties:
+          id:
+            type: string
+            secret: false
+            required: true
+            global: false
+          name:
+            type: string
+            secret: false
+            required: true
+            global: false
+      - type: dto
+        name: Game
+        properties:
+          id:
+            type: string
+            secret: false
+            required: true
+            global: false
+          finished:
+            type: boolean
+            secret: false
+            required: true
+            global: false
+    source:
+      type: kaplang
+      version: 1.11.2
+      value: |-
+        type User {
+        	id: string
+        	name: string
+        }
+
+
+        type Game {
+        	id: string
+        	finished: boolean
+        }
+  providers: []
+  consumers:
+    - kind: kapeta/resource-type-rest-client:0.1.3
+      metadata:
+        name: games
+      spec:
+        port:
+          name: rest
+          type: rest
+        methods:
+          getGames:
+            responseType:
+              ref: Game[]
+            method: GET
+            path: /games
+            arguments: {}
+        source:
+          type: kaplang
+          version: 1.11.2
+          value: |-
+            @GET('/games')
+            getGames(  ):Game[]
+    - kind: kapeta/resource-type-rest-client:0.1.3
+      metadata:
+        name: users
+      spec:
+        port:
+          name: rest
+          type: rest
+        methods:
+          HighRanked::getHighRankedUsers:
+            responseType:
+              type: integer[]
+            method: GET
+            path: /high-ranked/
+            arguments: {}
+            controllerName: HighRanked
+          Users::getUsers:
+            responseType:
+              ref: User[]
+            method: GET
+            path: /users/
+            arguments: {}
+            controllerName: Users
+        source:
+          type: kaplang
+          version: 1.11.2
+          value: |-
+            controller Users("/users") {
+                @GET('/')
+                getUsers( ):User[]
+            }
+
+            controller HighRanked("/high-ranked") {
+                @GET('/')
+                getHighRankedUsers( ):integer[]
+            }
+  target:
+    kind: kapeta/language-target-nodejs:local

@@ -22,6 +22,8 @@ import {
     DSLController,
 } from '@kapeta/kaplang-core';
 import { includes } from '../includes';
+import { lowerFirst, upperFirst } from 'lodash';
+import * as prettier from 'prettier';
 
 const DB_TYPES = ['kapeta/resource-type-mongodb', 'kapeta/resource-type-postgresql'];
 export type HandleBarsType = typeof Handlebars;
@@ -237,6 +239,35 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         } catch (e) {
             console.warn('Failed to write entity', entity);
             throw e;
+        }
+    });
+
+    engine.registerHelper('lowerFirst', function (typename) {
+        return new engine.SafeString(lowerFirst(typename));
+    });
+
+    engine.registerHelper('upperFirst', function (typename) {
+        return new engine.SafeString(upperFirst(typename));
+    });
+
+    engine.registerHelper('prettier', function (this: any, options) {
+        const content = options.fn(this);
+
+        try {
+            // Format the content using Prettier
+            const formattedContent = prettier.format(content, {
+                parser: 'typescript',
+                printWidth: 120,
+                proseWrap: 'never',
+                singleQuote: true,
+                tabWidth: 4,
+            });
+
+            return new Handlebars.SafeString(formattedContent);
+        } catch (error) {
+            console.error('Error formatting content with Prettier:', error);
+            // Return unformatted content on error
+            return new Handlebars.SafeString(content);
         }
     });
 };

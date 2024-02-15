@@ -15,7 +15,7 @@ const targetConfig: ILanguageTargetProvider = {
     kind: kapetaDefinition.metadata.name,
     version: packageJson.version,
     title: kapetaDefinition.metadata.title,
-    blockKinds: ['kapeta/block-type-service'],
+    blockKinds: ['kapeta/block-type-service', 'kapeta/block-type-cli'],
     resourceKinds: [
         'kapeta/resource-type-mongodb',
         'kapeta/resource-type-postgresql',
