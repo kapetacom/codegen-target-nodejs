@@ -6,5 +6,5 @@
         "esModuleInterop": true
     },
     "exclude": ["node_modules", "web", "node"],
-    "include": ["src/**/*.ts", "definitions.d.ts"]
+    "include": ["src/**/*.ts", "test/**/*.ts", "definitions.d.ts"]
 }
