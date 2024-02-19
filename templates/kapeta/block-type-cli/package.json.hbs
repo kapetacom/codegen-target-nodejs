@@ -3,24 +3,23 @@
     "name": "@{{lowercase data.metadata.name}}",
     "version": "0.0.1",
     "description": "",
-    "main": "dist/src/index.js",
-    "type": "commonjs",
+    "main": "dist/cjs/index.js",
     "scripts": {
-        "prepare:hosts": "node -r ts-node/register ./scripts/prepare-hosts.ts",
-        "prebuild": "cpx \"./package.json\" dist/src",
+        "prepare:hosts": "ts-node ./scripts/prepare-hosts.ts",
+        "prebuild": "rm -rf dist",
         "build": "tsc",
         "postbuild": "pkg package.json",
-        "predev": "npm run prepare:hosts",
-        "dev": "ts-node -r tsconfig-paths/register src/index.ts",
+        "prestart:dev": "npm run prepare:hosts",
+        "start:dev": "dotenvx run --env-file=.env.development -- ts-node src/index.ts",
         "prewatch": "npm run prepare:hosts",
-        "watch": "nodemon --exec 'ts-node -r tsconfig-paths/register' src/index.ts"
+        "watch": "dotenvx run --env-file=.env.development -- nodemon --exec 'ts-node' src/index.ts"
     },
     "bin": {
         "{{assetName data.metadata.name}}": "./bin/{{assetName data.metadata.name}}"
     },
     "pkg": {
         "scripts": [
-            "dist/src/{{assetName data.metadata.name}}.js"
+            "dist/cjs/index.js"
         ],
         "assets": [],
         "targets": [
@@ -40,22 +39,33 @@
     "dependencies": {
         "@kapeta/nodejs-api-client": "^0.2.0",
         "@kapeta/npm-package-handler": "^0.0.21",
-        "commander": "^12.0.0"
-        {{#consumes 'kapeta/resource-type-rest-client'}},
+        {{#consumes 'kapeta/resource-type-rest-client'}}
             "@kapeta/sdk-config": "^2",
             "@kapeta/sdk-rest": "^1.0.1",
-            "@kapeta/sdk-rest-client": "^3.3"
+            "@kapeta/sdk-rest-client": "^3.3",
         {{/consumes}}
+        "commander": "^12.0.0",
+        "dotenv": "^16.4.4",
+        "tslib": "^2.6.2"
     },
     "bundledDependencies": true,
     "devDependencies": {
+        "@dotenvx/dotenvx": "^0.16.0",
         "@kapeta/prettier-config": "^0.6.2",
+        "@rollup/plugin-commonjs": "^25.0.7",
+        "@rollup/plugin-json": "^6.1.0",
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@rollup/plugin-typescript": "^11.1.6",
         "@types/node": "^20.11.17",
-        "cpx": "^1.5.0",
         "nodemon": "^3.0.3",
         "pkg": "^5.8.1",
         "prettier": "^3.2.5",
+        "rollup": "^4.12.0",
+        "rollup-plugin-bundle-size": "^1.0.3",
+        "rollup-plugin-tsconfig-paths": "^1.5.2",
         "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
         "typescript": "^5.3.3"
     },
     "prettier": "@kapeta/prettier-config"

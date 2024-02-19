@@ -47,3 +47,15 @@ import { initRestClients } from 'generated:clients';
 
 const { usersClient, usersHighRankedClient } = initRestClients();
 ```
+
+## Environment Variables
+
+The `.env` or `.env.development` files has to contain the following environment variables:
+
+- `KAPETA_CONSUMER_SERVICE_GAMES_REST`
+- `KAPETA_CONSUMER_SERVICE_USERS_REST`
+
+The values will be updated automatically in `.env.development` when you run the CLI in dev mode (`npm run start:dev` or `npm run watch`). 
+
+To run the CLI in production mode, you need to set the environment variables manually in the `.env` file.
+

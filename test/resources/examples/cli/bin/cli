@@ -2,4 +2,4 @@
 
 process.title = 'cli';
 
-require('../dist/src/index.js');
+require('../dist/cjs/index.js');

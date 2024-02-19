@@ -1,18 +1,27 @@
 {{#consumes 'kapeta/resource-type-rest-client'}}
     //#FILENAME:src/.generated/clients/index.ts:write-always
-    import hostsConfig from '../../../config/hosts.development.json';
     {{#consumers-of-type 'kapeta/resource-type-rest-client'}}
     {{#kaplang-rest-methods spec.source namespace=metadata.name~}}
         import { {{controller-name this}}Client } from './{{controller-name this}}Client';
     {{~/kaplang-rest-methods}}
-    {{/consumers-of-type}}    
-
-
+    {{/consumers-of-type}}
+    import 'dotenv/config';
+    
+    
     export const initRestClients = () => {
+        {{#consumers-of-type 'kapeta/resource-type-rest-client'}}
+        {{#kaplang-rest-methods spec.source namespace=metadata.name~}}
+            if(!process.env.KAPETA_CONSUMER_SERVICE_{{uppercase ../metadata.name}}_REST) {
+                throw new Error('Environment varianble "KAPETA_CONSUMER_SERVICE_{{uppercase ../metadata.name}}_REST" is not defined');
+            }            
+        {{~/kaplang-rest-methods}}
+        {{/consumers-of-type}}    
+
+
         return {
             {{#consumers-of-type 'kapeta/resource-type-rest-client'}}
             {{#kaplang-rest-methods spec.source namespace=metadata.name~}}
-                {{lowerFirst (controller-name this)}}Client: new {{controller-name this}}Client(false).$withBaseUrl(hostsConfig.{{string ../metadata.name}}),
+                {{lowerFirst (controller-name this)}}Client: new {{controller-name this}}Client(false).$withBaseUrl(process.env.KAPETA_CONSUMER_SERVICE_{{uppercase ../metadata.name}}_REST),
             {{~/kaplang-rest-methods}}
             {{/consumers-of-type}}    
         };

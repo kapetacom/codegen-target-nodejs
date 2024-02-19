@@ -251,23 +251,27 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
     });
 
     engine.registerHelper('prettier', function (this: any, options) {
+        // Get the content inside the {{#prettier}}...{{/prettier}} block
         const content = options.fn(this);
 
-        try {
-            // Format the content using Prettier
-            const formattedContent = prettier.format(content, {
-                parser: 'typescript',
-                printWidth: 120,
-                proseWrap: 'never',
-                singleQuote: true,
-                tabWidth: 4,
-            });
+        const prettierOptions = {
+            parser: 'typescript',
+            printWidth: 120,
+            proseWrap: 'never',
+            singleQuote: true,
+            tabWidth: 4,
+            // Overwrite with Prettier options from the helper's hash arguments
+            ...options.hash,
+        };
 
-            return new Handlebars.SafeString(formattedContent);
+        try {
+            const formattedContent = prettier.format(content, prettierOptions);
+
+            return new engine.SafeString(formattedContent);
         } catch (error) {
             console.error('Error formatting content with Prettier:', error);
             // Return unformatted content on error
-            return new Handlebars.SafeString(content);
+            return new engine.SafeString(content);
         }
     });
 };

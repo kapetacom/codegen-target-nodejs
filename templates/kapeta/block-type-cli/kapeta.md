@@ -46,4 +46,18 @@ const { {{#kaplang-rest-methods spec.source namespace=metadata.name}} {{lowerFir
 {{/prettier}}
 ```
 {{/consumers-of-type}}
+
+## Environment Variables
+
+The `.env` or `.env.development` files has to contain the following environment variables:
+
+{{#consumers-of-type 'kapeta/resource-type-rest-client'}}
+- `KAPETA_CONSUMER_SERVICE_{{uppercase metadata.name}}_REST`
+{{~/consumers-of-type}}
+
+
+The values will be updated automatically in `.env.development` when you run the CLI in dev mode (`npm run start:dev` or `npm run watch`). 
+
+To run the CLI in production mode, you need to set the environment variables manually in the `.env` file.
+
 {{/consumes}}
