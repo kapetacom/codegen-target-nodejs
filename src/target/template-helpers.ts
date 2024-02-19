@@ -254,10 +254,13 @@ export const addTemplateHelpers = (engine: HandleBarsType, data: any, context: a
         // Get the content inside the {{#prettier}}...{{/prettier}} block
         const content = options.fn(this);
 
-        // Extract Prettier options from the helper's hash arguments
         const prettierOptions = {
-            // Default options can be specified here
             parser: 'typescript',
+            printWidth: 120,
+            proseWrap: 'never',
+            singleQuote: true,
+            tabWidth: 4,
+            // Overwrite with Prettier options from the helper's hash arguments
             ...options.hash,
         };
 
