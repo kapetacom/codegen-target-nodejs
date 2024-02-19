@@ -25,7 +25,7 @@ bin/cli [arguments]
 
 To run the CLI in dev mode, run the following commands:
 ```bash
-npm run dev [arguments]
+npm run start:dev [arguments]
 ```
 
 To rerun the CLI in dev mode while watching for changes, run the following commands:
