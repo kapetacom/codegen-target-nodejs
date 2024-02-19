@@ -1,3 +1,4 @@
+//#FILENAME:rollup.config.mjs:create-only
 import packageJson from './package.json' assert { type: 'json' };
 import commonjs from '@rollup/plugin-commonjs';
 import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
