@@ -34,7 +34,7 @@ See below for details on how to use the REST clients.
 To use the "games" REST Client(s) - simply add the following code to your service:
 
 ```typescript
-import { initRestClients } from 'generated:clients';
+import { initRestClients } from "generated:clients";
 
 const { gamesClient } = initRestClients();
 ```
@@ -43,7 +43,7 @@ const { gamesClient } = initRestClients();
 To use the "users" REST Client(s) - simply add the following code to your service:
 
 ```typescript
-import { initRestClients } from 'generated:clients';
+import { initRestClients } from "generated:clients";
 
 const { usersClient, usersHighRankedClient } = initRestClients();
 ```

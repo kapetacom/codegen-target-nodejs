@@ -11,7 +11,7 @@ program
     });
 
 // Catch all command to show a custom message for unknown commands
-program.command('*', { noHelp: true }).action(() => {});
+program.command('*', { hidden: true }).action(() => {});
 // Event listener for unknown commands
 program.on('command:*', function (operands) {
     console.error(`Error: Unknown command '${operands[0]}'.`);
