@@ -16,7 +16,7 @@
         "sourceMap": true,
         "lib": ["es2022"],
         "paths": {
-            "generated:*": ["src/.generated/*"]
+            "generated:*": ["./src/.generated/*"]
         }
     },
     "ts-node": {
