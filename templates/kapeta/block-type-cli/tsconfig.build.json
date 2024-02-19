@@ -1,0 +1,9 @@
+//#FILENAME:tsconfig.build.json:create-only
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true
+  }
+}

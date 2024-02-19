@@ -15,7 +15,6 @@
         "outDir": "dist",
         "sourceMap": true,
         "lib": ["es2022"],
-        "baseUrl": ".",
         "paths": {
             "generated:*": ["src/.generated/*"]
         }
@@ -23,5 +22,6 @@
     "ts-node": {
         "require": ["tsconfig-paths/register"]
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
 }

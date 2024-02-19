@@ -3,12 +3,11 @@
 // GENERATED SOURCE - DO NOT EDIT
 //
 import * as Path from 'path';
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile } from 'fs/promises';
 import Config from '@kapeta/sdk-config';
 
 const BASE_PATH = Path.resolve(__dirname, '..');
-const CONFIG_DIR = Path.resolve(BASE_PATH, 'config');
-const HOSTS_FILE = Path.join(CONFIG_DIR, 'hosts.development.json');
+const ENV_FILE = Path.join(BASE_PATH, '.env.development');
 
 const RESOURCES = [
     {{#consumers-of-type 'kapeta/resource-type-rest-client'}}
@@ -22,27 +21,25 @@ const RESOURCES = [
 (async function () {
     const config = await Config.init(BASE_PATH);
 
-    // Ensure the config directory exists
-    await mkdir(CONFIG_DIR, { recursive: true });
-
-    const hosts: { [key: string]: string } = {};
+    let envContents = '';
     for (const resource of RESOURCES) {
         const host = await config.getServiceAddress(resource.name, resource.type);
         if (host === null) {
             console.error('Failed to get host for resource: %s', resource.name);
             process.exit(1);
         }
-        hosts[resource.name] = host;
+        // Convert each resource into an environment variable declaration
+        envContents += `KAPETA_CONSUMER_SERVICE_${resource.name.toUpperCase()}_${resource.type.toUpperCase()}="${host}"\n`;
     }
 
-    await writeFile(HOSTS_FILE, JSON.stringify(hosts, null, 2), {
+    await writeFile(ENV_FILE, envContents.trim(), {
         flag: 'w',
     });
 })()
     .then(() => {
-        console.log('Hosts file written: %s', HOSTS_FILE);
+        console.log('Env file written: %s', ENV_FILE);
     })
     .catch((e) => {
-        console.error('Failed to write hosts file: %s', HOSTS_FILE, e);
+        console.error('Failed to write env file: %s', ENV_FILE, e);
         process.exit(1);
     });
