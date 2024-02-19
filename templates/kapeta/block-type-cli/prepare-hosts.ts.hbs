@@ -21,7 +21,7 @@ const RESOURCES = [
 (async function () {
     const config = await Config.init(BASE_PATH);
 
-    let envContents = '';
+    let envContents = "#\n# Run `npm run prepare:hosts` to update these values\n#\n";
     for (const resource of RESOURCES) {
         const host = await config.getServiceAddress(resource.name, resource.type);
         if (host === null) {
