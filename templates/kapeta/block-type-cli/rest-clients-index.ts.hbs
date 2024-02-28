@@ -12,7 +12,7 @@
         {{#consumers-of-type 'kapeta/resource-type-rest-client'}}
         {{#kaplang-rest-methods spec.source namespace=metadata.name~}}
             if(!process.env.KAPETA_CONSUMER_SERVICE_{{uppercase ../metadata.name}}_REST) {
-                throw new Error('Environment varianble "KAPETA_CONSUMER_SERVICE_{{uppercase ../metadata.name}}_REST" is not defined');
+                throw new Error('Environment variable "KAPETA_CONSUMER_SERVICE_{{uppercase ../metadata.name}}_REST" is not defined');
             }            
         {{~/kaplang-rest-methods}}
         {{/consumers-of-type}}    
