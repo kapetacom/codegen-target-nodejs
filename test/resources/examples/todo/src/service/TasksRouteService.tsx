@@ -1,4 +1,3 @@
-import type { Request, Response } from 'express';
 import { ConfigProvider } from '@kapeta/sdk-config';
 import { TasksRoutes } from 'generated:rest/TasksRoutes';
 
