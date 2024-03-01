@@ -28,19 +28,19 @@ spec:
                 get():string
             }
   consumers:
-    - kind: kapeta/resource-type-npm-repository:local
+    - kind: kapeta/resource-type-npm-registry:local
       metadata:
         name: npm
       spec:
         port:
           type: http
-    - kind: kapeta/resource-type-docker-repository:local
+    - kind: kapeta/resource-type-docker-registry:local
       metadata:
         name: docker
       spec:
         port:
           type: http
-    - kind: kapeta/resource-type-maven-repository:local
+    - kind: kapeta/resource-type-maven-registry:local
       metadata:
         name: mvn
       spec:
