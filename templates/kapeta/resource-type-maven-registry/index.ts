@@ -12,11 +12,13 @@ export const PORT_TYPE = 'http';
  *
  * Use the output of this function to connect to the {{data.metadata.name}} repository.
  *
- * Maven repositories expects Basic authentication, so you will need to provide a username and password for
+ * Maven repositories might expect Basic authentication, so you will need to provide a username and password for
  * your requests.
  * E.g. add the HTTP Header: Authentication: Basic base64(username:password)
  *
+ * If the credentials are not provided, the repository is authenticated in a different way (service account, etc.)
+ *
  */
-export const get{{type data.metadata.name}}Details = (config?: ConfigProvider):Promise<ResourceInfo<{}, DefaultCredentials> | null> => {
+export const get{{type data.metadata.name}}Details = (config: ConfigProvider):Promise<ResourceInfo<{path?:string}, DefaultCredentials> | null> => {
     return config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, '{{string data.metadata.name}}');
 }

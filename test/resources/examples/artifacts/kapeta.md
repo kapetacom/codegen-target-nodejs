@@ -58,3 +58,48 @@ All errors will be formatted as JSON - with the following structure:
 
 
 
+
+## NPM Registries
+
+### npm
+To access the "npm" NPM registry - the following will return the access details:
+
+```typescript
+import { runApp } from '@kapeta/sdk-config';
+import { getNpmDetails } from 'generated:repository/npm-repository';
+
+runApp(async (configProvider: ConfigProvider) => {
+    const details = await getNpmDetails(configProvider);
+    console.log(details);
+}, __dirname);
+```
+
+## Docker Registries
+
+### docker
+To access the "docker" Docker registry - the following will return the access details:
+
+```typescript
+import { runApp } from '@kapeta/sdk-config';
+import { getDockerDetails } from 'generated:repository/docker-repository';
+
+runApp(async (configProvider: ConfigProvider) => {
+    const details = await getDockerDetails(configProvider);
+    console.log(details);
+}, __dirname);
+```
+
+## Maven Registries
+
+### mvn
+To access the "mvn" Maven registry - the following will return the access details:
+
+```typescript
+import { runApp } from '@kapeta/sdk-config';
+import { getMvnDetails } from 'generated:repository/mvn-repository';
+
+runApp(async (configProvider: ConfigProvider) => {
+    const details = await getMvnDetails(configProvider);
+    console.log(details);
+}, __dirname);
+```
