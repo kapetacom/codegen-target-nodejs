@@ -31,4 +31,11 @@ describe('blocks', () => {
 
         return CodegenHelpers.testCodeGenFor(target, new BlockCodeGenerator(data), basedir);
     });
+
+    test('artifacts', async () => {
+        const basedir = Path.resolve(__dirname, '../resources/examples/artifacts');
+        const data = require('../resources/examples/artifacts.kapeta.yml');
+
+        return CodegenHelpers.testCodeGenFor(target, new BlockCodeGenerator(data), basedir);
+    });
 });

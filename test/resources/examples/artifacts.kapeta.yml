@@ -1,0 +1,50 @@
+kind: kapeta/block-type-service:1.3.5
+metadata:
+  name: kapeta/test-use-artifacts
+  visibility: private
+spec:
+  entities: {}
+  providers:
+    - kind: kapeta/resource-type-rest-api:1.0.14
+      metadata:
+        name: main
+      spec:
+        port:
+          name: rest
+          type: rest
+        methods:
+          Artifacts::get:
+            responseType:
+              type: string
+            method: GET
+            path: /artifacts/
+            arguments: {}
+            controllerName: Artifacts
+        source:
+          type: kapeta-dsl
+          value: |-
+            controller Artifacts('/artifacts') {
+                @GET("/")
+                get():string
+            }
+  consumers:
+    - kind: kapeta/resource-type-npm-registry:local
+      metadata:
+        name: npm
+      spec:
+        port:
+          type: http
+    - kind: kapeta/resource-type-docker-registry:local
+      metadata:
+        name: docker
+      spec:
+        port:
+          type: http
+    - kind: kapeta/resource-type-maven-registry:local
+      metadata:
+        name: mvn
+      spec:
+        port:
+          type: http
+  target:
+    kind: kapeta/language-target-nodejs:local

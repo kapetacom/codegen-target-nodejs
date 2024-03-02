@@ -321,3 +321,60 @@ await eventsPublisher.publish({
 });
 ```
 {{/provides}}
+
+{{#consumes 'kapeta/resource-type-npm-registry'}}
+## NPM Registries
+
+{{#consumers-of-type 'kapeta/resource-type-npm-registry'}}
+### {{metadata.name}}
+To access the "{{metadata.name}}" NPM registry - the following will return the access details:
+
+```typescript
+import { runApp } from '@kapeta/sdk-config';
+import { get{{type metadata.name}}Details } from 'generated:repository/{{snakeCase metadata.name}}-repository';
+
+runApp(async (configProvider: ConfigProvider) => {
+    const details = await get{{type metadata.name}}Details(configProvider);
+    console.log(details);
+}, __dirname);
+```
+{{/consumers-of-type}}
+{{/consumes}}
+
+{{#consumes 'kapeta/resource-type-docker-registry'}}
+## Docker Registries
+
+{{#consumers-of-type 'kapeta/resource-type-docker-registry'}}
+### {{metadata.name}}
+To access the "{{metadata.name}}" Docker registry - the following will return the access details:
+
+```typescript
+import { runApp } from '@kapeta/sdk-config';
+import { get{{type metadata.name}}Details } from 'generated:repository/{{snakeCase metadata.name}}-repository';
+
+runApp(async (configProvider: ConfigProvider) => {
+    const details = await get{{type metadata.name}}Details(configProvider);
+    console.log(details);
+}, __dirname);
+```
+{{/consumers-of-type}}
+{{/consumes}}
+
+{{#consumes 'kapeta/resource-type-maven-registry'}}
+## Maven Registries
+
+{{#consumers-of-type 'kapeta/resource-type-maven-registry'}}
+### {{metadata.name}}
+To access the "{{metadata.name}}" Maven registry - the following will return the access details:
+
+```typescript
+import { runApp } from '@kapeta/sdk-config';
+import { get{{type metadata.name}}Details } from 'generated:repository/{{snakeCase metadata.name}}-repository';
+
+runApp(async (configProvider: ConfigProvider) => {
+    const details = await get{{type metadata.name}}Details(configProvider);
+    console.log(details);
+}, __dirname);
+```
+{{/consumers-of-type}}
+{{/consumes}}
