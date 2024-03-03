@@ -1,0 +1,10 @@
+//#FILENAME:.prettierignore:create-only
+.kapeta/*
+*.md
+tsconfig.*
+package-lock.json
+package.json
+kapeta.yml
+rollup.config.mjs
+bin/*
+src/.generated/*

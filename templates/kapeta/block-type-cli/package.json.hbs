@@ -3,11 +3,13 @@
     "name": "@{{lowercase data.metadata.name}}",
     "version": "0.0.1",
     "description": "",
-    "main": "dist/cjs/index.js",
+    "main": "dist/index.js",
     "scripts": {
         "prepare:hosts": "ts-node ./scripts/prepare-hosts.ts",
         "prebuild": "rm -rf dist",
-        "build": "tsc",
+        "build": "rollup -c",
+        "build:binary": "pkg package.json",
+        "format": "prettier --write .",
         "postbuild": "pkg package.json",
         "prestart:dev": "npm run prepare:hosts",
         "start:dev": "dotenvx run --env-file=.env.development -- ts-node src/index.ts",
@@ -19,7 +21,7 @@
     },
     "pkg": {
         "scripts": [
-            "dist/cjs/index.js"
+            "dist/index.js"
         ],
         "assets": [],
         "targets": [
@@ -37,8 +39,6 @@
         "outputPath": "dist/bin"
     },
     "dependencies": {
-        "@kapeta/nodejs-api-client": "^0.2.0",
-        "@kapeta/npm-package-handler": "^0.0.21",
         {{#consumes 'kapeta/resource-type-rest-client'}}
             "@kapeta/sdk-config": "^2",
             "@kapeta/sdk-rest": "^1.0.1",
