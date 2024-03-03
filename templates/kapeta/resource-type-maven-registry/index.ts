@@ -4,7 +4,7 @@
 //
 import {ConfigProvider, ResourceInfo, DefaultCredentials} from "@kapeta/sdk-config";
 
-export const RESOURCE_TYPE = 'kapeta/resource-type-maven-repository';
+export const RESOURCE_TYPE = 'kapeta/resource-type-maven-registry';
 export const PORT_TYPE = 'http';
 
 /**

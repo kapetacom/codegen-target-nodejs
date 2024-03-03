@@ -3,7 +3,7 @@
 //
 import { ConfigProvider, ResourceInfo, DefaultCredentials } from '@kapeta/sdk-config';
 
-export const RESOURCE_TYPE = 'kapeta/resource-type-npm-repository';
+export const RESOURCE_TYPE = 'kapeta/resource-type-npm-registry';
 export const PORT_TYPE = 'http';
 
 /**
