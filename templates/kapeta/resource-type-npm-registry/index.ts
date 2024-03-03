@@ -7,6 +7,17 @@ import {ConfigProvider, ResourceInfo, DefaultCredentials} from "@kapeta/sdk-conf
 export const RESOURCE_TYPE = 'kapeta/resource-type-npm-registry';
 export const PORT_TYPE = 'http';
 
+export type Options = {
+    // Base path for the repository
+    path?: string
+
+    // Base path for downloads from the repository
+    downloadLocation?:string
+
+    // Prefix for artifacts in the repository
+    prefix?:string
+}
+
 /**
  * Gets the connection details for the {{data.metadata.name}} NPM repository.
  *
@@ -19,6 +30,6 @@ export const PORT_TYPE = 'http';
  * If the credentials are not provided, the repository is authenticated in a different way (service account, etc.)
  *
  */
-export const get{{type data.metadata.name}}Details = (config: ConfigProvider):Promise<ResourceInfo<{path?:string}, DefaultCredentials> | null> => {
+export const get{{type data.metadata.name}}Details = (config: ConfigProvider):Promise<ResourceInfo<Options, DefaultCredentials> | null> => {
     return config.getResourceInfo(RESOURCE_TYPE, PORT_TYPE, '{{string data.metadata.name}}');
 }
