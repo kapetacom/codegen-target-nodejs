@@ -73,6 +73,10 @@ spec:
             total: number
         }
 
+        Node {
+            children: Node[]
+        }
+
   consumers:
     - kind: kapeta/resource-type-rabbitmq-subscriber:local
       metadata:
@@ -146,3 +150,11 @@ spec:
               @GET("/{id}")
               getTask(@Path id:string):Task
             }
+  configuration:
+    source:
+      type: kaplang
+      version: 1.11.2
+      value: |-
+        type Recursive {
+        	children: Recursive[]
+        }
