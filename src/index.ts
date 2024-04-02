@@ -4,7 +4,7 @@
  */
 
 import { format, Target, Template, TypeLike } from '@kapeta/codegen-target';
-import type { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen';
+import type { GeneratedAsset, SourceFile, GeneratedFile } from '@kapeta/codegen-target';
 import Path from 'path';
 import { exec } from '@kapeta/nodejs-process';
 import { mergePackageJson } from './target/merge-package';

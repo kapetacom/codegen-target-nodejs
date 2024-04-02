@@ -2,7 +2,7 @@
  * Copyright 2023 Kapeta Inc.
  * SPDX-License-Identifier: MIT
  */
-import { GeneratedFile, SourceFile } from '@kapeta/codegen';
+import { GeneratedFile, SourceFile } from '@kapeta/codegen-target';
 import { addNewOrUnchanged } from './helpers';
 
 export const mergePackageJson = (
@@ -24,13 +24,13 @@ export const mergePackageJson = (
         target.devDependencies = {};
     }
 
-    addNewOrUnchanged(target.dependencies, newContent.dependencies, lastContent?.dependencies ?? null);
-    addNewOrUnchanged(target.devDependencies, newContent.devDependencies, lastContent?.devDependencies ?? null);
+    addNewOrUnchanged(target.dependencies, newContent.dependencies || {}, lastContent?.dependencies ?? null);
+    addNewOrUnchanged(target.devDependencies, newContent.devDependencies || {}, lastContent?.devDependencies ?? null);
 
     if (!target.scripts) {
         target.scripts = {};
     }
-    addNewOrUnchanged(target.scripts, newContent.scripts, lastContent?.scripts ?? null);
+    addNewOrUnchanged(target.scripts, newContent.scripts || {}, lastContent?.scripts ?? null);
     addNewOrUnchanged(target, newContent, lastContent);
 
     return {
