@@ -38,7 +38,7 @@
         "outputPath": "dist/bin"
     },
     "dependencies": {
-        "@kapeta/sdk-config": "^2",
+        "@kapeta/sdk-config": "^2.2",
         "@kapeta/sdk-rest": "^1.0.1",
         "@kapeta/sdk-rest-client": "^3.3",
         "commander": "^12.0.0",
