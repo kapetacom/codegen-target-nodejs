@@ -48,17 +48,19 @@ export class {{pascalCase data.metadata.name}}Client {
             }
         }
 
+        const port = parseInt(`${config.port}`, 10);
+
         this.minio = new minio.Client({
             endPoint: config.host,
-            port: parseInt(`${config.port}`, 10),
-            useSSL: false,
+            port,
+            useSSL: port === 443,
             accessKey: config.credentials.username,
             secretKey: config.credentials.password,
         });
     }
 
     public async listObjects(): Promise<minio.BucketItem[]> {
-        const objects = await this.minio.listObjectsV2(this.bucketName, '', true);
+        const objects = this.minio.listObjectsV2(this.bucketName, '', true);
         return objects.toArray();
     }
 
