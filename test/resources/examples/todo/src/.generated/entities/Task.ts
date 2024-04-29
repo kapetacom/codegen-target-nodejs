@@ -3,7 +3,7 @@
 //
 
 import { Idable } from 'generated:entities/Idable';
-import { SomeNativeType } from '@kapeta/ui-web-types';
+import { CookieOptions } from 'express';
 /**
  * Task type
  */
@@ -30,7 +30,7 @@ export interface Task extends Idable {
      */
     created: number;
     metadata: any;
-    someNativeType: SomeNativeType;
+    someNativeType: CookieOptions;
     details: {
         innerProp: string;
         moreDetails: {
