@@ -9,10 +9,10 @@ spec:
     source:
       type: kapeta-dsl
       value: |+
-        @Native("@kapeta/ui-web-types")
-        type SomeNativeType {
-            id: string
-            name: string
+        // A native type example
+        @Native("express")
+        type CookieOptions {
+          path: string
         }
         
         //A state
@@ -45,7 +45,7 @@ spec:
         
             metadata: any
         
-            someNativeType: SomeNativeType
+            someNativeType: CookieOptions
         
             details: {
                 innerProp: string
